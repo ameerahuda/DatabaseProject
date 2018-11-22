@@ -1,10 +1,10 @@
 body {
-  padding-top: 40px;
+  padding-top: 10px;
   padding-bottom: 40px;
 }
 
 .form-signin {
-  max-width: 330px;
+  max-width: 500px;
   padding: 15px;
   margin: 0 auto;
 }
@@ -30,7 +30,7 @@ body {
 .form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0px;
 }
 .form-signin input[type="password"] {
   margin-bottom: 10px;

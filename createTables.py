@@ -6,7 +6,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
-    passwd = "your_password",
+    passwd = "Chivas14",
     database = "UYPdb"
 )
 
@@ -21,7 +21,7 @@ mycursor = mydb.cursor()
 #                  "SchoolType VARCHAR(255), GradeInFall VARCHAR(255), ExpectedHighSchool VARCHAR(255), "
 #                  "ExpectedGradYear VARCHAR(255), GT VARCHAR(255), ELL VARCHAR(255), "
 #                  "CONSTRAINT PK_Students PRIMARY KEY (StudentID))")
-
+#
 # mycursor.execute("CREATE TABLE Parents (ParentID VARCHAR(255), StudentID VARCHAR(255), FirstName VARCHAR(255), "
 #                  "LastName VARCHAR(255), Address VARCHAR(255), City VARCHAR(255), State VARCHAR(255), "
 #                  "Zip VARCHAR(255), Email VARCHAR(255), CellPhoneNumber VARCHAR(255), WorkPhoneNumber VARCHAR(255), "
@@ -54,9 +54,9 @@ mycursor = mydb.cursor()
 #                  "CONSTRAINT FK0_Takes FOREIGN KEY (StudentID) REFERENCES Students(StudentID),"
 #                  "CONSTRAINT FK1_Takes FOREIGN KEY (ClassID) REFERENCES Classes(ClassID))")
 
-# mycursor.execute("SHOW TABLES")
-#
-# for tb in mycursor:
-#     print(tb)
+mycursor.execute("SHOW TABLES")
+
+for tb in mycursor:
+     print(tb)
 
 
