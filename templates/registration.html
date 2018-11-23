@@ -11,13 +11,358 @@
     -->
     <link href="../static/css/signup.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-    <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/additional-methods.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
-    <!-- Need to add so the .js can use the html file (how im understanding it) -->
-	<script src="../static/js/signUp.js"></script>
+      <script src="/static/js/signUp.js"></script>
+     <div class="error-messages" style="display:none;"></div>
+
+    <script>
+function validate()
+{
+	var fname = document.forms["RegForm"]["firstName"];
+	var initial = document.forms["RegForm"]["initial"];
+	var lname = document.forms["RegForm"]["lastName"];
+	var suffix = document.forms["RegForm"]["suffix"];
+	var preName = document.forms["RegForm"]["preferredName"]
+	var address = document.forms["RegForm"]["address"];
+	var city = document.forms["RegForm"]["city"];
+	var state = document.forms["RegForm"]["state"];
+	var zip = document.forms["RegForm"]["zip"];
+	var dob = document.forms["RegForm"]["dob"];
+	var gender = document.forms["RegForm"]["gender"];
+	var race = document.forms["RegForm"]["race"];
+	var email = document.forms["RegForm"]["email"];
+	var phone = document.forms["RegForm"]["phoneNumber"];
+	var siblings = document.forms["RegForm"]["siblings"];
+	var healthConditions = document.forms["RegForm"]["healthConditions"];
+	var disability = document.forms["RegForm"]["disability"];
+	var sn = document.forms["RegForm"]["schoolName"];
+	var sd = document.forms["RegForm"]["schoolDistrict"];
+	var st = document.forms["RegForm"]["schoolType"];
+	var gif = document.forms["RegForm"]["gradeInFall"];
+	var gt = document.forms["RegForm"]["gt"];
+	var ell = document.forms["RegForm"]["ell"];
+	var graddate = document.forms["RegForm"]["gradDate"];
+	var exphs = document.forms["RegForm"]["expHighSchool"];
+	var p1fn = document.forms["RegForm"]["p1FirstName"];
+	var p1ln = document.forms["RegForm"]["p1LastName"];
+	var p1adr = document.forms["RegForm"]["p1Address"];
+	var p1ci = document.forms["RegForm"]["p1City"];
+	var p1s = document.forms["RegForm"]["p1State"];
+	var p1z = document.forms["RegForm"]["p1Zip"];
+	var p1e = document.forms["RegForm"]["p1Email"];
+	var p1hp = document.forms["RegForm"]["p1HomePhone"];
+	var p1cel = document.forms["RegForm"]["p1PhoneNumber"];
+	var p1wp = document.forms["RegForm"]["p1WorkPhone"];
+	var p2fn = document.forms["RegForm"]["p2FirstName"];
+	var p2ln = document.forms["RegForm"]["p2LastName"];
+	var p2adr = document.forms["RegForm"]["p2Address"];
+	var p2ci = document.forms["RegForm"]["p2City"];
+	var p2s = document.forms["RegForm"]["p2State"];
+	var p2z = document.forms["RegForm"]["p2Zip"];
+	var p2e = document.forms["RegForm"]["p2Email"];
+	var p2hp = document.forms["RegForm"]["p2HomePhone"];
+	var p2cel = document.forms["RegForm"]["p2PhoneNumber"];
+	var p2wp = document.forms["RegForm"]["p2WorkPhone"];
+	var dateofReg = document.forms["RegForm"]["dateOfRegistration"];
+	var letters = /^[A-Za-z]+$/;
+	var numbers = /^[0-9]+$/;
+	var phoneno = /^\d{10}$/;
+	var date =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+	var letterNumber = /^[0-9a-zA-Z _]+$/;
+	var letterspace = /^[A-Za-z, _]+$/;
+
+	if (!fname.value.match(letters))
+	{
+	    fname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    fname.style.backgroundColor = "white";
+    }
+
+	if (initial.value.length > 1 || initial.required)
+	{
+		initial.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    initial.style.backgroundColor = "white";
+    }
+
+	if (!lname.value.match(letters))
+	{
+		lname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    lname.style.backgroundColor = "white";
+    }
+
+	if (suffix.value.length > 1 && !suffix.value.match(letters))
+	{
+		suffix.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    suffix.style.backgroundColor = "white";
+    }
+
+    if (preName.value.length > 1 && !preName.value.match(letters))
+	{
+		preName.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    preName.style.backgroundColor = "white";
+    }
+
+	if (email.value.length > 1 && email.value.indexOf(".", 0) < 0)
+	{
+		email.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    email.style.backgroundColor = "white";
+    }
+
+	if (phone.value.length > 1 && !phone.value.match(phoneno))
+	{
+		phone.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    phone.style.backgroundColor = "white";
+    }
+
+	if (dob.value.length > 1 && !dob.value.match(date))
+	{
+		dob.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    dob.style.backgroundColor = "white";
+    }
+
+	if (address.value.length > 1 && !address.value.match(letterNumber))
+	{
+		address.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    address.style.backgroundColor = "white";
+    }
+    if (city.value.length > 1 && !city.value.match(letters))
+	{
+		city.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    city.style.backgroundColor = "white";
+    }
+    if (zip.value.length > 1 && !zip.value.match(numbers))
+	{
+		zip.style.backgroundColor = "pink";
+		return false;
+	} else if(zip.value.length > 1 && zip.value.match(numbers) && zip.value.length > 5){
+        zip.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    zip.style.backgroundColor = "white";
+    }
+    if (siblings.value.length > 1 && !siblings.value.match(letterspace))
+	{
+		siblings.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    siblings.style.backgroundColor = "white";
+    }
+    if (healthConditions.value.length > 1 && !healthConditions.value.match(letterspace))
+	{
+		healthConditions.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    healthConditions.style.backgroundColor = "white";
+    }
+    if (disability.value.length > 1 && !disability.value.match(letterspace))
+	{
+		disability.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    disability.style.backgroundColor = "white";
+    }
+    if (sn.value.length > 1 && !sn.value.match(letters))
+	{
+		sn.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    sn.style.backgroundColor = "white";
+    }
+    if (sd.value.length > 1 && !sd.value.match(letters))
+	{
+		sd.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    sd.style.backgroundColor = "white";
+    }
+
+    if (graddate.value.length > 1 && !graddate.value.match(numbers))
+	{
+		graddate.style.backgroundColor = "pink";
+		return false;
+	} else if(graddate.value.length > 1 && graddate.value.match(numbers) && graddate.value.length > 4){
+        graddate.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    graddate.style.backgroundColor = "white";
+    }
+    if (exphs.value.length > 1 && !exphs.value.match(letters))
+	{
+		exphs.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    exphs.style.backgroundColor = "white";
+    }
+    if (!p1fn.value.match(letters))
+	{
+	    p1fn.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1fn.style.backgroundColor = "white";
+    }
+    if (!p1ln.value.match(letters))
+	{
+	    p1ln.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1ln.style.backgroundColor = "white";
+    }
+    if (!p1adr.value.match(letterNumber))
+	{
+	    p1adr.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1adr.style.backgroundColor = "white";
+    }
+    if (!p1ci.value.match(letters))
+	{
+	    p1ci.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1ci.style.backgroundColor = "white";
+    }
+    if (p1s.value.match("Choose..."))
+	{
+		p1s.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1s.style.backgroundColor = "white";
+    }
+    if (!p1z.value.match(numbers))
+	{
+	    p1z.style.backgroundColor = "pink";
+		return false;
+	} else if(p1z.value.length > 1 && p1z.value.match(numbers) && p1z.value.length > 5){
+        p1z.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    p1z.style.backgroundColor = "white";
+    }
+    if (p1e.value.indexOf(".", 0) < 0)
+	{
+		p1e.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1e.style.backgroundColor = "white";
+    }
+    if (!p1hp.value.match(phoneno))
+	{
+		p1hp.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1hp.style.backgroundColor = "white";
+    }
+    if (!p1cel.value.match(phoneno))
+	{
+		p1cel.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1cel.style.backgroundColor = "white";
+    }
+    if (!p1wp.value.match(phoneno))
+	{
+		p1wp.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p1wp.style.backgroundColor = "white";
+    }
+
+    if (p2fn.value.length > 1 && !p2fn.value.match(letters))
+	{
+	    p2fn.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2fn.style.backgroundColor = "white";
+    }
+    if (p2ln.value.length > 1 && !p2ln.value.match(letters))
+	{
+	    p2ln.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2ln.style.backgroundColor = "white";
+    }
+    if (p2adr.value.length > 1 && !p2adr.value.match(letterNumber))
+	{
+	    p2adr.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2adr.style.backgroundColor = "white";
+    }
+    if (p2ci.value.length > 1 && !p2ci.value.match(letters))
+	{
+	    p2ci.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2ci.style.backgroundColor = "white";
+    }
+
+    if (p2z.value.length > 1 && !p2z.value.match(numbers))
+	{
+	    p2z.style.backgroundColor = "pink";
+		return false;
+	} else if(p2z.value.length > 1 && p2z.value.match(numbers) && p2z.value.length > 5){
+        p2z.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    p2z.style.backgroundColor = "white";
+    }
+    if (p2e.value.length > 1 && p2e.value.indexOf(".", 0) < 0)
+	{
+		p2e.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2e.style.backgroundColor = "white";
+    }
+    if (p2hp.value.length > 1 && !p2hp.value.match(phoneno))
+	{
+		p2hp.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2hp.style.backgroundColor = "white";
+    }
+    if (p2cel.value.length > 1 && !p2cel.value.match(phoneno))
+	{
+		p2cel.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2cel.style.backgroundColor = "white";
+    }
+    if (p2wp.value.length > 1 && !p2wp.value.match(phoneno))
+	{
+		p2wp.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    p2wp.style.backgroundColor = "white";
+    }
+    if (!dateofReg.value.match(date))
+	{
+		dateofReg.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    dateofReg.style.backgroundColor = "white";
+    }
+
+	return true;
+}</script>
+
   </head>
 
   <body>
@@ -38,11 +383,12 @@
         <h1>Sign Up</h1><br>
         <!-- Students Info  -->
         <h3>Students Information</h3>
-        <form id="regist">
+          <!-- onsubmit="return validate()" action="{{ url_for('signUp') }}" -->
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="re">
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="inputFirstName">FirstName</label>
-              <input type="text" name="firstName" id="inputFirstName" class="form-control" placeholder="FirstName">
+              <input type="text" name="firstName" id="inputFirstName" required="required" class="form-control" placeholder="FirstName">
             </div>
             <div class="form-group col-md-2">
               <label for="inputMiddleInitial">Middle Initial</label>
@@ -50,7 +396,7 @@
             </div>
             <div class="form-group col-md-3">
               <label for="inputLastName">Last Name</label>
-              <input type="text" name="lastName" class="form-control" id="inputLastName" placeholder="LastName">
+              <input type="text" name="lastName" class="form-control" id="inputLastName" required="required" placeholder="LastName">
             </div>
             <div class="form-group col-md-2">
               <label for="inputSuffix">Suffix</label>
@@ -161,15 +507,19 @@
             </div>
             <div class="form-group col-md-6">
               <label for="inputPhoneNumber">PhoneNumber </label>
-              <input type="text" name="phoneNumber" id="inputPhoneNumber" class="form-control" placeholder="###-###-####">
+              <input type="text" name="phoneNumber" id="inputPhoneNumber" class="form-control" placeholder="##########">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="inputSiblings">Siblings in Program</label>
               <input type="text" name="siblings" id="inputSiblings" class="form-control" placeholder="List siblings">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="inputHealthConditions">Health Conditions</label>
               <input type="text" name="healthConditions" id="inputHealthConditions" class="form-control" placeholder="List conditions">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputDisabilityInfo">Disability Info</label>
+              <input type="text" name="disability" id="inputDisabilityInfo" class="form-control" placeholder="Disability info">
             </div>
             <div class="form-group col-md-3">
               <label for="inputSchoolName">School Name</label>
@@ -234,24 +584,24 @@
           </div>
             <div class="form-group col-md-6">
               <label for="inputP1FirstName">FirstName</label>
-              <input type="text" name="p1FirstName" id="inputP1FirstName" class="form-control" placeholder="FirstName">
+              <input type="text" name="p1FirstName" id="inputP1FirstName" class="form-control" required="required" placeholder="FirstName">
             </div>
             <div class="form-group col-md-6">
               <label for="inputP1LastName">LastName</label>
-              <input type="text" name="p1LastName" class="form-control" id="inputP1LastName" placeholder="LastName">
+              <input type="text" name="p1LastName" class="form-control" id="inputP1LastName" required="required" placeholder="LastName">
             </div>
           <div class="form-group col-md-12">
             <label for="inputP1Address">Address</label>
-            <input type="text" name="p1Address" class="form-control" id="inputP1Address" placeholder="1234 Main St">
+            <input type="text" name="p1Address" class="form-control" id="inputP1Address" required="required" placeholder="1234 Main St">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputP1City">City</label>
-              <input type="text" name="p1City" class="form-control" id="inputP1City">
+              <input type="text" name="p1City" class="form-control" required="required" id="inputP1City">
             </div>
             <div class="form-group col-md-4">
               <label for="inputP1State">State</label>
-              <select id="inputP1State" name="p1State" class="form-control">
+              <select id="inputP1State" name="p1State" required="required" class="form-control">
                 <option selected>Choose...</option>
                 <option value="AK">Alaska</option>
                 <option value="AL">Alabama</option>
@@ -309,19 +659,23 @@
             </div>
             <div class="form-group col-md-2">
               <label for="inputP1Zip">Zip</label>
-              <input type="text" name="p1Zip" class="form-control" id="inputP1Zip">
+              <input type="text" name="p1Zip" class="form-control" required="required" id="inputP1Zip">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label for="inputP1Email">Email</label>
-              <input type="text" name="p1Email" id="inputP1Email" class="form-control" placeholder="example@mail.com">
+              <input type="text" name="p1Email" id="inputP1Email" class="form-control" required="required" placeholder="example@mail.com">
             </div>
-            <div class="form-group col-md-4">
-              <label for="inputP1PhoneNumber">PhoneNumber </label>
-              <input type="text" name="p1PhoneNumber" id="inputP1PhoneNumber" class="form-control" placeholder="###-###-####">
+            <div class="form-group col-md-3">
+              <label for="inputP1HomePhone">Home Phone</label>
+              <input type="text" name="p1HomePhone" id="inputP1HomePhone" class="form-control" required="required" placeholder="##########">
             </div>
-            <div class="form-group col-md-4">
-              <label for="inputP1WorkPhone">Work PhoneNumber</label>
-              <input type="text" name="p1WorkPhone" id="inputP1WorkPhone" class="form-control" placeholder="###-###-####">
+            <div class="form-group col-md-3">
+              <label for="inputP1PhoneNumber">Cell Phone</label>
+              <input type="text" name="p1PhoneNumber" id="inputP1PhoneNumber" class="form-control" required="required" placeholder="##########">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputP1WorkPhone">Work Phone</label>
+              <input type="text" name="p1WorkPhone" id="inputP1WorkPhone" class="form-control" required="required" placeholder="##########">
             </div>
             <!-- Parent2 Info  -->
            <br>
@@ -405,23 +759,29 @@
               <label for="inputP2Zip">Zip</label>
               <input type="text" name="p2Zip" class="form-control" id="inputP2Zip">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label for="inputP2Email">Email</label>
               <input type="text" name="p2Email" id="inputP2Email" class="form-control" placeholder="example@mail.com">
             </div>
-            <div class="form-group col-md-4">
-              <label for="inputP2PhoneNumber">PhoneNumber </label>
-              <input type="text" name="p2PhoneNumber" id="inputP2PhoneNumber" class="form-control" placeholder="###-###-####">
+            <div class="form-group col-md-3">
+              <label for="inputP2HomePhone">Home Phone</label>
+              <input type="text" name="p2HomePhone" id="inputP2HomePhone" class="form-control" placeholder="##########">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
+              <label for="inputP2PhoneNumber">PhoneNumber </label>
+              <input type="text" name="p2PhoneNumber" id="inputP2PhoneNumber" class="form-control" placeholder="##########">
+            </div>
+            <div class="form-group col-md-3">
               <label for="inputP2WorkPhone">Work PhoneNumber</label>
-              <input type="text" name="p2WorkPhone" id="inputP2WorkPhone" class="form-control" placeholder="###-###-####">
+              <input type="text" name="p2WorkPhone" id="inputP2WorkPhone" class="form-control" placeholder="##########">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="inputDateOfRegistration">Today's Date</label>
+              <input type="text" name="dateOfRegistration" id="inputDateOfRegistration" class="form-control" placeholder="MM/DD/YYYY">
             </div>
         <br>
-       <!--
-        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
-        -->
-        <button id="btnSignUp" type="button" class="btn btn-primary">Sign up</button>
+        <input id="btnSignUp" type="submit" class="btn btn-primary">
+        <!-- <p><a id="btnSignUp" class="btn btn-primary" href="/signUp/applied" role="button">Sign up</a></p> -->
       </form>
       </div>
 
@@ -430,6 +790,5 @@
       </footer>
 
     </div>
-  <script src="../static/js/validation.js"></script>
   </body>
 </html>

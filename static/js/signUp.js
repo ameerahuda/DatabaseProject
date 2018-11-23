@@ -11,6 +11,8 @@ $(function(){
 			type: 'POST',
 			success: function(response){
 				console.log(response);
+				// window.location.href = "/signUp/applied";
+				//console.log("in");
 			},
 			error: function(error){
 				console.log(error);
@@ -18,4 +20,5 @@ $(function(){
 		});
 		console.log("This is working so far here");
 	});
+
 });
