@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, json, redirect, url_for
+from Endpoints import *
 from Classes.Objects import Student, Parent
 from MySQLFunctions.insertSQL import *
+import uuid
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -9,15 +12,12 @@ app = Flask(__name__)
 def main():
     return render_template('index.html')
 
-# show registration page endpoint
+# 0: show registration page endpoint
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('registration.html')
 
-@app.route('/testing')
-def changePage():
-    return render_template('changePage.html')
-
+# 3rd (last Registration Endpoint): where information is received and saved to database for Registration
 @app.route('/signUp/applied', methods=['POST'])
 def afterapplied():
     # read in the values (if any) from the UI
@@ -95,7 +95,10 @@ def afterapplied():
         _state = "N/A"
 
     if _dob == "":
-        _dob = "N/A"
+        _dob = datetime.strptime("00/00/0000", '%m/%d/%Y')
+    else:
+        temp = _dob
+        _dob = datetime.strptime(temp, '%m/%d/%Y')
 
     if _gender == "Choose...":
         _gender = "N/A"
@@ -172,14 +175,20 @@ def afterapplied():
     if _p2workphone == "":
         _p2workphone = "N/A"
 
-    s = Student("",_dateOfRegistration, "", _fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
+    temp1 = _dateOfRegistration
+    _dateOfRegistration = datetime.strptime(temp1, '%m/%d/%Y')
+
+    sid = str(uuid.uuid4())[:12]
+    p1id = str(uuid.uuid4())[:12]
+    p2id = str(uuid.uuid4())[:12]
+    s = Student(sid,_dateOfRegistration, "N/A", _fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
                 _address, _city, _state, _zip, _email, _phoneNumber, _disability, _healthConditions, _siblings,
                 _schoolName, _schoolDistrict, _schoolType, _gradeInFall, _expHighSchool, _gradDate, _gt, _ell,
-                "", "", "", "")
-    parent1 = Parent("", "", _p1fname, _p1lname, _p1address, _p1city, _p1state, _p1zip, _p1email, _p1phonenumber,
-                     _p1workphone, _p1HomePhone, "")
-    parent2 = Parent("", "", _p2fname, _p2lname, _p2address, _p2city, _p2state, _p2zip, _p2email, _p2phonenumber,
-                     _p2workphone, _p2HomePhone, "")
+                "N/A", "N/A", "N/A", "0")
+    parent1 = Parent(p1id, sid, _p1fname, _p1lname, _p1address, _p1city, _p1state, _p1zip, _p1email, _p1phonenumber,
+                     _p1workphone, _p1HomePhone, "0")
+    parent2 = Parent(p2id, sid, _p2fname, _p2lname, _p2address, _p2city, _p2state, _p2zip, _p2email, _p2phonenumber,
+                     _p2workphone, _p2HomePhone, "0")
 
     insertStudent(s)
     insertParent(parent1)
@@ -187,7 +196,7 @@ def afterapplied():
 
     return render_template('afterApplying.html')
 
-# registration endpoint
+# 1st: registration endpoint
 @app.route('/signUp', methods=['POST'])
 def signUp():
     return json.dumps({'html': '<span>All fields good !!</span>'})
