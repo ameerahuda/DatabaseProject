@@ -2,14 +2,10 @@
 # insert your password wherever it says "your_password"
 
 import mysql.connector
+from DBandTables.ConnectionToDB import DatabaseConnection
 
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    passwd = "your_password",
-    database = "UYPdb"
-)
 
+mydb = DatabaseConnection()
 mycursor = mydb.cursor()
 
 # mycursor.execute("ALTER TABLE Students ADD ApprovedBy VARCHAR(255)")

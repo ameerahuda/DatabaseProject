@@ -1,20 +1,12 @@
 import mysql.connector
+from DBandTables.ConnectionToDB import DatabaseConnection
 from Classes.Objects import *
-
-try:
-    mydb = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        passwd = "your_password",
-        database = "UYPdb"
-    )
-    mycursor = mydb.cursor()
-except mysql.connector.Error as e:
-    print("Unable to connect to database".format(e))
-    exit(0)
 
 def insertStudent(Student):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO Students (StudentID, DateOfRegistration, AcceptedStatus, FirstName, LastName, MiddleInitial, " \
                     "Suffix, PreferredName, DateOfBirth, Gender, Race, Address, City, State, Zip, Email, PhoneNumber, " \
                     "DisabilityInfo, HealthConditions, Siblings, SchoolName, SchoolDistrict, SchoolType, GradeInFall, " \
@@ -35,6 +27,9 @@ def insertStudent(Student):
 
 def insertParent(Parent):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO Parents (ParentID, StudentID, FirstName, LastName, Address, City, State, Zip, Email, " \
                     "CellPhoneNumber, WorkPhoneNumber, HomePhoneNumber, IsDeleted) VALUES " \
                     "(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -49,6 +44,9 @@ def insertParent(Parent):
 
 def insertAdditionalInfo(AdditionalInformation):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO AdditionalInfo (StudentID, YearAccepted, GradeWhenAccepted, Status, FundingStatus, " \
                     "GrantName, NationalClearingHouse, IsDeleted) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
         mycursor.execute(statement, (AdditionalInformation.StudentID, AdditionalInformation.YearAccepted,
@@ -63,6 +61,9 @@ def insertAdditionalInfo(AdditionalInformation):
 
 def insertInstructor(Instructor):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO Instructors (InstructorID, FirstName, LastName, UserName, Password, IsDeleted) " \
                     "VALUES (%s,%s,%s,%s,%s,%s)"
         mycursor.execute(statement, (Instructor.InstructorID, Instructor.FirstName, Instructor.LastName,
@@ -75,6 +76,9 @@ def insertInstructor(Instructor):
 
 def insertClass(Class):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO Classes (ClassID, ClassName, InstructorID, Session, Level, TimeSlot, Building, " \
                     "RoomNumber, Capacity, NumberOfStudentsRegistered, NumberOfStudentsWaitlisted, IsDeleted)" \
                     "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -89,6 +93,9 @@ def insertClass(Class):
 
 def insertMentor(Mentor):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO Mentors (InstructorID, StudentID, IsDeleted) VALUES (%s,%s,%s)"
         mycursor.execute(statement, (Mentor.InstructorID, Mentor.StudentID, Mentor.IsDeleted))
         mydb.commit()
@@ -99,6 +106,9 @@ def insertMentor(Mentor):
 
 def insertTake(Take):
     try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
         statement = "INSERT INTO Takes (StudentID, ClassID, IsDeleted) VALUES (%s,%s,%s)"
         mycursor.execute(statement, (Take.StudentID, Take.ClassID, Take.IsDeleted))
         mydb.commit()

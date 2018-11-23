@@ -1,20 +1,12 @@
 import mysql.connector
+from DBandTables.ConnectionToDB import DatabaseConnection
 from Classes.Objects import *
 from MySQLFunctions.insertSQL import *
 import uuid
 from datetime import datetime
 
-try:
-    mydb = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        passwd = "your_password",
-        database = "UYPdb"
-    )
-    mycursor = mydb.cursor()
-except mysql.connector.Error as e:
-    print("Unable to connect to database".format(e))
-    exit(0)
+mydb = DatabaseConnection()
+mycursor = mydb.cursor()
 
 
 # testing insert into Students table
