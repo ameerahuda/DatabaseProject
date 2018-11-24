@@ -1,4 +1,4 @@
-import mysql.connecton
+import mysql.connector
 from DBandTables.ConnectionToDB import DatabaseConnection
 from Classes.Objects import *
 
@@ -7,12 +7,12 @@ def deleteStudent(studentID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE Students SET isDeleted = 1 WHERE StudentID = " + studentID
+        statement = "UPDATE Students SET IsDeleted = 1 WHERE StudentID = " + studentID
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
 
 def deleteParent(parentID, studentID):
@@ -20,12 +20,12 @@ def deleteParent(parentID, studentID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE Parents SET isDeleted = 1 WHERE ParentID = %s AND StudentID = %s"
+        statement = "UPDATE Parents SET IsDeleted = 1 WHERE ParentID = %s AND StudentID = %s"
         mycursor.execute(statement, (parentID, studentID))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
 
 def deleteAdditionalInfo(studentID):
@@ -33,12 +33,12 @@ def deleteAdditionalInfo(studentID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE AdditionalInfo SET isDeleted = 1 WHERE StudentID = " + studentID
+        statement = "UPDATE AdditionalInfo SET IsDeleted = 1 WHERE StudentID = " + studentID
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
 
 def deleteInstructor(instructorID):
@@ -46,12 +46,12 @@ def deleteInstructor(instructorID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE Instructors SET isDeleted = 1 WHERE InstructorID = " + instructorID
+        statement = "UPDATE Instructors SET IsDeleted = 1 WHERE InstructorID = " + instructorID
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
 
 def deleteClass(classID):
@@ -59,12 +59,12 @@ def deleteClass(classID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE Classes SET isDeleted = 1 WHERE ClassID = " + classID
+        statement = "UPDATE Classes SET IsDeleted = 1 WHERE ClassID = " + str(classID)
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
 
 def deleteMentor(instructorID, studentID):
@@ -72,12 +72,12 @@ def deleteMentor(instructorID, studentID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE Mentors SET isDeleted = 1 WHERE InstructorID = %s AND StudentID = %s"
+        statement = "UPDATE Mentors SET IsDeleted = 1 WHERE InstructorID = %s AND StudentID = %s"
         mycursor.execute(statement, (instructorID, studentID))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
 
 def deleteTake(studentID, classID):
@@ -85,10 +85,10 @@ def deleteTake(studentID, classID):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "UPDATE Takes SET isDeleted = 1 WHERE StudentID = %s AND ClassID = %s"
+        statement = "UPDATE Takes SET IsDeleted = 1 WHERE StudentID = %s AND ClassID = %s"
         mycursor.execute(statement, (studentID, classID))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print 'FAILED TO UPDATE: TRY AGAIN'
         exit(0)
