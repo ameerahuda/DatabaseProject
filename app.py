@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, json, redirect, url_for, session
 from Endpoints import *
-from Classes.Objects import Student, Parent
+from Classes.Objects import *
 from DBandTables import *
 from MySQLFunctions.insertSQL import *
 import uuid
@@ -193,13 +193,13 @@ def afterapplied():
     num = random.randint(10000, 99999)
 
     # used in generating password
-    s = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!$?."
+    ran = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!$?."
     plen = 8
 
     s = Student(str(sid), _dateOfRegistration, "N/A", _fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
                 _address, _city, _state, _zip, _email, _phoneNumber, _disability, _healthConditions, _siblings,
                 _schoolName, _schoolDistrict, _schoolType, _gradeInFall, _expHighSchool, _gradDate, _gt, _ell,
-                "N/A", _fname + str(num), ("".join(random.sample(s, plen))), "0")
+                "N/A", _fname + str(num), ("".join(random.sample(ran, plen))), "0")
     parent1 = Parent(str(p1id), str(sid), _p1fname, _p1lname, _p1address, _p1city, _p1state, _p1zip, _p1email, _p1phonenumber,
                      _p1workphone, _p1HomePhone, "0")
     parent2 = Parent(str(p2id), str(sid), _p2fname, _p2lname, _p2address, _p2city, _p2state, _p2zip, _p2email, _p2phonenumber,
@@ -211,6 +211,7 @@ def afterapplied():
 
     return render_template('afterApplying.html')
 
+# SIGN IN
 @app.route('/showSignIn')
 def showSignIn():
     return render_template("signIn.html")
@@ -222,6 +223,31 @@ def signIn():
 @app.route('/signIn/student', methods=['POST', 'GET'])
 def afterStudentSignIn():
     return render_template('signIn.html')
+
+# PERSONNEL REGISTRATION
+@app.route('/showAdminSignUp')
+def showAdminSignUp():
+    return render_template("personnelRegistration.html")
+
+@app.route('/adminSignUp', methods=['POST'])
+def adminSignUp():
+    return json.dumps({'html': '<span>All fields good !!</span>'})
+
+@app.route('/adminSignUp/applied', methods=['POST'])
+def afteradminapplied():
+    _adminFirstName = request.form['firstName']
+    _adminLastName = request.form['lastName']
+    _adminActivationCode = request.form['activationCode']
+    _adminUserName = request.form['userName']
+    _adminPassword = request.form['passWord']
+
+    #admin == instructor
+    adminID = str(uuid.uuid4())[:12]
+    admin = Instructor(str(adminID), _adminFirstName, _adminLastName, _adminUserName, _adminPassword, "0")
+    insertInstructor(admin)
+
+    # CHANGE TO WHATEVEVER WE DECIDE
+    return render_template('afterApplying.html')
 
 if __name__ == "__main__":
     app.run()
