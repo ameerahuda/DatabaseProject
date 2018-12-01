@@ -179,14 +179,14 @@ function validate()
 	}else{
 	    disability.style.backgroundColor = "white";
     }
-    if (sn.value.length > 1 && !sn.value.match(letters))
+    if (sn.value.length > 1 && !sn.value.match(letterspace))
 	{
 		sn.style.backgroundColor = "pink";
 		return false;
 	}else{
 	    sn.style.backgroundColor = "white";
     }
-    if (sd.value.length > 1 && !sd.value.match(letters))
+    if (sd.value.length > 1 && !sd.value.match(letterspace))
 	{
 		sd.style.backgroundColor = "pink";
 		return false;
@@ -371,7 +371,7 @@ function validate()
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" ><a href="main">Home</a></li>
+            <li role="presentation" ><a href="#">Home</a></li>
             <li role="presentation"><a href="#">Sign In</a></li>
             <li role="presentation" class="active"><a href="#">Sign Up</a></li>
           </ul>
@@ -383,7 +383,6 @@ function validate()
         <h1>Sign Up</h1><br>
         <!-- Students Info  -->
         <h3>Students Information</h3>
-          <!-- onsubmit="return validate()" action="{{ url_for('signUp') }}" -->
         <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="re">
           <div class="form-row">
             <div class="form-group col-md-3">

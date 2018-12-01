@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, json, redirect, url_for
+from flask import Flask, render_template, request, json, redirect, url_for, session
 from Endpoints import *
 from Classes.Objects import Student, Parent
+from DBandTables import *
 from MySQLFunctions.insertSQL import *
 import uuid
 from datetime import datetime
+import random
 
 app = Flask(__name__)
 
@@ -12,12 +14,17 @@ app = Flask(__name__)
 def main():
     return render_template('index.html')
 
-# 0: show registration page endpoint
+# 1st: show registration page
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('registration.html')
 
-# 3rd (last Registration Endpoint): where information is received and saved to database for Registration
+# 2nd: registration endpoint
+@app.route('/signUp', methods=['POST'])
+def signUp():
+    return json.dumps({'html': '<span>All fields good !!</span>'})
+
+# 3rd (last Registration Endpoint): where information is received and saved to database for Registration (only if valid)
 @app.route('/signUp/applied', methods=['POST'])
 def afterapplied():
     # read in the values (if any) from the UI
@@ -181,13 +188,21 @@ def afterapplied():
     sid = str(uuid.uuid4())[:12]
     p1id = str(uuid.uuid4())[:12]
     p2id = str(uuid.uuid4())[:12]
-    s = Student(sid,_dateOfRegistration, "N/A", _fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
+
+    # generating username: Contains firstname + random number (range: 10,000 to 99,999)
+    num = random.randint(10000, 99999)
+
+    # used in generating password
+    s = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!$?."
+    plen = 8
+
+    s = Student(str(sid), _dateOfRegistration, "N/A", _fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
                 _address, _city, _state, _zip, _email, _phoneNumber, _disability, _healthConditions, _siblings,
                 _schoolName, _schoolDistrict, _schoolType, _gradeInFall, _expHighSchool, _gradDate, _gt, _ell,
-                "N/A", "N/A", "N/A", "0")
-    parent1 = Parent(p1id, sid, _p1fname, _p1lname, _p1address, _p1city, _p1state, _p1zip, _p1email, _p1phonenumber,
+                "N/A", _fname + str(num), ("".join(random.sample(s, plen))), "0")
+    parent1 = Parent(str(p1id), str(sid), _p1fname, _p1lname, _p1address, _p1city, _p1state, _p1zip, _p1email, _p1phonenumber,
                      _p1workphone, _p1HomePhone, "0")
-    parent2 = Parent(p2id, sid, _p2fname, _p2lname, _p2address, _p2city, _p2state, _p2zip, _p2email, _p2phonenumber,
+    parent2 = Parent(str(p2id), str(sid), _p2fname, _p2lname, _p2address, _p2city, _p2state, _p2zip, _p2email, _p2phonenumber,
                      _p2workphone, _p2HomePhone, "0")
 
     insertStudent(s)
@@ -196,10 +211,17 @@ def afterapplied():
 
     return render_template('afterApplying.html')
 
-# 1st: registration endpoint
-@app.route('/signUp', methods=['POST'])
-def signUp():
+@app.route('/showSignIn')
+def showSignIn():
+    return render_template("signIn.html")
+
+@app.route('/signIn', methods=['POST'])
+def signIn():
     return json.dumps({'html': '<span>All fields good !!</span>'})
+
+@app.route('/signIn/student', methods=['POST', 'GET'])
+def afterStudentSignIn():
+    return render_template('signIn.html')
 
 if __name__ == "__main__":
     app.run()
