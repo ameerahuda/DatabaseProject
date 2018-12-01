@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>UYP Sign Up</title>
+    <!--
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    -->
+    <link href="../static/css/signup.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="/static/js/signUp.js"></script>
+     <div class="error-messages" style="display:none;"></div>
+
+    <script>
+function validate()
+{
+	var fname = document.forms["RegForm"]["firstName"];
+	var lname = document.forms["RegForm"]["lastName"];
+	var acode = document.forms["RegForm"]["activationCode"];
+	var uname = document.forms["RegForm"]["userName"];
+	var pword = document.forms["RegForm"]["passWord"]
+	var letters = /^[A-Za-z]+$/;
+	var numbers = /^[0-9]+$/;
+	var phoneno = /^\d{10}$/;
+	var date =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+	var letterNumber = /^[0-9a-zA-Z _]+$/;
+	var letterspace = /^[A-Za-z, _]+$/;
+	var code = code123;
+
+	if (!fname.value.match(letters))
+	{
+	    fname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    fname.style.backgroundColor = "white";
+    }
+
+	if (!lname.value.match(letters))
+	{
+		lname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    lname.style.backgroundColor = "white";
+    }
+
+    if (!acode.value.match(code))
+	{
+		acode.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    acode.style.backgroundColor = "white";
+    }
+
+    if (!uname.value.match(letterNumber))
+	{
+		uname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    uname.style.backgroundColor = "white";
+    }
+
+    if (!pword.value.match(letterNumber))
+	{
+		pword.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    pword.style.backgroundColor = "white";
+    }
+
+	return true;
+}</script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" ><a href="main">Home</a></li>
+            <li role="presentation"><a href="#">Student Sign In</a></li>
+            <li role="presentation"><a href="#">Student Sign Up</a></li>
+            <li role="presentation"><a href="#">Administrative Sign In</a></li>
+            <li role="presentation" class="active"><a href="#">Administrative Sign Up</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">UYP Summer 2019</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Administrative Sign Up</h1>
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="form-signin">
+        <label for="inputFirstName">FirstName</label>
+        <input type="text" name="firstName" id="inputFirstName" required="required" class="form-control" placeholder="FirstName">
+        <label for="inputLastName">Last Name</label>
+        <input type="text" name="lastName" class="form-control" id="inputLastName" placeholder="Last Name">
+        <label for="inputActivationCode">Activation Code</label>
+        <input type="text" name="activationCode" class="form-control" id="inputActivationCode" placeholder="Activation Code">
+        <label for="inputUserName">Username</label>
+        <input type="text" name="userName" class="form-control" id="inputUserName" placeholder="Username">
+        <label for="inputPassword">Password</label>
+        <input type="text" name="passWord" class="form-control" id="inputPassword" placeholder="Password">
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
+      </form>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; Company 2015</p>
+      </footer>
+
+    </div>
+  </body>
+</html>
