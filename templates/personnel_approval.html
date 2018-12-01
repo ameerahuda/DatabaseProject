@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>UYP</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/static/js/signUp.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" ><a href="main">Home</a></li>
+            <li role="presentation" class="active"><a href="#">Student Approval</a></li>
+            <li role="presentation"><a href="#">Student Search</a></li>
+            <li role="presentation"><a href="#">Courses</a></li>
+            <li role="presentation"><a href="#">Export</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">UYP Summer 2019</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Student Approval</h1>
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="form-signin">
+            <div class="form-row">
+                <h4>Student You Want to Accept</h4>
+                <div class="form-group col-md-3">
+                    <label for="AcceptedStudentFirstName">Student First Name</label>
+                    <input type="text" name="aStudentFirstName" id="insertAcceptedStudentFirstName" class="form-control" placeholder="First Name">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="AcceptedStudentLastName">Student Last Name</label>
+                    <input type="text" name="aStudentLastName" id="insertAcceptedStudentLastName" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="AcceptedStudentUname">Student Username</label>
+                    <input type="text" name="aStudentUname" id="insertAcceptedStudentUname" class="form-control" placeholder="Student Username">
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h4>Student You Want to Reject</h4>
+                <div class="form-group col-md-3">
+                    <label for="RejectedStudentFirstName">Student First Name</label>
+                    <input type="text" name="rStudentFirstName" id="insertRejectedStudentFirstName" class="form-control" placeholder="First Name">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="RejectedStudentLastName">Student Last Name</label>
+                    <input type="text" name="rStudentLastName" id="insertRejectedStudentLastName" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="RejectedStudentUname">Student Username</label>
+                    <input type="text" name="rStudentUname" id="insertRejectedUname" class="form-control" placeholder="Student Username">
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h4>Enter Your Information</h4>
+                <div class="form-group col-md-3">
+                    <label for="AuthorizersFirstName">Your First Name</label>
+                    <input type="text" name="authorizersFirstName" id="insertAuthorizersFirstName" class="form-control" placeholder="Your First Name">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="AuthorizersLastName">Your Last Name</label>
+                    <input type="text" name="authorizersLastName" id="insertAuthorizersLastName" class="form-control" placeholder="Your Last Name">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="AuthorizersUname">Your Username</label>
+                    <input type="text" name="authorizersUname" id="insertAuthorizersUname" class="form-control" placeholder="Your Username">
+                </div>
+            </div>
+            <br>
+            <input id="btnSignUp" type="submit" class="btn btn-primary">
+            <br>
+            <br>
+            <br>
+            <h3>All Students</h3>
+            {% for user in data %}
+                <li>{{user[3]}} {{user[4]}} - Username: {{user[29]}}</li>
+            {% endfor %}
+        </form>
+      </div>
+    </div>
+</body>
+</html>

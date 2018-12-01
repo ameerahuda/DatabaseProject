@@ -4,11 +4,12 @@ from Classes.Objects import Student, Parent
 from MySQLFunctions.insertSQL import *
 import uuid
 from datetime import datetime
+from MySQLFunctions.getSQL import *
 
 app = Flask(__name__)
 
 # landing page endpoint
-@app.route('/')
+@app.route('/', methods=['GET'])
 def main():
     return render_template('index.html')
 
