@@ -13,6 +13,101 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script>
+function validate()
+{
+	var aFname = document.forms["RegForm"]["aStudentFirstName"];
+	var aLname = document.forms["RegForm"]["aStudentLastName"];
+	var aUname = document.forms["RegForm"]["aStudentUname"];
+	var rFname = document.forms["RegForm"]["rStudentFirstName"];
+	var rLname = document.forms["RegForm"]["rStudentLastName"];
+	var rUname = document.forms["RegForm"]["rStudentUname"];
+	var yFname = document.forms["RegForm"]["authorizersFirstName"];
+	var yLname = document.forms["RegForm"]["authorizersLastName"];
+	var yUname = document.forms["RegForm"]["authorizersUname"];
+
+	var letters = /^[A-Za-z]+$/;
+	var numbers = /^[0-9]+$/;
+	var phoneno = /^\d{10}$/;
+	var date =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+	var letterNumber = /^[0-9a-zA-Z _]+$/;
+	var letterspace = /^[A-Za-z, _]+$/;
+
+	if (aFname.length > 1 && !aFname.value.match(letters))
+	{
+	    aFname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    aFname.style.backgroundColor = "white";
+    }
+
+    if (aLname.length > 1 && !aLname.value.match(letters))
+	{
+	    aLname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    aLname.style.backgroundColor = "white";
+    }
+
+    if (aUname.length > 1 && !aUname.value.match(letterNumber))
+	{
+	    aUname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    aUname.style.backgroundColor = "white";
+    }
+
+    if (rFname.length > 1 && !rFname.value.match(letters))
+	{
+	    rFname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    rFname.style.backgroundColor = "white";
+    }
+
+    if (rLname.length > 1 && !rLname.value.match(letters))
+	{
+	    rLname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    rLname.style.backgroundColor = "white";
+    }
+
+    if (rUname.length > 1 && !rUname.value.match(letterNumber))
+	{
+	    rUname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    rUname.style.backgroundColor = "white";
+    }
+
+    if (yFname.length > 1 && !yFname.value.match(letters))
+	{
+	    yFname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    yFname.style.backgroundColor = "white";
+    }
+
+    if (yLname.length > 1 && !yLname.value.match(letters))
+	{
+	    yLname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    yLname.style.backgroundColor = "white";
+    }
+
+    if (yUname.length > 1 && !yUname.value.match(letterNumber))
+	{
+	    yUname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    yUname.style.backgroundColor = "white";
+    }
+
+	return true;
+}</script>
+
 </head>
 <body>
     <div class="container">
