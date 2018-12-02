@@ -13,7 +13,7 @@ def getAllStudents():
         data = mycursor.fetchall()
         return render_template("personnel_approval.html", data=data)
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO SELECT: TRY AGAIN'
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
         exit(0)
 
