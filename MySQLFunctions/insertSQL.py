@@ -21,8 +21,8 @@ def insertStudent(Student):
                                      Student.GT, Student.ELL, Student.ApprovedBy, Student.UserName, Student.Password, Student.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
 
 def insertParent(Parent):
@@ -38,8 +38,8 @@ def insertParent(Parent):
                                      Parent.WorkPhoneNumber, Parent.HomePhoneNumber, Parent.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
 
 def insertAdditionalInfo(AdditionalInformation):
@@ -55,8 +55,8 @@ def insertAdditionalInfo(AdditionalInformation):
                                      AdditionalInformation.NationalClearingHouse, AdditionalInformation.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
 
 def insertInstructor(Instructor):
@@ -70,8 +70,8 @@ def insertInstructor(Instructor):
                                      Instructor.Username, Instructor.Password, Instructor.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
 
 def insertClass(Class):
@@ -87,8 +87,8 @@ def insertClass(Class):
                                      Class.NumOfStudentsRegistered, Class.NumOfStudentsWaitlisted, Class.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
 
 def insertMentor(Mentor):
@@ -100,8 +100,8 @@ def insertMentor(Mentor):
         mycursor.execute(statement, (Mentor.InstructorID, Mentor.StudentID, Mentor.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
 
 def insertTake(Take):
@@ -113,6 +113,6 @@ def insertTake(Take):
         mycursor.execute(statement, (Take.StudentID, Take.ClassID, Take.IsDeleted))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO INSERT: TRY AGAIN'
+        print(e)
+        print('FAILED TO INSERT: TRY AGAIN')
         exit(0)
