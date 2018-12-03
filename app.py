@@ -249,5 +249,35 @@ def afteradminapplied():
     # CHANGE TO WHATEVEVER WE DECIDE
     return render_template('afterApplying.html')
 
+# ADD CLASS
+@app.route('/showAddClass')
+def showAddClass():
+    return render_template("addClass.html")
+
+@app.route('/addClass', methods=['POST'])
+def addClass():
+    return json.dumps({'html': '<span>All fields good !!</span>'})
+
+@app.route('/addClass/class', methods=['POST'])
+def afterAddedClass():
+    _className = request.form['className']
+    _insID = request.form['instructorID']
+    _building = request.form['building']
+    _roomno = request.form['roomNo']
+    _session = request.form['session']
+    _level = request.form['level']
+    _cap = request.form['capacity']
+    _startTime = request.form['startTime']
+    _endTime = request.form['endTime']
+
+    timeslot = _startTime + _endTime
+
+    classid = str(uuid.uuid4())[:12]
+    c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
+    insertClass(c)
+
+    # CHANGE TO WHATEVEVER WE DECIDE
+    return render_template('afterApplying.html')
+
 if __name__ == "__main__":
     app.run()

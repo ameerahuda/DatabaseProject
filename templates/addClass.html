@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>UYP Sign Up</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="../static/css/signup.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="/static/js/addClass.js"></script>
+     <div class="error-messages" style="display:none;"></div>
+
+    <script>
+function validate()
+{
+	var cname = document.forms["RegForm"]["className"];
+	var roomn = document.forms["RegForm"]["roomNo"];
+	var capac = document.forms["RegForm"]["capacity"];
+	var letters = /^[A-Za-z]+$/;
+	var numbers = /^[0-9]+$/;
+	var phoneno = /^\d{10}$/;
+	var date =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+	var letterNumber = /^[0-9a-zA-Z _]+$/;
+	var letterspace = /^[A-Za-z ]+$/;
+	var className =/^[A-Za-z,? _'0-9]+$/;
+	var code = code123;
+
+	if (!cname.value.match(className))
+	{
+	    cname.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    cname.style.backgroundColor = "white";
+    }
+
+    if (!roomn.value.match(letters))
+	{
+		roomn.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    roomn.style.backgroundColor = "white";
+    }
+
+    if (!capac.value.match(letterNumber))
+	{
+		capac.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    capac.style.backgroundColor = "white";
+    }
+
+	return true;
+}</script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" ><a href="main">Home</a></li>
+            <li role="presentation"><a href="#">Student Sign In</a></li>
+            <li role="presentation"><a href="#">Student Sign Up</a></li>
+            <li role="presentation"><a href="#">Administrative Sign In</a></li>
+            <li role="presentation" class="active"><a href="#">Administrative Sign Up</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">UYP Summer 2019</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Add Class</h1>
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterAddedClass') }}" method="post" class="form-signin">
+        <label for="inputClassName">Class Name</label>
+        <input type="text" name="className" id="inputClassName" required="required" class="form-control" placeholder="Class Name">
+        <label for="inputInstructorID">Instructor ID</label>
+        <input type="text" name="instructorID" class="form-control" required="required" id="inputInstructorID" placeholder="Instructor ID">
+        <label for="inputBuilding">Building</label>
+        <!--<input type="text" name="building" class="form-control" required="required" id="inputBuilding" placeholder="Building Name"> -->
+        <select id="inputBuilding" name="building" required="required" class="form-control">
+                <option selected>Choose...</option>
+                <option value="HO">HoSchaf</option>
+                <option value="MG">MGJ</option>
+                <option value="MO">Moody</option>
+                <option value="MM">MMSCI</option>
+                <option value="SD">SDRCH</option>
+        </select>
+        <label for="inputRoomNo">Room Number</label>
+        <input type="text" name="roomNo" class="form-control" required="required" id="inputRoomNo" placeholder="Room Number">
+        <label for="inputSession">Session</label>
+        <!-- <input type="text" name="session" class="form-control" required="required" id="inputSession" placeholder="Session"> -->
+        <select id="inputSession" name="session" required="required" class="form-control">
+                <option selected>Choose...</option>
+                <option value="ON">1</option>
+                <option value="TW">2</option>
+                <option value="TH">3</option>
+        </select>
+        <label for="inputLevel">Level</label>
+        <!-- <input type="text" name="session" class="form-control" required="required" id="inputSession" placeholder="Session"> -->
+        <select id="inputLevel" name="level" required="required" class="form-control">
+                <option selected>Choose...</option>
+                <option value="FO">4th-5th</option>
+                <option value="SI">6th-8th</option>
+                <option value="NI">9th-12th</option>
+        </select>
+        <label for="inputCapacity">Capacity</label>
+        <input type="text" name="capacity" class="form-control" required="required" id="inputCapacity" placeholder="Capacity">
+        <label for="inputStartTime">Start Time</label>
+        <input type="time" name="startTime" required="required" id="inputStartTime">
+        <label for="inputEndTime">End Time</label>
+        <input type="time" name="endTime" required="required" id="inputEndTime">
+        <br>
+        <input id="btnAddClass" type="submit" class="btn btn-primary">
+      </form>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; UYP 2018</p>
+      </footer>
+
+    </div>
+  </body>
+</html>
