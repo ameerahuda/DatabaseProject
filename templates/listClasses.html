@@ -7,7 +7,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <div class="error-messages" style="display:none;"></div>
       <script src="/static/js/signIn.js"></script>
-
+      <!--<script>
+        var x = document.getElementById("class table");
+        function displayClasses(){
+          window.open();
+          x.innerHTML = "<tr>\n" +
+              "\t\t    <th>Testing</th>\n" +
+              "\t\t\t<th>One</th>\n" +
+              "\t\t\t<th>Two</th>\n" +
+              "\t\t  </tr>\n" +
+              "\t\t  <tr>\n" +
+              "\t\t    <td>Testing</td>\n" +
+              "\t\t\t<td>One</td>\n" +
+              "\t\t\t<td>Two</td>\n" +
+              "\t\t  </tr>";
+        }
+      </script>-->
   </head>
   
   <body>
@@ -19,23 +34,31 @@
 			<li role="presentation"><a href="#">Approval</a></li>
 			<li role="presentation"><a href="#">Student Search</a></li>
 			<li role="presentation" class="active"><a href="#">Courses</a></li>
+          </ul>
 		</nav>
 		<h3 class="text-muted">UYP Summer 2019</h3>
 	  </div>
-	  <div class="jumbotron">
+	  <div id="gang" class="jumbotron">
 	    <h1>Courses</h1>
-		<table>
-		  <tr>
-		    <th>Testing</th>
-			<th>One</th>
-			<th>Two</th>
-		  </tr>
-		  <tr>
-		    <td>Testing</td>
-			<td>One</td>
-			<td>Two</td>
-		  </tr>
-		<table>
+          <script>
+              var a = document.getElementById("gang");
+              var x = document.createElement("TABLE");
+              x.setAttribute("id", "classList");
+              a.appendChild(x);
+
+              var y = document.createElement("TR");
+              y.setAttribute("id", "testRow");
+              document.getElementById("classList").appendChild(y);
+              var i = 0;
+              for(i = 0; i < 3; i++){
+                var z = document.createElement("TH");
+                z.setAttribute("width", "100px");
+                var t = document.createTextNode(String(i));
+                z.appendChild(t);
+                document.getElementById("testRow").appendChild(z);
+              }
+
+          </script>
 	  </div>
 	</div>
   </body>

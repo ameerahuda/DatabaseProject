@@ -11,8 +11,8 @@ def deleteStudent(studentID):
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
 
 def deleteParent(parentID, studentID):
@@ -24,8 +24,8 @@ def deleteParent(parentID, studentID):
         mycursor.execute(statement, (parentID, studentID))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print ('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
 
 def deleteAdditionalInfo(studentID):
@@ -37,8 +37,8 @@ def deleteAdditionalInfo(studentID):
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
 
 def deleteInstructor(instructorID):
@@ -50,8 +50,8 @@ def deleteInstructor(instructorID):
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
 
 def deleteClass(classID):
@@ -63,8 +63,8 @@ def deleteClass(classID):
         mycursor.execute(statement)
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
 
 def deleteMentor(instructorID, studentID):
@@ -76,8 +76,8 @@ def deleteMentor(instructorID, studentID):
         mycursor.execute(statement, (instructorID, studentID))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
 
 def deleteTake(studentID, classID):
@@ -89,6 +89,6 @@ def deleteTake(studentID, classID):
         mycursor.execute(statement, (studentID, classID))
         mydb.commit()
     except (mysql.connector.Error, mysql.connector.Warning) as e:
-        print e
-        print 'FAILED TO UPDATE: TRY AGAIN'
+        print(e)
+        print('FAILED TO UPDATE: TRY AGAIN')
         exit(0)
