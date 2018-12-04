@@ -11,10 +11,9 @@ import random
 app = Flask(__name__)
 
 # landing page endpoint
-@app.route('/', methods = ['GET'])
+@app.route('/')
 def main():
-    return getStudentByUsername("personnel_editStudent.html", "'ameera0115'")
-    #return render_template('index.html')
+    return render_template('index.html')
 
 # 1st: show registration page
 @app.route('/showSignUp')
