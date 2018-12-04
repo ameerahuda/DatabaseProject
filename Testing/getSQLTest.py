@@ -6,4 +6,7 @@ mydb = DatabaseConnection()
 mycursor = mydb.cursor()
 
 # testing getting all students
-getAllStudents()
+# getAllStudents()
+
+# testing getting student by username
+getStudentByUsername("'ameera0115'")
