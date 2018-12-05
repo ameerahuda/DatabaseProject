@@ -101,3 +101,8 @@ class Take:
     self.StudentID = StudentID
     self.ClassID = ClassID
     self.IsDeleted = IsDeleted
+
+class Applicant:
+  def __init__(self, StudentID, AcceptedStatus):
+    self.StudentID = StudentID
+    self.AcceptedStatus = AcceptedStatus

@@ -25,16 +25,18 @@ def updateStudent(Student):
 		print(e)
 		exit(0)
 
-def updateApplicant(Student):
+def updateApplicant(Applicant):
 	try:
 		db = DatabaseConnection()
 		c = db.cursor()
-		
-		stmt = "UPDATE Students SET DateOfRegistration = %s, AcceptedStatus = %s WHERE StudentID = %s"
-		vals = (Student.DateOfRegistration, Student.AcceptedStatus, Student.id)
-		
+
+		stmt = "UPDATE Students SET AcceptedStatus = %s WHERE StudentID = %s"
+		var1 = str(Applicant.AcceptedStatus)
+		var2 = Applicant.StudentID
+		vals = (var1, var2[0])
+
 		c.execute(stmt, vals)
-		
+
 		db.commit()
 	except (sql.Error, sql.Warning) as e:
 		print(e)
@@ -135,3 +137,5 @@ def updateAdditionalInfo(AdditionalInfo):
 	except (sql.Error, sql.Warning) as e:
 		print(e)
 		exit(0)
+
+

@@ -6,7 +6,9 @@ from MySQLFunctions.insertSQL import *
 import uuid
 from datetime import datetime
 from MySQLFunctions.getSQL import *
+from MySQLFunctions.updateSQL import *
 import random
+import datetime
 
 app = Flask(__name__)
 
@@ -301,13 +303,69 @@ def afterPersonnelApproval():
     _authL = request.form['authorizersLastName']
     _authU = request.form['authorizersUname']
 
-    #if _aFStudent != "" or _aLStudent != "" or _aUStudent != "":
-     #   if _authF != "" or _authL != "" or _authU != "":
+    var = "'"
+    var += _aUStudent
+    var += "'"
 
+    var1 = "'"
+    var1 += _rUStudent
+    var1 += "'"
 
+    var2 = "'"
+    var2 += _authU
+    var2 += "'"
 
-    # CHANGE TO WHATEVEVER WE DECIDE
-    return render_template('afterApplying.html')
+    # if there is a student in both approve and deny
+    if _aFStudent != "" and _aLStudent != "" and _aUStudent != "" and _rFStudent != "" and _rLStudent != "" and\
+            _rUStudent != "":
+        if _authF != "" and _authL != "" and _authU != "":
+            if getStudentByUsernameOnly(var) == 0 or getStudentByUsernameOnly(var1) == 0:
+                return render_template('approval_StudentDNE.html')
+            else:
+                asID = getStudentID(_aUStudent)
+                rsID = getStudentID(_rUStudent)
+                d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(asID, "Accepted")
+                s1 = Applicant(rsID, "Denied")
+                updateApplicant(s)
+                updateApplicant(s1)
+
+                # NEEDS TO BE CHANGED
+                return render_template("afterApplying.html")
+        else:
+            return render_template('approval_StudentDNE.html')
+            # only approved student
+    elif _aFStudent != "" and _aLStudent != "" and _aUStudent != "" and _rFStudent == "" and _rLStudent == "" and\
+            _rUStudent == "":
+        if _authF != "" and _authL != "" and _authU != "":
+            if getStudentByUsernameOnly(var) == 0:
+                return render_template('approval_StudentDNE.html')
+            else:
+                asID = getStudentID(var)
+                d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(asID, "Accepted")
+                updateApplicant(s)
+                # NEEDS TO BE CHANGED
+                return render_template("afterApplying.html")
+        else:
+            return render_template('approval_StudentDNE.html')
+    elif _aFStudent == "" and _aLStudent == "" and _aUStudent == "" and _rFStudent != "" and _rLStudent != "" and\
+            _rUStudent != "":
+        if _authF != "" and _authL != "" and _authU != "":
+            if getStudentByUsernameOnly(var1) == 0:
+                return render_template('approval_StudentDNE.html')
+            else:
+                rsID = getStudentID(var1)
+                d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(rsID, "Denied")
+                updateApplicant(s)
+                # NEEDS TO BE CHANGED
+                return render_template("afterApplying.html")
+        else:
+            return render_template('approval_StudentDNE.html')
+    else:
+        return render_template('personnel_approval.html')
+
 
 if __name__ == "__main__":
     app.run()

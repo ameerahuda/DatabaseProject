@@ -41,5 +41,32 @@ def getStudentByUsername(filename, username):
         print('FAILED TO SELECT: TRY AGAIN')
         exit(0)
 
+def getStudentByUsernameOnly(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Students WHERE UserName = " + username
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        if mycursor.rowcount == 0:
+            data = 0
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
 
+# return studentID
+def getStudentID(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT StudentID FROM Students WHERE UserName = " + username
+        mycursor.execute(statement)
+        data = mycursor.fetchone()
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
+        exit(0)
 
