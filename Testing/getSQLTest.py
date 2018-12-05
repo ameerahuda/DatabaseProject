@@ -9,4 +9,7 @@ mycursor = mydb.cursor()
 # getAllStudents()
 
 # testing getting student by username
-getStudentByUsername("'ameera0115'")
+#getStudentByUsername("'ameera0115'")
+
+#testing getting students courses
+getStudentCoursesByUsername("'ameera0115'")

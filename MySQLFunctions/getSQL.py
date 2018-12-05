@@ -70,3 +70,18 @@ def getStudentID(username):
         print('FAILED TO RETURN STUDENTID')
         exit(0)
 
+def getStudentCoursesByUsername(filename, username):
+    try:
+        result = getStudentID(username)
+        studentID = result[0]
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Takes, Classes WHERE Takes.ClassID = Classes.ClassID AND Takes.StudentID = '" + studentID + "'"
+        mycursor.execute(statement, studentID)
+        data = mycursor.fetchall()
+        print data
+        return render_template(filename, data=data)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
+        exit(0)
