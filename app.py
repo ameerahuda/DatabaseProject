@@ -280,5 +280,34 @@ def afterAddedClass():
     # CHANGE TO WHATEVEVER WE DECIDE
     return render_template('afterApplying.html')
 
+# PERSONNEL APPROVAL
+@app.route('/showPersonnelApproval')
+def showPersonnelApproval():
+    return render_template("personnel_approval.html")
+
+@app.route('/personnelApproval', methods=['POST'])
+def personnelApproval():
+    return json.dumps({'html': '<span>All fields good !!</span>'})
+
+@app.route('/personnelApproval/status', methods=['POST'])
+def afterPersonnelApproval():
+    _aFStudent = request.form['aStudentFirstName']
+    _aLStudent = request.form['aStudentLastName']
+    _aUStudent = request.form['aStudentUname']
+    _rFStudent = request.form['rStudentFirstName']
+    _rLStudent = request.form['rStudentLastName']
+    _rUStudent = request.form['rStudentUname']
+    _authF = request.form['authorizersFirstName']
+    _authL = request.form['authorizersLastName']
+    _authU = request.form['authorizersUname']
+
+    #if _aFStudent != "" or _aLStudent != "" or _aUStudent != "":
+     #   if _authF != "" or _authL != "" or _authU != "":
+
+
+
+    # CHANGE TO WHATEVEVER WE DECIDE
+    return render_template('afterApplying.html')
+
 if __name__ == "__main__":
     app.run()

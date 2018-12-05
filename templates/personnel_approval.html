@@ -9,7 +9,7 @@
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/static/js/signUp.js"></script>
+    <script src="/static/js/personnelApproval.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -126,7 +126,7 @@ function validate()
 
       <div class="jumbotron">
         <h1>Student Approval</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="form-signin">
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterPersonnelApproval') }}" method="post" class="form-signin">
             <div class="form-row">
                 <h4>Student You Want to Accept</h4>
                 <div class="form-group col-md-3">
@@ -177,7 +177,7 @@ function validate()
                 </div>
             </div>
             <br>
-            <input id="btnSignUp" type="submit" class="btn btn-primary">
+            <input id="btnPersonnelApproval" type="submit" class="btn btn-primary">
             <br>
             <br>
             <br>
