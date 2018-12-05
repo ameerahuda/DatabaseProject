@@ -28,19 +28,40 @@
               var id = document.forms["EditClassInfo"]["EditedCourseID"];
               var ses = document.forms["EditClassInfo"]["EditedCourseSession"];
               var mssg = "";
-              if(id.value != ""){
-                  mssg += "id = " + id.value + "\n";
-              }
 
-              if(ses.value != "Select"){
-                  mssg += "session = " + ses.value;
-                  window.alert(mssg);
+              var validID = /^[0-9]+$/;
+              if(id.value.length > 0 && id.value.match(validID)){
+                  mssg += "id = " + id.value + "\n";
+                  if(ses.value != "Select"){
+                      mssg += "session = " + ses.value;
+                      window.alert(mssg);
+                  }
+                  else{
+                      window.alert("Must Select Session");
+                  }
               }
               else{
-                  window.alert("Must Select Session");
+                  window.alert("ID not valid");
               }
           }
       </script>
+      <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 2px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
   </head>
   
   <body>
@@ -72,85 +93,37 @@
                 <button name="Edit Class" type="submit" value="Edit" class="btn btn-primary">Edit Class</button>
             </div>
         </form>
-          <script>
-              var a = document.getElementById("displayArea");
-              var x = document.createElement("TABLE");
-              x.setAttribute("id", "classList");
-              x.setAttribute("border", "2px");
-              a.appendChild(x);
-
-              var y = document.createElement("TR");
-              y.setAttribute("id", "tblHeadRow");
-              document.getElementById("classList").appendChild(y);
-
-              var z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              var t = document.createTextNode("Course ID");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Course Name");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Instructor ID");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Session");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Level");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Time Slot");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Building");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Room Number");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Capacity");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Course Size");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-              z = document.createElement("TH");
-              z.setAttribute("width", "100px");
-              t = document.createTextNode("Wait List size");
-              z.appendChild(t);
-              document.getElementById("tblHeadRow").appendChild(z);
-
-          </script>
-	  </div>
+        <table id="classList">
+            <tr id="headerRow">
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Instructor ID</th>
+                <th>Session</th>
+                <th>Level</th>
+                <th>Time Slot</th>
+                <th>Building</th>
+                <th>Room Number</th>
+                <th>Capacity</th>
+                <th>Course Size</th>
+                <th>Waitlist Size</th>
+            </tr>
+            {% for user in data %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] }}</td>
+                        <td>{{ user[4] }}</td>
+                        <td>{{ user[5] }}</td>
+                        <td>{{ user[6] }}</td>
+                        <td>{{ user[7] }}</td>
+                        <td>{{ user[8] }}</td>
+                        <td>{{ user[9] }}</td>
+                        <td>{{ user[10] }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+      </div>
 	</div>
   </body>
 </html>
