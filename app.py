@@ -13,7 +13,7 @@ import datetime
 app = Flask(__name__)
 
 # landing page endpoint
-@app.route('/', methods = ['GET'])
+@app.route('/')
 def main():
     return render_template('index.html')
 
