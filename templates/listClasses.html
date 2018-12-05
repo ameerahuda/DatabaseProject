@@ -23,6 +23,24 @@
               "\t\t  </tr>";
         }
       </script>-->
+      <script>
+          function validate(){
+              var id = document.forms["EditClassInfo"]["EditedCourseID"];
+              var ses = document.forms["EditClassInfo"]["EditedCourseSession"];
+              var mssg = "";
+              if(id.value != ""){
+                  mssg += "id = " + id.value + "\n";
+              }
+
+              if(ses.value != "Select"){
+                  mssg += "session = " + ses.value;
+                  window.alert(mssg);
+              }
+              else{
+                  window.alert("Must Select Session");
+              }
+          }
+      </script>
   </head>
   
   <body>
@@ -38,25 +56,98 @@
 		</nav>
 		<h3 class="text-muted">UYP Summer 2019</h3>
 	  </div>
-	  <div id="gang" class="jumbotron">
+	  <div id="displayArea" class="jumbotron">
 	    <h1>Courses</h1>
+        <form onsubmit="validate()" name="EditClassInfo" class="form-signin">
+            <div class="form-row">
+                <h4>Class you want to Edit</h4>
+                <label for="EditedCourseID">Couse ID</label>
+                <input type="text" name="EditedCourseID" class="form-control" placeholder="Course ID">
+                <select class="form-control" name="EditedCourseSession">
+                    <option value="Select">Select Session...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <button name="Edit Class" type="submit" value="Edit" class="btn btn-primary">Edit Class</button>
+            </div>
+        </form>
           <script>
-              var a = document.getElementById("gang");
+              var a = document.getElementById("displayArea");
               var x = document.createElement("TABLE");
               x.setAttribute("id", "classList");
+              x.setAttribute("border", "2px");
               a.appendChild(x);
 
               var y = document.createElement("TR");
-              y.setAttribute("id", "testRow");
+              y.setAttribute("id", "tblHeadRow");
               document.getElementById("classList").appendChild(y);
-              var i = 0;
-              for(i = 0; i < 3; i++){
-                var z = document.createElement("TH");
-                z.setAttribute("width", "100px");
-                var t = document.createTextNode(String(i));
-                z.appendChild(t);
-                document.getElementById("testRow").appendChild(z);
-              }
+
+              var z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              var t = document.createTextNode("Course ID");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Course Name");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Instructor ID");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Session");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Level");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Time Slot");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Building");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Room Number");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Capacity");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Course Size");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
+
+              z = document.createElement("TH");
+              z.setAttribute("width", "100px");
+              t = document.createTextNode("Wait List size");
+              z.appendChild(t);
+              document.getElementById("tblHeadRow").appendChild(z);
 
           </script>
 	  </div>
