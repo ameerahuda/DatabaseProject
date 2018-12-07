@@ -13,7 +13,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # added for staying logged in
-# app.secret_key = 'secretkey'
+app.secret_key = 'secretkey'
 
 
 # landing page endpoint
@@ -244,9 +244,15 @@ def afterapplied():
 def showSignIn():
     return render_template("signIn.html")
 
-@app.route('/signIn', methods=['POST'])
+@app.route('/signIn', methods=['POST', 'GET'])
 def signIn():
-    return json.dumps({'html': '<span>All fields good !!</span>'})
+    return render_template("signIn.html")
+
+@app.route('/logout')
+def logout():
+   # remove the username from the session if it is there
+   session.pop('username', None)
+   return redirect(url_for('index'))
 
 @app.route('/signIn/student', methods=['POST', 'GET'])
 def afterStudentSignIn():
@@ -450,12 +456,15 @@ def afterAddedClass():
 
     timeslot = _startTime + _endTime
 
-    classid = str(uuid.uuid4())[:12]
-    c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
-    insertClass(c)
+    if checkCourseInSession(_className, session) > 0:
+        return
+    else:
+        classid = str(uuid.uuid4())[:12]
+        c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
+        insertClass(c)
 
-    # CHANGE TO WHATEVEVER WE DECIDE
-    return render_template('afterApplying.html')
+        # CHANGE TO WHATEVEVER WE DECIDE
+        return render_template('afterApplying.html')
 
 # ---- List class (Personnel) ----
 @app.route('/showPersonnelCourses', methods=['GET'])

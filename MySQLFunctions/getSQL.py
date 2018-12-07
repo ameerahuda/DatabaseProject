@@ -99,3 +99,19 @@ def getStudentCoursesByUsername(filename, username):
         print(e)
         print('FAILED TO RETURN STUDENTID')
         exit(0)
+
+def checkCourseInSession(className, session):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Classes WHERE Classes.ClassName = %s AND Classes.Session = %s"
+        vals = (className, session)
+        mycursor.execute(statement, vals)
+        data = mycursor.fetchall()
+        if mycursor.rowcount == 0:
+            data = 0
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
+        exit(0)
