@@ -1,12 +1,12 @@
 $(function(){
 	// this will execute when the button for signup is pushed,
 	// btnSignUp is the name of the button in the signup.html
-	$('#btnAddClass').click(function(){
+	$('#btnStudentSearch').click(function(){
 		console.log("This is working so far");
 		// the url is the endpoint that is created in app.py
 		// type is whatever you want to do, can be POST or GET
 		$.ajax({
-			url: '/showAddClass',
+			url: '/studentSearch',
 			data: $('form').serialize(),
 			type: 'POST',
 			success: function(response){

@@ -138,4 +138,32 @@ def updateAdditionalInfo(AdditionalInfo):
 		print(e)
 		exit(0)
 
+def updateEditedStudent(Student1):
+	try:
+		db = DatabaseConnection()
+		c = db.cursor()
+
+		stmt = "UPDATE Students SET FirstName = %s, LastName = %s, " \
+			   "MiddleInitial = %s, Suffix = %s, PreferredName = %s, " \
+			   "DateOfBirth = %s, Gender = %s, Race = %s, Address = %s, " \
+			   "City = %s, State = %s, Zip = %s, Email = %s, " \
+			   "PhoneNumber = %s, DisabilityInfo = %s, HealthConditions = %s," \
+			   "Siblings = %s, SchoolName = %s, SchoolDistrict = %s, " \
+			   "SchoolType = %s, GradeInFall = %s, ExpectedHighSchool = %s, " \
+			   "ExpectedGradYear = %s, GT = %s, ELL = %s " \
+			   "WHERE UserName = %s"
+		vals = (Student1.FirstName, Student1.LastName, Student1.MiddleInitial,
+				Student1.Suffix, Student1.PreferredName, Student1.DateOfBirth, Student1.Gender, Student1.Race,
+				Student1.Address, Student1.City, Student1.State, Student1.Zip, Student1.Email, Student1.PhoneNumber,
+				Student1.DisabilityInfo, Student1.HealthConditions, Student1.Siblings, Student1.SchoolName,
+				Student1.SchoolDistrict, Student1.SchoolType, Student1.GradeInFall, Student1.ExpectedHighSchool,
+				Student1.ExpectedGradYear, Student1.GT, Student1.ELL, Student1.UserName)
+
+		c.execute(stmt, vals)
+
+		db.commit()
+	except (sql.Error, sql.Warning) as e:
+		print(e)
+		exit(0)
+
 

@@ -6,7 +6,7 @@
     <link href="../static/css/signup.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <div class="error-messages" style="display:none;"></div>
-      <script src="/static/js/signIn.js"></script>
+      <script src="/static/js/addClass.js"></script>
       <!--<script>
         var x = document.getElementById("class table");
         function displayClasses(){
@@ -40,11 +40,17 @@
                       window.alert("Must Select Session");
                   }
               }
-              else{
+              /*else{
                   window.alert("ID not valid");
-              }
+              }*/
           }
       </script>
+      <script>
+          function submitForm(action){
+            document.getElementById('listclassesform').action = action;
+            document.getElementById('listclassesform').submit();
+          }
+</script>
       <style>
         table {
             font-family: arial, sans-serif;
@@ -69,18 +75,21 @@
 	  <div class="header">
 	    <nav>
 		  <ul class="nav nav-pills pull-right">
-		    <li role="presentation"><a href="main">Home</a></li>
-			<li role="presentation"><a href="#">Approval</a></li>
-			<li role="presentation"><a href="#">Student Search</a></li>
-			<li role="presentation" class="active"><a href="#">Courses</a></li>
+		    <li role="presentation" ><a href="showPersonnelCourses">Home</a></li>
+            <li role="presentation"><a href="showPersonnelApproval">Student Approval</a></li>
+            <li role="presentation"><a href="showStudentSearch">Student Search</a></li>
+            <li role="presentation" class="active"><a href="showPersonnelCourses">Courses</a></li>
+            <li role="presentation"><a href="#">Export</a></li>
           </ul>
 		</nav>
 		<h3 class="text-muted">UYP Summer 2019</h3>
 	  </div>
 	  <div id="displayArea" class="jumbotron">
 	    <h1>Courses</h1>
-        <form onsubmit="validate()" name="EditClassInfo" class="form-signin">
+        <form id="listclassesform" onsubmit="return validate()" method="post" name="EditClassInfo" class="form-signin">
             <div class="form-row">
+                <h4>Add a Course</h4>
+                <input name="btnAddClass" type="submit" onclick="submitForm('showAddClass')" value="Add" class="btn btn-primary">
                 <h4>Class you want to Edit</h4>
                 <label for="EditedCourseID">Couse ID</label>
                 <input type="text" name="EditedCourseID" class="form-control" placeholder="Course ID">
@@ -90,7 +99,7 @@
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </select>
-                <button name="Edit Class" type="submit" value="Edit" class="btn btn-primary">Edit Class</button>
+                <input name="btnEditClass" type="submit" value="Edit" class="btn btn-primary">
             </div>
         </form>
         <table id="classList">
