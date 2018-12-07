@@ -13,7 +13,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # added for staying logged in
-# app.secret_key = 'secretkey'
+app.secret_key = 'secretkey'
 
 
 # landing page endpoint
@@ -36,11 +36,11 @@ def main():
 #         return redirect(url_for('index'))
 #     return render_template('practiceSignIn.html')
 #
-# @app.route('/logout')
-# def logout():
-#    # remove the username from the session if it is there
-#    session.pop('username', None)
-#    return redirect(url_for('index'))
+@app.route('/logout')
+def logout():
+   # remove the username from the session if it is there
+   session.pop('username', None)
+   return redirect(url_for('main'))
 
 # 1st: show registration page
 @app.route('/showSignUp')
@@ -240,13 +240,31 @@ def afterapplied():
     return render_template('afterApplying.html')
 
 # SIGN IN
-@app.route('/showSignIn')
+@app.route('/showSignIn', methods=['POST', 'GET'])
 def showSignIn():
+    if 'username' in session:
+        username = session['username']
+        ## check if student or personnel
+        if studentOrPersonnel(username) == "student entry":
+            return redirect(url_for('showStudentProfile'))
+        else:
+            return render_template('personnel_approval.html')
     return render_template("signIn.html")
 
-@app.route('/signIn', methods=['POST'])
+@app.route('/signIn', methods=['GET', 'POST'])
 def signIn():
-    return json.dumps({'html': '<span>All fields good !!</span>'})
+    # check if username even exists
+    # if yes then do this
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('showSignIn'))
+    # else redirect ot home page to register
+    return render_template('index.html')
+
+
+# @app.route('/signIn', methods=['POST'])
+# def signIn():
+#     return json.dumps({'html': '<span>All fields good !!</span>'})
 
 @app.route('/signIn/student', methods=['POST', 'GET'])
 def afterStudentSignIn():
@@ -496,7 +514,9 @@ def showStudentHome():
 # ---- Student MyProfile ----
 @app.route('/studentProfile', methods=['POST', 'GET'])
 def showStudentProfile():
-    return render_template("student_editProfile.html")
+    username = session['username']
+    return getStudentByUsername("student_editProfile.html", username)
+    #return render_template("student_editProfile.html")
 
 if __name__ == "__main__":
     app.run()

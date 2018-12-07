@@ -23,7 +23,9 @@ def getStudentByUsername(filename, username):
     try:
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
-        statement = "SELECT * FROM Students WHERE UserName = " + username
+        val = "'" + username + "'"
+        print val
+        statement = "SELECT * FROM Students WHERE UserName = " + val
         mycursor.execute(statement)
         data = mycursor.fetchall()
         # var = "'" + data[0][0] + "'"
@@ -98,4 +100,22 @@ def getStudentCoursesByUsername(filename, username):
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO RETURN STUDENTID')
+        exit(0)
+
+def studentOrPersonnel(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        val = "'" + username + "'"
+        statement = "SELECT * FROM Students WHERE UserName = " + val
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        print data
+        if len(data) == 0:
+            return "admin entry"
+        else:
+            return "student entry"
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
         exit(0)
