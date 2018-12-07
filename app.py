@@ -8,7 +8,7 @@ from datetime import datetime
 from MySQLFunctions.getSQL import *
 from MySQLFunctions.updateSQL import *
 import random
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -105,7 +105,7 @@ def afterapplied():
         _state = "N/A"
 
     if _dob == "":
-        _dob = datetime.strptime("00/00/0000", '%m/%d/%Y')
+        _dob = datetime.strptime("01/01/0001", '%m/%d/%Y')
     else:
         temp = _dob
         _dob = datetime.strptime(temp, '%m/%d/%Y')
@@ -365,6 +365,68 @@ def afterPersonnelApproval():
             return render_template('approval_StudentDNE.html')
     else:
         return render_template('personnel_approval.html')
+
+# ----- Student Search (Personnel) ------
+@app.route('/showStudentSearch', methods=['GET'])
+def showStudentSearch():
+    return getAllStudents("personnel_searchStudent.html")
+
+@app.route('/studentSearch', methods=['POST', 'GET'])
+def studentSearch():
+    return json.dumps({'html': '<span>All fields good !!</span>'})
+
+@app.route('/studentSearch/student', methods=['POST', 'GET'])
+def afterStudentSearch():
+    _studentUsername = request.form['studentUname']
+
+    if _studentUsername == "":
+        return getAllStudents("personnel_searchStudent.html")
+    else:
+        var = "'"
+        var += _studentUsername
+        var += "'"
+        if getStudentByUsernameOnly(var) == 0:
+            return render_template('approval_StudentDNE.html')
+        else:
+            sid = getStudentID(var)
+            return getStudentByUsername('personnel_editStudent.html', var)
+
+@app.route('/showSuccessfulEdit', methods=['POST'])
+def showSuccessfulEdit():
+    _fname = request.form['firstName']
+    _lname = request.form['lastName']
+    _initial = request.form['initial']
+    _preferredName = request.form['preferredName']
+    _suffix = request.form['suffix']
+    _address = request.form['address']
+    _city = request.form['city']
+    _zip = request.form['zip']
+    _state = request.form['state']
+    _dob = request.form['dob']
+    _gender = request.form['gender']
+    _race = request.form['race']
+    _email = request.form['email']
+    _phoneNumber = request.form['phoneNumber']
+    _siblings = request.form['siblings']
+    _healthConditions = request.form['healthConditions']
+    _disability = request.form['disability']
+    _schoolName = request.form['schoolName']
+    _schoolDistrict = request.form['schoolDistrict']
+    _schoolType = request.form['schoolType']
+    _gradeInFall = request.form['gradeInFall']
+    _gt = request.form['gt']
+    _ell = request.form['ell']
+    _gradDate = request.form['gradDate']
+    _expHighSchool = request.form['expHighSchool']
+    _uname = request.form['uname']
+
+    s = Student1(_fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
+                 _address, _city, _state, _zip, _email, _phoneNumber, _disability, _healthConditions, _siblings,
+                 _schoolName, _schoolDistrict, _schoolType, _gradeInFall, _expHighSchool, _gradDate, _gt, _ell, _uname)
+
+    updateEditedStudent(s)
+
+    return render_template("personnel_StudentEditGood.html")
 
 
 if __name__ == "__main__":
