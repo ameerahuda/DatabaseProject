@@ -36,8 +36,8 @@
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-              <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation" ><a href="main">My Profile</a></li>
+              <li role="presentation" class="active"><a href="/studentHome">Home</a></li>
+            <li role="presentation" ><a href="/studentProfile">My Profile</a></li>
             <li role="presentation"><a href="#">Add or Drop Course</a></li>
           </ul>
         </nav>
@@ -46,7 +46,7 @@
 
       <div class="jumbotron">
         <h1>Student Courses</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="form-signin">
+        <form id="regist" name="RegForm" onsubmit="return validate()"  method="post" class="form-signin">
             <table>
                 <tr>
                     <th>Course Name</th>

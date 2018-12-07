@@ -70,6 +70,20 @@ def getStudentID(username):
         print('FAILED TO RETURN STUDENTID')
         exit(0)
 
+def getAllCourses(filename):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
+        statement = "SELECT * FROM Classes"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        return render_template(filename, data=data)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
 def getStudentCoursesByUsername(filename, username):
     try:
         result = getStudentID(username)
