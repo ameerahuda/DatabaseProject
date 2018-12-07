@@ -12,10 +12,35 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+# added for staying logged in
+# app.secret_key = 'secretkey'
+
+
 # landing page endpoint
-@app.route('/', methods = ['GET'])
+@app.route('/')
 def main():
     return render_template('index.html')
+
+# added for staying logged in
+# @app.route('/')
+# def index():
+#    if 'username' in session:
+#       username = session['username']
+#       return render_template('student_editProfile.html')
+#    return render_template('practiceSignIn.html')
+#
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         session['username'] = request.form['username']
+#         return redirect(url_for('index'))
+#     return render_template('practiceSignIn.html')
+#
+# @app.route('/logout')
+# def logout():
+#    # remove the username from the session if it is there
+#    session.pop('username', None)
+#    return redirect(url_for('index'))
 
 # 1st: show registration page
 @app.route('/showSignUp')
