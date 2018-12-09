@@ -167,3 +167,27 @@ def updateEditedStudent(Student1):
 		exit(0)
 
 
+def updateEditClass(EditCourse, courseid):
+	try:
+		db = DatabaseConnection()
+		c = db.cursor()
+
+		print courseid
+
+		var = "'" + courseid[0] + "'"
+
+		stmt = "UPDATE Classes SET ClassName = %s, Classes.Session = %s, Classes.Level = %s, TimeSlot = %s, " \
+			   "Building = %s, RoomNumber = %s, Capacity = %s WHERE ClassID = '" + courseid[0] + "'"
+
+
+		vals = (EditCourse.className, EditCourse.session, EditCourse.level, EditCourse.timeSlot, EditCourse.building,
+				EditCourse.roomNumber, EditCourse.capacity)
+
+		print courseid[0]
+		print vals
+		c.execute(stmt, vals)
+
+		db.commit()
+	except (sql.Error, sql.Warning) as e:
+		print(e)
+		exit(0)

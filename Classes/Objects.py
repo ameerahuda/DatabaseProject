@@ -138,3 +138,13 @@ class Student1:
     self.GT = GT
     self.ELL = ELL
     self.UserName = UserName
+
+class EditCourse:
+  def __init__(self, className, building, roomNumber, session, level, capacity, timeSlot):
+    self.className = className
+    self.building = building
+    self.roomNumber = roomNumber
+    self.session = session
+    self.level = level
+    self.capacity = capacity
+    self.timeSlot = timeSlot
