@@ -74,8 +74,13 @@ function validate()
         <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterAddedClass') }}" method="post" class="form-signin">
         <label for="inputClassName">Class Name</label>
         <input type="text" name="className" id="inputClassName" required="required" class="form-control" placeholder="Class Name">
-        <label for="inputInstructorID">Instructor ID</label>
-        <input type="text" name="instructorID" class="form-control" required="required" id="inputInstructorID" placeholder="Instructor ID">
+        <label for="inputInstructorID">Instructor</label>
+        <select id="inputInstructorID" name="instructorID" required="required" class="form-control">
+                <option selected>Choose...</option>
+                {% for user in data %}
+                    <option value={{ user[0] }}>{{ user[1] }} {{ user[2] }} {{ user[3] }}</option>
+                {% endfor %}
+        </select>
         <label for="inputBuilding">Building</label>
         <!--<input type="text" name="building" class="form-control" required="required" id="inputBuilding" placeholder="Building Name"> -->
         <select id="inputBuilding" name="building" required="required" class="form-control">

@@ -483,6 +483,15 @@ function validate()
                         <label for="inputUname">Username</label>
                         <input type="text" name="uname" id="inputUname" class="form-control" value="{{ user[29] }}" readonly>
                     </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputMentorID">Mentor</label>
+                        <select id="inputMentorID" name="mentorID" required="required" class="form-control">
+                            <option selected>Choose...</option>
+                            {% for item in obj %}
+                                <option value={{ item[0] }}>{{ item[1] }} {{ item[2] }} {{ item[3] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
             {% endfor %}
             <br>
