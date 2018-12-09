@@ -110,7 +110,6 @@ def studentOrPersonnel(username):
         statement = "SELECT * FROM Students WHERE UserName = " + val
         mycursor.execute(statement)
         data = mycursor.fetchall()
-        print data
         if len(data) == 0:
             return "admin entry"
         else:
