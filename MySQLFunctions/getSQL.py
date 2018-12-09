@@ -24,7 +24,7 @@ def getStudentByUsername(filename, username):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
         val = "'" + username + "'"
-        print val
+        print(val)
         statement = "SELECT * FROM Students WHERE UserName = " + val
         mycursor.execute(statement)
         data = mycursor.fetchall()
