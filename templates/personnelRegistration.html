@@ -29,6 +29,11 @@ function validate()
 	var letterNumber = /^[0-9a-zA-Z _]+$/;
 	var letterspace = /^[A-Za-z, _]+$/;
 	var code = "code123";
+	//var code = /^code123$/;
+	var pwordUpper = /^.*[A-Z]+.*$/;
+	var pwordLower = /^.*[a-z]+.*$/;
+	var pwordNumber = /^.*[0-9]+.*$/;
+	var pwordSpecial = /^.*[!@#$%&*()^:;.,/\\"'~`+_={}-]+.*$/;
 
 	if (!fname.value.match(letters))
 	{
@@ -62,7 +67,11 @@ function validate()
 	    uname.style.backgroundColor = "white";
     }
 
-    if (!pword.value.match(letterNumber))
+    if (pword.value.length < 8 ||
+        !pword.value.match(pwordUpper)
+        || !pword.value.match(pwordLower)
+        || !pword.value.match(pwordNumber)
+        || !pword.value.match(pwordSpecial))
 	{
 		pword.style.backgroundColor = "pink";
 		return false;
@@ -103,7 +112,7 @@ function validate()
         <label for="inputUserName">Username</label>
         <input type="text" name="userName" class="form-control" required="required" id="inputUserName" placeholder="Username">
         <label for="inputPassword">Password</label>
-        <input type="text" name="passWord" class="form-control" required="required" id="inputPassword" placeholder="Password">
+        <input type="password" name="passWord" class="form-control" required="required" id="inputPassword" placeholder="Password">
 
         <input id="btnAdminSignUp" type="submit" class="btn btn-primary">
             <!-- <button id="btnAdminSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button> -->
