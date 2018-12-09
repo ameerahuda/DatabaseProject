@@ -30,10 +30,12 @@ function validate()
 	var letterspace = /^[A-Za-z, _]+$/;
 	var code = "code123";
 	//var code = /^code123$/;
-	var pwordUpper = /^.*[A-Z]+.*$/;
-	var pwordLower = /^.*[a-z]+.*$/;
-	var pwordNumber = /^.*[0-9]+.*$/;
-	var pwordSpecial = /^.*[!@#$%&*()^:;.,/\\"'~`+_={}-]+.*$/;
+	var code = /^code123$/;
+	var containsUpper = /^.*[A-Z]+.*$/;
+	var containsLower = /^.*[a-z]+.*$/;
+	var containsNumber = /^.*[0-9]+.*$/;
+	var containsSpecial = /^.*[!@#$%&*()^:;.,/\\"'~`+_={}-]+.*$/;
+	var containsLetters = /^.*[A-Za-z].*/;
 
 	if (!fname.value.match(letters))
 	{
@@ -59,7 +61,10 @@ function validate()
 	    acode.style.backgroundColor = "white";
     }
 
-    if (!uname.value.match(letterNumber))
+    if (uname.value.length < 5
+        || !uname.value.match(containsLetters)
+        || !uname.value.match(containsNumber)
+        || uname.value.match(containsSpecial))
 	{
 		uname.style.backgroundColor = "pink";
 		return false;
@@ -68,10 +73,10 @@ function validate()
     }
 
     if (pword.value.length < 8 ||
-        !pword.value.match(pwordUpper)
-        || !pword.value.match(pwordLower)
-        || !pword.value.match(pwordNumber)
-        || !pword.value.match(pwordSpecial))
+        !pword.value.match(containsUpper)
+        || !pword.value.match(containsLower)
+        || !pword.value.match(containsNumber)
+        || !pword.value.match(containsSpecial))
 	{
 		pword.style.backgroundColor = "pink";
 		return false;
@@ -110,9 +115,9 @@ function validate()
         <label for="inputActivationCode">Activation Code</label>
         <input type="text" name="activationCode" class="form-control" required="required" id="inputActivationCode" placeholder="Activation Code">
         <label for="inputUserName">Username</label>
-        <input type="text" name="userName" class="form-control" required="required" id="inputUserName" placeholder="Username">
+        <input type="text" name="userName" class="form-control" required="required" id="inputUserName" placeholder="Username (A-Z, a-z, 0-9)">
         <label for="inputPassword">Password</label>
-        <input type="password" name="passWord" class="form-control" required="required" id="inputPassword" placeholder="Password">
+        <input type="password" name="passWord" class="form-control" required="required" id="inputPassword" placeholder="Password (8 Characters, 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character">
 
         <input id="btnAdminSignUp" type="submit" class="btn btn-primary">
             <!-- <button id="btnAdminSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button> -->

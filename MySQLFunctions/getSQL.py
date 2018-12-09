@@ -141,6 +141,16 @@ def checkIfCourseExists(courseid):
         val = "'" + courseid + "'"
         print courseid
         statement = "SELECT * FROM Classes WHERE ClassID = " + val
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+def getInstructorByUsernameOnly(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Instructors WHERE UserName = '" + username + "'"
         mycursor.execute(statement)
         data = mycursor.fetchall()
         if mycursor.rowcount == 0:
@@ -148,7 +158,7 @@ def checkIfCourseExists(courseid):
         return data
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
-        print('FAILED TO RETURN STUDENTID')
+        print('FAILED TO SELECT: TRY AGAIN')
         exit(0)
 
 def getAllInstructors(filename):

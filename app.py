@@ -290,10 +290,12 @@ def afteradminapplied():
     #admin == instructor
     adminID = str(uuid.uuid4())[:12]
     admin = Instructor(str(adminID), _adminFirstName, _adminLastName, _adminUserName, _adminPassword, "0")
-    insertInstructor(admin)
+    if getInstructorByUsernameOnly(admin.Username) == 0:
+        insertInstructor(admin)
+        return render_template('afterApplying.html')
+    else:
+        return render_template('personnelRegistration.html')
 
-    # CHANGE TO WHATEVEVER WE DECIDE
-    return render_template('afterApplying.html')
 
 # PERSONNEL APPROVAL
 @app.route('/showPersonnelApproval')
