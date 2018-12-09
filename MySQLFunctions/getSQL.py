@@ -24,7 +24,6 @@ def getStudentByUsername(filename, username):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
         val = "'" + username + "'"
-        print val
         statement = "SELECT * FROM Students WHERE UserName = " + val
         mycursor.execute(statement)
         data = mycursor.fetchall()
@@ -117,4 +116,52 @@ def studentOrPersonnel(username):
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+
+def getAllInstructors(filename):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
+        statement = "SELECT * FROM Instructors"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        return render_template(filename, data=data)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+
+def getEditCourseInfo(filename, courseId):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Classes WHERE ClassID = '" + courseId + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        statement = "SELECT * FROM Instructors"
+        mycursor.execute(statement)
+        obj = mycursor.fetchall()
+        return render_template(filename, data=data, obj = obj)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
+        exit(0)
+
+def getEditStudentFromPersonnel(filename, username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Students WHERE UserName = '" + username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        statement = "SELECT * FROM Instructors"
+        mycursor.execute(statement)
+        obj = mycursor.fetchall()
+        return render_template(filename, data=data, obj = obj)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
         exit(0)
