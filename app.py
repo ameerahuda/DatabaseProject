@@ -248,7 +248,7 @@ def showSignIn():
         if studentOrPersonnel(username) == "student entry":
             return redirect(url_for('showStudentProfile'))
         else:
-            return render_template('personnel_approval.html')
+            return getAllStudents("personnel_approval.html")
     return render_template("signIn.html")
 
 @app.route('/signIn', methods=['GET', 'POST'])

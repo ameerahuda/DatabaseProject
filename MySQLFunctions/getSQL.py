@@ -165,3 +165,4 @@ def getEditStudentFromPersonnel(filename, username):
         print(e)
         print('FAILED TO RETURN STUDENTID')
         exit(0)
+
