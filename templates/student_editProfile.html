@@ -9,7 +9,7 @@
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/static/js/signUp.js"></script>
+    <script src="/static/js/editStudentProfile.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -57,7 +57,7 @@ function validate()
 	    fname.style.backgroundColor = "white";
     }
 
-	if (initial.value.length > 1 || initial.required)
+	if (initial.value.match(numbers))
 	{
 		initial.style.backgroundColor = "pink";
 		return false;
@@ -73,7 +73,7 @@ function validate()
 	    lname.style.backgroundColor = "white";
     }
 
-	if (suffix.value.length > 1 && !suffix.value.match(letters))
+	if (suffix.value.match(numbers))
 	{
 		suffix.style.backgroundColor = "pink";
 		return false;
@@ -81,7 +81,10 @@ function validate()
 	    suffix.style.backgroundColor = "white";
     }
 
-    if (preName.value.length > 1 && !preName.value.match(letters))
+    if (preName.localeCompare("N/A") === 0){
+        preName.style.backgroundColor = "white";
+    }
+    else if (preName.value.match(numbers))
 	{
 		preName.style.backgroundColor = "pink";
 		return false;
@@ -89,15 +92,15 @@ function validate()
 	    preName.style.backgroundColor = "white";
     }
 
-	if (email.value.length > 1 && email.value.indexOf(".", 0) < 0)
+	/*if (email.value.length > 1 && email.value.indexOf(".", 0) < 0)
 	{
 		email.style.backgroundColor = "pink";
 		return false;
 	}else{
 	    email.style.backgroundColor = "white";
-    }
+    }*/
 
-	if (phone.value.length > 1 && !phone.value.match(phoneno))
+	/*if (phone.value.length > 1 && !phone.value.match(phoneno))
 	{
 		phone.style.backgroundColor = "pink";
 		return false;
@@ -111,9 +114,9 @@ function validate()
 		return false;
 	}else{
 	    dob.style.backgroundColor = "white";
-    }
+    }*/
 
-    if (gender.value.length > 1 && !gender.value.match(letters))
+    /*if (gender.value.length > 1 && !gender.value.match(letters))
 	{
 		gender.style.backgroundColor = "pink";
 		return false;
@@ -127,9 +130,9 @@ function validate()
 		return false;
 	}else{
 	    race.style.backgroundColor = "white";
-    }
+    }*/
 
-	if (address.value.length > 1 && !address.value.match(letterNumber))
+	/*if (address.value.length > 1 && !address.value.match(letterNumber))
 	{
 		address.style.backgroundColor = "pink";
 		return false;
@@ -197,9 +200,9 @@ function validate()
 		return false;
 	}else{
 	    sd.style.backgroundColor = "white";
-    }
+    }*/
 
-    if (st.value.length > 1 && !st.value.match(letterspace))
+   /* if (st.value.length > 1 && !st.value.match(letterspace))
 	{
 		st.style.backgroundColor = "pink";
 		return false;
@@ -229,8 +232,8 @@ function validate()
 		return false;
 	}else{
 	    ell.style.backgroundColor = "white";
-    }
-
+    }*/
+/*
     if (graddate.value.length > 1 && !graddate.value.match(numbers))
 	{
 		graddate.style.backgroundColor = "pink";
@@ -247,15 +250,15 @@ function validate()
 		return false;
 	}else{
 	    exphs.style.backgroundColor = "white";
-    }
+    }*/
 
-    if (!dateofReg.value.match(date))
+    /*if (!dateofReg.value.match(date))
 	{
 		dateofReg.style.backgroundColor = "pink";
 		return false;
 	}else{
 	    dateofReg.style.backgroundColor = "white";
-    }
+    }*/
 
 	return true;
 }</script>
@@ -277,7 +280,7 @@ function validate()
 
       <div class="jumbotron">
         <h1>Student Profile</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="form-signin">
+        <form id="regist" name="RegForm" onsubmit="return validate()"  method="post" class="form-signin">
             {% for user in data %}
                 <h3>Students Information</h3>
                 <div class="form-row">
