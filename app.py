@@ -403,7 +403,7 @@ def afterStudentSearch():
         if getStudentByUsernameOnly(var) == 0:
             return render_template('approval_StudentDNE.html')
         else:
-            return getStudentByUsername('personnel_editStudent.html', _studentUsername)
+            return getEditStudentFromPersonnel('personnel_editStudent.html', _studentUsername)
 
 @app.route('/showSuccessfulEdit', methods=['POST', 'GET'])
 def showSuccessfulEdit():
@@ -504,7 +504,8 @@ def showSuccessfulEdit():
 # ADD CLASS
 @app.route('/showAddClass',methods=['POST'])
 def showAddClass():
-    return render_template("addClass.html")
+    return getAllInstructors("addClass.html")
+    # return render_template("addClass.html")
 
 @app.route('/addClass', methods=['POST'])
 def addClass():
