@@ -197,14 +197,14 @@ def getEditCourseInfo(filename, courseId):
         obj = mycursor.fetchall()
 
         statement = "SELECT Takes.StudentID, Takes.ClassID, Students.FirstName, Students.LastName, Students.UserName " \
-                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val
+                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val + " AND Takes.IsDeleted = '0'"
         mycursor.execute(statement)
         currStudents = mycursor.fetchall()
         print(currStudents)
 
         statement = "SELECT Students.StudentID, Students.FirstName, Students.LastName, Students.UserName " \
                     "FROM Students WHERE Students.StudentID NOT IN (SELECT Students.StudentID " \
-                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val + ")"
+                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val + " AND Takes.IsDeleted = '0')"
         mycursor.execute(statement)
         otherStudents = mycursor.fetchall()
         print(otherStudents)
@@ -397,6 +397,22 @@ def checkIfCorrectInstructorPassword(username, password):
             return "Correct Password"
         else:
             return "Incorrect Password"
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+def getIfAlreadyInTakes(courseID, studentId):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Takes WHERE StudentID = '" + studentId + "' AND ClassID = '" + courseID + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        if len(data) == 0:
+            return "Can input"
+        else:
+            return "don't input"
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO SELECT: TRY AGAIN')
