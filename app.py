@@ -7,6 +7,7 @@ import uuid
 from datetime import datetime
 from MySQLFunctions.getSQL import *
 from MySQLFunctions.updateSQL import *
+from MySQLFunctions.deleteSQL import *
 import random
 from datetime import datetime
 
@@ -551,8 +552,7 @@ def afterAddedClass():
         c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
         insertClass(c)
 
-        # CHANGE TO WHATEVEVER WE DECIDE
-        return render_template('afterApplying.html')
+        return redirect(url_for('showPersonnelCourses'))
     else:
         return getAllInstructors("error_incorrectInput.html")
 
@@ -638,7 +638,9 @@ def personnelEditProfile():
 # ---- Student MyCourses (AKA their home) ----
 @app.route('/studentHome', methods=['POST', 'GET'])
 def showStudentHome():
-    return render_template("student_myCourses.html")
+    username = session['username']
+    return getStudentByUsername("student_editProfile.html", username)
+    # return render_template("student_myCourses.html")
     # return getStudentCoursesByUsername("student_myCourses.html")
 
 # ---- Student MyProfile ----
@@ -737,6 +739,44 @@ def editStudentProfile():
     studentUpdateProfile(s, username)
 
     return redirect(url_for('showStudentProfile'))
+
+# ---- Student SHOW Add/Drop Course ----
+@app.route('/studentAddDropCourse', methods=['POST', 'GET'])
+def addDropCourseStudent():
+    username = session['username']
+    var = "'" + username + "'"
+    return getCoursesByGrade("student_addOrDropCourse.html", username)
+
+# ---- Student Add Course ----
+@app.route('/studentAddCourse', methods=['POST', 'GET'])
+def studentAddCourse():
+
+    _courseid = request.form['classID']
+
+    if checkIfCourseExists(_courseid) == 0:
+        return render_template("error_StudentCourseDNE.html")
+    else:
+        username = session['username']
+        var = "'" + username + "'"
+        _sid = getStudentID(var)
+        t = Take(_sid, _courseid, "0")
+        insertTake(t)
+        return redirect(url_for('showStudentHome'))
+
+# ---- Student SHOW Add/Drop Course ----
+@app.route('/studentDropCourse', methods=['POST', 'GET'])
+def studentDropCourse():
+    _courseid = request.form['classID']
+
+    if checkIfCourseExists(_courseid) == 0:
+        return render_template("error_StudentCourseDNE.html")
+    else:
+        username = session['username']
+        var = "'" + username + "'"
+        _sid = getStudentID(var)
+        deleteTake(_sid, _courseid)
+        return redirect(url_for('showStudentHome'))
+
 
 if __name__ == "__main__":
     app.run()

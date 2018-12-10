@@ -300,7 +300,10 @@ def getCoursesByGrade(filename, username):
     mycursor = mydb.cursor()
     val = "'" + username + "'"
     student = getStudentByUsernameOnly(val)
+    print student
     grade = student[0][23]
+    print grade
+    level = "N/A"
     if grade in ["4th", "5th"]:
         level = "4th-5th"
     if grade in ["6th", "7th" "8th"]:
@@ -308,9 +311,10 @@ def getCoursesByGrade(filename, username):
     if grade in ["9th", "10th", "11th", "12th"]:
         level = "9th-12th"
 
-    statement = "SELECT * FROM Classes WHERE Level = '" + level + "'" + " AND NumberOfStudentsRegistered < Capacity"
+    statement = "SELECT * FROM Classes WHERE Classes.Level = '" + level + "'" + " AND NumberOfStudentsRegistered < Capacity"
     mycursor.execute(statement)
     data = mycursor.fetchall()
+    print(data)
     return render_template(filename, data=data)
 
 def incrementClassSize(courseid):
