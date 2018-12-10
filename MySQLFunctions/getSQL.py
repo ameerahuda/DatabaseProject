@@ -192,14 +192,12 @@ def getEditCourseInfo(filename, courseId):
                     "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val
         mycursor.execute(statement)
         currStudents = mycursor.fetchall()
-        print currStudents
 
         statement = "SELECT Students.StudentID, Students.FirstName, Students.LastName, Students.UserName " \
                     "FROM Students WHERE Students.StudentID NOT IN (SELECT Students.StudentID " \
                     "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val + ")"
         mycursor.execute(statement)
         otherStudents = mycursor.fetchall()
-        print otherStudents
 
         return render_template(filename, data=data, obj=obj, cStu=currStudents, oStu=otherStudents)
     except (mysql.connector.Error, mysql.connector.Warning) as e:
@@ -278,9 +276,42 @@ def getCoursesByGrade(filename, username):
     if grade in ["9th", "10th", "11th", "12th"]:
         level = "9th-12th"
 
-    statement = "SELECT * FROM Classes WHERE Level = '" + level + "'"
+    statement = "SELECT * FROM Classes WHERE Level = '" + level + "'" + " AND NumberOfStudentsRegistered < Capacity"
     mycursor.execute(statement)
     data = mycursor.fetchall()
     return render_template(filename, data=data)
+
+def incrementClassSize(courseid):
+    mydb = DatabaseConnection()
+    mycursor = mydb.cursor()
+    val = "'" + courseid + "'"
+    statement = "SELECT NumberOfStudentsRegistered FROM Classes WHERE ClassID = " + val
+    mycursor.execute(statement)
+    data = mycursor.fetchall()
+    num = int(data[0][0])
+    num = num + 1
+
+    statement = "UPDATE Classes SET NumberOfStudentsRegistered = " + str(num) + " WHERE ClassID = " + val
+    mycursor.execute(statement)
+    mydb.commit()
+
+def decrementClassSize(courseid):
+    mydb = DatabaseConnection()
+    mycursor = mydb.cursor()
+    val = "'" + courseid + "'"
+    statement = "SELECT NumberOfStudentsRegistered FROM Classes WHERE ClassID = " + val
+    mycursor.execute(statement)
+    data = mycursor.fetchall()
+    num = int(data[0][0])
+    num = num - 1
+
+    statement = "UPDATE Classes SET NumberOfStudentsRegistered = " + str(num) + " WHERE ClassID = " + val
+    mycursor.execute(statement)
+    mydb.commit()
+
+
+
+
+
 
 

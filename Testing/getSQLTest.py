@@ -19,4 +19,6 @@ mycursor = mydb.cursor()
 
 # getEditCourseInfo('2f8b7d4d-2d9')
 
-getCoursesByGrade('Jamie51788')
+# getCoursesByGrade('Jamie51788')
+
+incrementClassSize('08cc38')
