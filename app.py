@@ -17,7 +17,7 @@ app.secret_key = 'secretkey'
 
 
 # landing page endpoint
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
 def main():
     return render_template('index.html')
     #return getCoursesByGrade("student_addOrDropCourse.html", 'Jamie51788')
@@ -501,7 +501,7 @@ def showSuccessfulEdit():
     if _mentorID != "Choose...":
         var = "'" + _uname + "'"
         data = getStudentByUsernameOnly(var)
-        print data[0][0]
+        print(data[0][0])
         m = Mentor(_mentorID,data[0][0],0)
         insertMentor(m)
 
@@ -535,17 +535,26 @@ def afterAddedClass():
     _startTime = request.form['startTime']
     _endTime = request.form['endTime']
 
-    timeslot = _startTime + _endTime
+    startTime_string = datetime.strptime(_startTime, '%H:%M')
+    endTime_string = datetime.strptime(_endTime, '%H:%M')
+    if endTime_string < startTime_string:
+        return render_template('error_incorrectInput.html')
+
+    timeslot = startTime_string.strftime('%I:%M %p') + "-" + endTime_string.strftime('%I:%M %p')
+    # timeslot = _startTime + _endTime
 
     if checkCourseInSession(_className, _session) > 0:
         return render_template("personnel_ErrorCoursesExist.html")
-    else:
+    elif getCourseByInstructorAndTime(_insID, timeslot, _session) == 0 \
+            and getCourseByRoomAndTime(_building, _roomno, timeslot, _session) == 0:
         classid = str(uuid.uuid4())[:6]
         c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
         insertClass(c)
 
         # CHANGE TO WHATEVEVER WE DECIDE
         return render_template('afterApplying.html')
+    else:
+        return getAllInstructors("error_incorrectInput.html")
 
 # ---- List class (Personnel) ----
 @app.route('/showPersonnelCourses', methods=['GET', 'POST'])
@@ -581,9 +590,9 @@ def afterpersonnelCourses():
 @app.route('/showPersonnelEditCourse', methods=['POST', 'GET'])
 def showPersonnelEditCourse():
     _courseid = request.form['EditedCourseID']
-    print _courseid
+    print(_courseid)
     val = "'" + _courseid + "'"
-    print val
+    print(val)
 
     if _courseid == "":
         return redirect(url_for('/personnelEditCourse'))

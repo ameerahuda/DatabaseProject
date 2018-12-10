@@ -173,7 +173,7 @@ def updateEditClass(EditCourse, courseid):
 		db = DatabaseConnection()
 		c = db.cursor()
 
-		print courseid
+		print(courseid)
 
 		var = "'" + courseid[0] + "'"
 
@@ -184,8 +184,8 @@ def updateEditClass(EditCourse, courseid):
 		vals = (EditCourse.className, EditCourse.session, EditCourse.level, EditCourse.timeSlot, EditCourse.building,
 				EditCourse.roomNumber, EditCourse.capacity)
 
-		print courseid[0]
-		print vals
+		print(courseid[0])
+		print(vals)
 		c.execute(stmt, vals)
 
 		db.commit()

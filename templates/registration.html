@@ -204,6 +204,14 @@ function validate()
     }else{
 	    graddate.style.backgroundColor = "white";
     }
+
+    if (graddate.value < 2018 || graddate.value > 2035) {
+        graddate.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    graddate.style.backgroundColor = "white";
+    }
+
     if (exphs.value.length > 1 && !exphs.value.match(letters))
 	{
 		exphs.style.backgroundColor = "pink";
