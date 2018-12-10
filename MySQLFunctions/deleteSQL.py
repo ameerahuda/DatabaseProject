@@ -58,7 +58,6 @@ def deleteClass(classID):
     try:
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
-
         statement = "UPDATE Classes SET IsDeleted = 1 WHERE ClassID = " + str(classID)
         mycursor.execute(statement)
         mydb.commit()
