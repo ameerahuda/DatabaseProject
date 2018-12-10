@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>UYP Sign Up</title>
+    <title>UYP Edit Course</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="../static/css/signup.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -70,12 +70,11 @@ function validate()
       </div>
 
       <div class="jumbotron">
-        <h1>Edit Class</h1>
+        <h1>Edit Course</h1>
         <form id="editClassPersonnel" name="RegForm" onsubmit="return validate()" action="{{ url_for('personnelEditCourse') }}" method="post" class="form-signin">
             {% for user in data %}
                 <label for="inputClassName">Class Name</label>
-                <input type="text" name="className" id="inputClassName" required="required" class="form-control" placeholder="Class Name" value={{ user[1] }}>
-                <label for="inputInstructorID">Instructor ID</label>
+                <input type="text" name="className" id="inputClassName" required="required" class="form-control" placeholder="Class Name" value="{{ user[1] }}">
                 <label for="inputInstructorID">Instructor</label>
                 <select id="inputInstructorID" name="instructorID" required="required" class="form-control">
                     <option selected>{{ user[2] }}</option>
@@ -116,6 +115,20 @@ function validate()
                 <input type="text" name="capacity" class="form-control" required="required" id="inputCapacity" placeholder="{{ user[8] }}" value="{{ user[8] }}">
                 <label for="inputStartTime">Time Slot</label>
                 <input type="text" name="timeSlot" class="form-control" required="required" id="inputTimeSlot" placeholder="{{ user[8] }}" value="{{ user[5] }}">
+                <label for="inputAddStudent">Add Student</label>
+                <select id="inputAddStudent" name="addStudent" class="form-control">
+                    <option selected>Select a Student to Add</option>
+                    {% for stu in oStu %}
+                        <option value={{ stu[0] }}>{{ stu[1] }} {{ stu[2] }} - {{ stu[3] }}</option>
+                    {% endfor %}
+                </select>
+                <label for="inputRemoveStudent">Remove Student</label>
+                <select id="inputRemoveStudent" name="removeStudent" class="form-control">
+                    <option selected>Select a Student to Remove</option>
+                    {% for stu in cStu %}
+                        <option value={{ stu[0] }}>{{ stu[2] }} {{ stu[3] }} - {{ stu[4] }}</option>
+                    {% endfor %}
+                </select>
             {% endfor %}
         <br>
         <input id="btnEditClass" type="submit" class="btn btn-primary">

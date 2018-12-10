@@ -177,15 +177,31 @@ def getAllInstructors(filename):
 
 def getEditCourseInfo(filename, courseId):
     try:
+        val = "'" + courseId + "'"
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
-        statement = "SELECT * FROM Classes WHERE ClassID = '" + courseId + "'"
+        statement = "SELECT * FROM Classes WHERE ClassID = " + val
         mycursor.execute(statement)
         data = mycursor.fetchall()
+
         statement = "SELECT * FROM Instructors"
         mycursor.execute(statement)
         obj = mycursor.fetchall()
-        return render_template(filename, data=data, obj = obj)
+
+        statement = "SELECT Takes.StudentID, Takes.ClassID, Students.FirstName, Students.LastName, Students.UserName " \
+                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val
+        mycursor.execute(statement)
+        currStudents = mycursor.fetchall()
+        print currStudents
+
+        statement = "SELECT Students.StudentID, Students.FirstName, Students.LastName, Students.UserName " \
+                    "FROM Students WHERE Students.StudentID NOT IN (SELECT Students.StudentID " \
+                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val + ")"
+        mycursor.execute(statement)
+        otherStudents = mycursor.fetchall()
+        print otherStudents
+
+        return render_template(filename, data=data, obj=obj, cStu=currStudents, oStu=otherStudents)
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO RETURN STUDENTID')

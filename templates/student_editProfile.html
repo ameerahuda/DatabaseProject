@@ -92,6 +92,13 @@ function validate()
 	    preName.style.backgroundColor = "white";
     }
 
+    if (graddate.value < 2018 || graddate.value > 2035) {
+        graddate.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    graddate.style.backgroundColor = "white";
+    }
+
 	/*if (email.value.length > 1 && email.value.indexOf(".", 0) < 0)
 	{
 		email.style.backgroundColor = "pink";

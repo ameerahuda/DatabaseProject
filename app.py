@@ -17,10 +17,9 @@ app.secret_key = 'secretkey'
 
 
 # landing page endpoint
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
 def main():
-    return getCoursesByGrade("student_addOrDropCourse.html", 'Jamie51788')
-    #return render_template('index.html')
+    return render_template('index.html')
 
 # added for staying logged in
 # @app.route('/')
@@ -529,6 +528,12 @@ def afterAddedClass():
     _cap = request.form['capacity']
     _startTime = request.form['startTime']
     _endTime = request.form['endTime']
+
+    startTime_string = datetime.strptime(_startTime, '%I:%M %p')
+    endTime_string = datetime.strptime(_endTime, '%I:%M %p')
+
+    if endTime_string < startTime_string:
+        return render_template('error_incorrectInput.html')
 
     timeslot = _startTime + _endTime
 
