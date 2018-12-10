@@ -76,7 +76,7 @@ def getAllCourses(filename):
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
 
-        statement = "SELECT * FROM Classes"
+        statement = "SELECT * FROM Classes WHERE IsDeleted = '0'"
         mycursor.execute(statement)
         data = mycursor.fetchall()
         return render_template(filename, data=data)
@@ -213,6 +213,8 @@ def getCourseID(className, sess):
     try:
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
+        print className
+        print sess
         statement = "SELECT ClassID FROM Classes WHERE Classes.ClassName = %s AND Classes.Session = %s"
         vals = (className, sess)
         mycursor.execute(statement, vals)

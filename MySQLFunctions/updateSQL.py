@@ -175,10 +175,10 @@ def updateEditClass(EditCourse, courseid):
 
 		print(courseid)
 
-		var = "'" + courseid[0] + "'"
+		var = "'" + courseid + "'"
 
 		stmt = "UPDATE Classes SET ClassName = %s, Classes.Session = %s, Classes.Level = %s, TimeSlot = %s, " \
-			   "Building = %s, RoomNumber = %s, Capacity = %s WHERE ClassID = '" + courseid[0] + "'"
+			   "Building = %s, RoomNumber = %s, Capacity = %s WHERE ClassID = '" + courseid + "'"
 
 
 		vals = (EditCourse.className, EditCourse.session, EditCourse.level, EditCourse.timeSlot, EditCourse.building,

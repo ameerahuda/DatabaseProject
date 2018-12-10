@@ -590,9 +590,7 @@ def afterpersonnelCourses():
 @app.route('/showPersonnelEditCourse', methods=['POST', 'GET'])
 def showPersonnelEditCourse():
     _courseid = request.form['EditedCourseID']
-    print(_courseid)
     val = "'" + _courseid + "'"
-    print(val)
 
     if _courseid == "":
         return redirect(url_for('/personnelEditCourse'))
@@ -600,6 +598,7 @@ def showPersonnelEditCourse():
         if checkIfCourseExists(_courseid) == 0:
             return render_template("error_courseDNE_PERSONNEL.html") # check this
         else:
+            session['courseId'] = _courseid
             return getEditCourseInfo('editClass.html', _courseid)
 
 @app.route('/personnelEditCourse', methods=['POST', 'GET'])
@@ -613,13 +612,30 @@ def personnelEditCourse():
     _cap = request.form['capacity']
     _startTime = request.form['timeSlot']
 
-    cid = getCourseID(_className, _session)
+    # cid = getCourseID(_className, _session)
+    cid = session['courseId']
 
     c = EditCourse(_className, _building, _roomno, _session, _level, _cap, _startTime)
 
     updateEditClass(c, cid)
 
+    session.pop('courseId', None)
+
     return redirect(url_for('showPersonnelCourses'))
+
+# ---- Personnel Drop Course ----
+@app.route('/personnelDropCourse', methods=['POST', 'GET'])
+def personnelDropCourse():
+    _courseid = request.form['droppedCourseID']
+    val = "'" + _courseid + "'"
+    if _courseid == "":
+        return redirect(url_for('showPersonnelCourses'))
+    else:
+        if checkIfCourseExists(_courseid) == 0:
+            return render_template("error_courseDNE_PERSONNEL.html")  # check this
+        else:
+            deleteClass(val)
+            return redirect(url_for('showPersonnelCourses'))
 
 # ---- Personnel Home Page (Edit their profile) ----
 @app.route('/personnelHome', methods=['POST', 'GET'])
@@ -775,7 +791,7 @@ def studentAddCourse():
         insertTake(t)
         return redirect(url_for('showStudentHome'))
 
-# ---- Student SHOW Add/Drop Course ----
+# ---- Student Drop Course ----
 @app.route('/studentDropCourse', methods=['POST', 'GET'])
 def studentDropCourse():
     _courseid = request.form['classID']
