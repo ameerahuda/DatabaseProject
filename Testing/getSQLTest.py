@@ -23,4 +23,4 @@ mycursor = mydb.cursor()
 
 # incrementClassSize('08cc38')
 
-exportStudents()
+getEditStudentFromPersonnel2('Jamie51788')
