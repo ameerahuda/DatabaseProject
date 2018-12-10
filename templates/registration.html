@@ -205,7 +205,7 @@ function validate()
 	    graddate.style.backgroundColor = "white";
     }
 
-    if (graddate.value < 2018 || graddate.value > 2035) {
+    if (graddate.value.length > 1 && (graddate.value < 2018 || graddate.value > 2035)) {
         graddate.style.backgroundColor = "pink";
 		return false;
     }else{

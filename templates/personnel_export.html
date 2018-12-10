@@ -270,7 +270,6 @@ function validate()
             <li role="presentation"><a href="/showPersonnelApproval">Student Approval</a></li>
             <li role="presentation"><a href="/showStudentSearch">Student Search</a></li>
             <li role="presentation"><a href="/showPersonnelCourses">Courses</a></li>
-            <li role="presentation" class="active"><a href="#">Export</a></li>
             <li role="presentation"><a href = '/logout'>Logout</a></li>
           </ul>
         </nav>
@@ -279,7 +278,7 @@ function validate()
 
       <div class="jumbotron">
         <h1>Export</h1>
-          <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('exportClasses') }}" method="post" class="form-signin">
+          <form id="regist" name="RegForm" onsubmit="return validate()"  method="post" class="form-signin">
             <h4>Export Courses to a File</h4>
             <input name="btnExport" type="submit" onclick="submitForm('exportClasses')" value="Export" class="btn btn-primary">
             <br>

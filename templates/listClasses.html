@@ -67,11 +67,10 @@
 	  <div class="header">
 	    <nav>
 		  <ul class="nav nav-pills pull-right">
-		    <li role="presentation" ><a href="/showPersonnelCourses">Home</a></li>
+		    <li role="presentation" ><a href="/personnelHome">Home</a></li>
             <li role="presentation"><a href="/showPersonnelApproval">Student Approval</a></li>
             <li role="presentation"><a href="/showStudentSearch">Student Search</a></li>
             <li role="presentation" class="active"><a href="/showPersonnelCourses">Courses</a></li>
-            <li role="presentation"><a href="#">Export</a></li>
             <li role="presentation"><a href = '/logout'>Logout</a></li>
           </ul>
 		</nav>
@@ -136,6 +135,8 @@
         </table>
         <br>
         <div class="form-group col-md-4">
+            <h4>Export Courses to a File</h4>
+            <input name="btnExport" type="submit" onclick="submitForm('exportClasses')" value="Export" class="btn btn-primary">
         </div>
       </div>
 	</div>
