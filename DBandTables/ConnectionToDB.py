@@ -5,7 +5,7 @@ def DatabaseConnection():
         mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="your_password",
+            passwd="#Slugger1!",
             database="UYPdb"
         )
         return mydb

@@ -496,7 +496,7 @@ def showSuccessfulEdit():
     if _mentorID != "Choose...":
         var = "'" + _uname + "'"
         data = getStudentByUsernameOnly(var)
-        print data[0][0]
+        print(data[0][0])
         m = Mentor(_mentorID,data[0][0],0)
         insertMentor(m)
 
@@ -505,7 +505,7 @@ def showSuccessfulEdit():
 # ADD CLASS
 @app.route('/showAddClass',methods=['POST'])
 def showAddClass():
-    return render_template("addClass.html")
+    return getAllInstructors("addClass.html")
 
 @app.route('/addClass', methods=['POST'])
 def addClass():
@@ -527,14 +527,17 @@ def afterAddedClass():
     _startTime = request.form['startTime']
     _endTime = request.form['endTime']
 
-    timeslot = _startTime + _endTime
+    startTime_string = datetime.strptime(_startTime, '%H:%M')
+    endTime_string = datetime.strptime(_endTime, '%H:%M')
 
-    classid = str(uuid.uuid4())[:12]
-    c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
-    insertClass(c)
-
-    # CHANGE TO WHATEVEVER WE DECIDE
-    return render_template('afterApplying.html')
+    timeslot = startTime_string.strftime('%I:%M %p') + "-" + endTime_string.strftime('%I:%M %p')
+    if getCourseByInstructorAndTime(_insID, timeslot, _session) == 0 and getCourseByRoomAndTime(_building, _roomno, timeslot, _session) == 0:
+        classid = str(uuid.uuid4())[:12]
+        c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
+        insertClass(c)
+        return render_template('afterApplying.html')
+    else:
+        return getAllInstructors("addClass.html")
 
 # ---- List class (Personnel) ----
 @app.route('/showPersonnelCourses', methods=['GET'])

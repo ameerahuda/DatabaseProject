@@ -178,3 +178,33 @@ def getEditStudentFromPersonnel(filename, username):
         print(e)
         print('FAILED TO RETURN STUDENTID')
         exit(0)
+
+def getCourseByInstructorAndTime(instructor, time, session):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Classes WHERE InstructorID = '" + instructor + "' AND TimeSlot = '" + time + "' AND Session = '" + session + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        if mycursor.rowcount == 0:
+            data = 0
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+def getCourseByRoomAndTime(building, room, time, session):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Classes WHERE Building = '" + building + "' AND RoomNumber = '" + room + "' AND TimeSlot = '" + time + "' AND Session = '" + session + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        if mycursor.rowcount == 0:
+            data = 0
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
