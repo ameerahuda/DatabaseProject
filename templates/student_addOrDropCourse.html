@@ -9,7 +9,7 @@
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/static/js/personnel_StudentSearch.js"></script>
+    <script src="/static/js/student_AddDropCourse.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -35,6 +35,14 @@ function validate()
 
 	return true;
 }</script>
+
+    <script>
+          function submitForm(action){
+             console.log(action);
+            document.getElementById('addDropStudentClass').action = action;
+            document.getElementById('addDropStudentClass').submit();
+          }
+      </script>
     
     <style>
         table {
@@ -71,7 +79,7 @@ function validate()
 
       <div class="jumbotron">
         <h1>Add or Drop Course</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterPersonnelApproval') }}" method="post" class="form-signin">
+        <form id="addDropStudentClass" name="RegForm" onsubmit="return validate()" method="post" class="form-signin">
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="ClassId">Class ID</label>
@@ -79,8 +87,8 @@ function validate()
                 </div>
             </div>
             <br>
-            <input id="btnStudentSearch" type="submit" value="Add" class="btn btn-primary">
-            <input id="btnStudentSearch" type="submit" value="Drop" class="btn btn-primary">
+            <input id="btnAddDrop" type="submit" value="Add" onclick="submitForm('studentAddCourse')" class="btn btn-primary">
+            <input id="btnAddDrop" type="submit" value="Drop" onclick="submitForm('studentDropCourse')" class="btn btn-primary">
             <br>
             <br>
             <br>
