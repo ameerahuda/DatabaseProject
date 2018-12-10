@@ -248,9 +248,23 @@ def showSignIn():
         username = session['username']
         ## check if student or personnel
         if studentOrPersonnel(username) == "student entry":
-            return redirect(url_for('showStudentProfile'))
+            password = session['password']
+            result = checkIfCorrectStudentPassword(username, password)
+            if result == "Correct Password":
+                return redirect(url_for('showStudentProfile'))
+            else:
+                session.pop('username', None)
+                return render_template('error_invalidUser.html')
+        elif studentOrPersonnel(username) == "admin entry":
+            password = session['password']
+            result = checkIfCorrectInstructorPassword(username, password)
+            if result == "Correct Password":
+                return redirect(url_for('personnelHome'))
+            else:
+                session.pop('username', None)
+                return render_template('error_invalidUser.html')
         else:
-            return redirect(url_for('personnelHome'))
+            return render_template('error_invalidUser.html')
     return render_template("signIn.html")
 
 @app.route('/signIn', methods=['GET', 'POST'])
@@ -259,6 +273,7 @@ def signIn():
     # if yes then do this
     if request.method == 'POST':
         session['username'] = request.form['username']
+        session['password'] = request.form['password']
         return redirect(url_for('showSignIn'))
     # else redirect ot home page to register
     return render_template('index.html')

@@ -127,7 +127,13 @@ def studentOrPersonnel(username):
         mycursor.execute(statement)
         data = mycursor.fetchall()
         if len(data) == 0:
-            return "admin entry"
+            statement = "SELECT * FROM Instructors WHERE UserName = " + val
+            mycursor.execute(statement)
+            data1 = mycursor.fetchall()
+            if len(data1) == 0:
+                return "invalid entry"
+            else:
+                return "admin entry"
         else:
             return "student entry"
     except (mysql.connector.Error, mysql.connector.Warning) as e:
@@ -355,6 +361,39 @@ def getAllCoursesNoFile():
         mycursor.execute(statement)
         data = mycursor.fetchall()
         return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+def checkIfCorrectStudentPassword(username, password):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
+        statement = "SELECT Password FROM Students WHERE UserName = '"+ username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        if data[0][0] == password:
+            return "Correct Password"
+        else:
+            return "Incorrect Password"
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+def checkIfCorrectInstructorPassword(username, password):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT Password FROM Instructors WHERE UserName = '"+ username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        if data[0][0] == password:
+            return "Correct Password"
+        else:
+            return "Incorrect Password"
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO SELECT: TRY AGAIN')

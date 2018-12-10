@@ -266,11 +266,11 @@ function validate()
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="/personnelHome">Home</a></li>
+            <li role="presentation"><a href="/personnelHome">Home</a></li>
             <li role="presentation"><a href="/showPersonnelApproval">Student Approval</a></li>
             <li role="presentation"><a href="/showStudentSearch">Student Search</a></li>
             <li role="presentation"><a href="/showPersonnelCourses">Courses</a></li>
-            <li role="presentation"><a href="/exportClasses">Export</a></li>
+            <li role="presentation" class="active"><a href="#">Export</a></li>
             <li role="presentation"><a href = '/logout'>Logout</a></li>
           </ul>
         </nav>
@@ -278,23 +278,10 @@ function validate()
       </div>
 
       <div class="jumbotron">
-        <h1>Personnel Profile</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('personnelEditProfile') }}" method="post" class="form-signin">
-            {% for user in data %}
-                <h3>Personnel Information</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="inputFirstName">FirstName</label>
-                        <input type="text" name="firstName" id="inputFirstName"  class="form-control" value={{ user[0] }} placeholder={{ user[0] }}>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputLastName">Last Name</label>
-                        <input type="text" name="lastName" class="form-control" id="inputLastName" value={{ user[1] }} placeholder={{ user[1] }}>
-                    </div>
-                </div>
-            {% endfor %}
-            <br>
-            <input id="btnEditPersonnelProfile" type="submit" class="btn btn-primary">
+        <h1>Export</h1>
+          <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('exportClasses') }}" method="post" class="form-signin">
+            <h4>Export Courses to a File</h4>
+            <input name="btnExport" type="submit" onclick="submitForm('exportClasses')" value="Export" class="btn btn-primary">
             <br>
             <br>
             <br>
