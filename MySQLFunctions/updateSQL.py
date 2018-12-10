@@ -232,3 +232,18 @@ def studentUpdateProfile(Student2, username):
 	except (sql.Error, sql.Warning) as e:
 		print(e)
 		exit(0)
+
+def updateTake2(courseid, studentid):
+	try:
+		db = DatabaseConnection()
+		c = db.cursor()
+
+		stmt = "UPDATE Takes SET IsDeleted = '0' WHERE StudentID = %s AND ClassID = %s"
+		vals = (studentid, courseid)
+
+		c.execute(stmt, vals)
+
+		db.commit()
+	except (sql.Error, sql.Warning) as e:
+		print(e)
+		exit(0)

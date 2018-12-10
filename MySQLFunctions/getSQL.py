@@ -460,7 +460,7 @@ def getIfAlreadyInTakes(courseID, studentId):
     try:
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
-        statement = "SELECT * FROM Takes WHERE StudentID = " + studentId + " AND ClassID = " + courseID
+        statement = "SELECT * FROM Takes WHERE StudentID = '" + studentId + "' AND ClassID = '" + courseID + "'"
         mycursor.execute(statement)
         data = mycursor.fetchall()
         if len(data) == 0:

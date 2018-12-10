@@ -632,6 +632,8 @@ def personnelEditCourse():
     _level = request.form['level']
     _cap = request.form['capacity']
     _startTime = request.form['timeSlot']
+    _addstudent = request.form['addStudent']
+    _removeStudent = request.form['removeStudent']
 
     # cid = getCourseID(_className, _session)
     cid = session['courseId']
@@ -639,6 +641,19 @@ def personnelEditCourse():
     c = EditCourse(_className, _building, _roomno, _session, _level, _cap, _startTime)
 
     updateEditClass(c, cid)
+
+    if _addstudent != "Select a Student to Add":
+        if getIfAlreadyInTakes(cid, _addstudent) == "Can input":
+            t = Take(_addstudent, cid, "0")
+            insertTake(t)
+            incrementClassSize(cid)
+        else:
+            updateTake2(cid, _addstudent)
+            incrementClassSize(cid)
+
+    if _removeStudent != "Select a Student to Remove":
+        deleteTake(_removeStudent, cid)
+        decrementClassSize(cid)
 
     session.pop('courseId', None)
 
