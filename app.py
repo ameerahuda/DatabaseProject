@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, json, redirect, url_for, session
+from flask import Flask, render_template, request, json, redirect, url_for, session, send_file
 from Endpoints import *
 from Classes.Objects import *
 from DBandTables import *
@@ -737,6 +737,8 @@ def editStudentProfile():
     studentUpdateProfile(s, username)
 
     return redirect(url_for('showStudentProfile'))
+
+
 
 if __name__ == "__main__":
     app.run()

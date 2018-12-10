@@ -13,7 +13,6 @@
               var id = document.forms["EditClassInfo"]["EditedCourseID"];
               var ses = document.forms["EditClassInfo"]["EditedCourseSession"];
               var mssg = "";
-
               var validID = /^[0-9]+$/;
               if(id.value.length > 0 && id.value.match(validID)){
                   mssg += "id = " + id.value + "\n";
@@ -33,8 +32,17 @@
       <script>
           function submitForm(action){
              console.log(action);
-            document.getElementById('listclassesform').action = action;
-            document.getElementById('listclassesform').submit();
+            if(action == 'exportClasses'){
+                var link = document.createElement("a");
+                link.download = "uypCourses.csv";
+                link.href = "/exportClasses";
+                link.click();
+                document.getElementById('listclassesform').action = 'showPersonnelCourses'
+            }
+            else{
+                document.getElementById('listclassesform').action = action;
+                document.getElementById('listclassesform').submit();
+            }
           }
       </script>
       <style>
@@ -43,19 +51,17 @@
             border-collapse: collapse;
             width: 100%;
         }
-
         td, th {
             border: 2px solid #dddddd;
             text-align: left;
             padding: 8px;
         }
-
         tr:nth-child(even) {
             background-color: #dddddd;
         }
     </style>
   </head>
-  
+
   <body>
 	<div class="container">
 	  <div class="header">
@@ -128,6 +134,10 @@
                     </tr>
                 {% endfor %}
         </table>
+        <div class="form-group col-md-4">
+            <h4>Export Courses to a File</h4>
+            <input name="btnExport" type="submit" onclick="submitForm('exportClasses')" value="Export" class="btn btn-primary">
+        </div>
       </div>
 	</div>
   </body>
