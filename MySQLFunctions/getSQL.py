@@ -237,6 +237,34 @@ def getEditStudentFromPersonnel(filename, username):
         print('FAILED TO RETURN STUDENTID')
         exit(0)
 
+def getPersonnelInfo(filename, username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT FirstName, LastName FROM Instructors WHERE UserName = '" + username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        print data
+        return render_template(filename, data=data)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN USERNAME')
+        exit(0)
+
+def getPersonnelInfoOnly(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT FirstName, LastName FROM Instructors WHERE UserName = '" + username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        print data
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN USERNAME')
+        exit(0)
+
 def getCoursesByGrade(filename, username):
     mydb = DatabaseConnection()
     mycursor = mydb.cursor()
@@ -254,6 +282,5 @@ def getCoursesByGrade(filename, username):
     mycursor.execute(statement)
     data = mycursor.fetchall()
     return render_template(filename, data=data)
-
 
 

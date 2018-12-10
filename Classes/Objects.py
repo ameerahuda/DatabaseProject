@@ -103,9 +103,11 @@ class Take:
     self.IsDeleted = IsDeleted
 
 class Applicant:
-  def __init__(self, StudentID, AcceptedStatus):
+  def __init__(self, StudentID, AcceptedStatus, ApproversFirstName, ApproversLastName):
     self.StudentID = StudentID
     self.AcceptedStatus = AcceptedStatus
+    self.ApproversFirstName = ApproversFirstName
+    self.ApproversLastName = ApproversLastName
 
 class Student1:
   def __init__(self, FirstName, LastName, MiddleInitial, Suffix, PreferredName,

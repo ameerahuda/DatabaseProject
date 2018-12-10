@@ -248,7 +248,7 @@ def showSignIn():
         if studentOrPersonnel(username) == "student entry":
             return redirect(url_for('showStudentProfile'))
         else:
-            return getAllStudents("personnel_approval.html")
+            return redirect(url_for('personnelHome'))
     return render_template("signIn.html")
 
 @app.route('/signIn', methods=['GET', 'POST'])
@@ -292,7 +292,7 @@ def afteradminapplied():
     admin = Instructor(str(adminID), _adminFirstName, _adminLastName, _adminUserName, _adminPassword, "0")
     if getInstructorByUsernameOnly(admin.Username) == 0:
         insertInstructor(admin)
-        return render_template('afterApplying.html')
+        return redirect(url_for('showSignIn'))
     else:
         return render_template('personnelRegistration.html')
 
@@ -300,7 +300,7 @@ def afteradminapplied():
 # PERSONNEL APPROVAL
 @app.route('/showPersonnelApproval')
 def showPersonnelApproval():
-    return render_template("personnel_approval.html")
+    return getAllStudents('personnel_approval.html')
 
 @app.route('/personnelApproval', methods=['POST'])
 def personnelApproval():
@@ -314,9 +314,14 @@ def afterPersonnelApproval():
     _rFStudent = request.form['rStudentFirstName']
     _rLStudent = request.form['rStudentLastName']
     _rUStudent = request.form['rStudentUname']
-    _authF = request.form['authorizersFirstName']
-    _authL = request.form['authorizersLastName']
-    _authU = request.form['authorizersUname']
+
+    username = session['username']
+
+    varr = getPersonnelInfoOnly(username)
+
+    _authF = varr[0][0]
+    _authL = varr[0][1]
+    _authU = username
 
     var = "'"
     var += _aUStudent
@@ -333,53 +338,53 @@ def afterPersonnelApproval():
     # if there is a student in both approve and deny
     if _aFStudent != "" and _aLStudent != "" and _aUStudent != "" and _rFStudent != "" and _rLStudent != "" and\
             _rUStudent != "":
+        print("here")
         if _authF != "" and _authL != "" and _authU != "":
             if getStudentByUsernameOnly(var) == 0 or getStudentByUsernameOnly(var1) == 0:
                 return render_template('approval_StudentDNE.html')
             else:
-                asID = getStudentID(_aUStudent)
-                rsID = getStudentID(_rUStudent)
-                d = datetime.datetime.today().strftime('%m/%d/%Y')
-                s = Applicant(asID, "Accepted")
-                s1 = Applicant(rsID, "Denied")
+                asID = getStudentID(var)
+                rsID = getStudentID(var1)
+                # d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(asID, "Accepted", _authF, _authL)
+                s1 = Applicant(rsID, "Denied", _authF, _authL)
                 updateApplicant(s)
                 updateApplicant(s1)
-
-                # NEEDS TO BE CHANGED
-                return render_template("afterApplying.html")
+                return redirect(url_for('showPersonnelApproval'))
         else:
             return render_template('approval_StudentDNE.html')
             # only approved student
     elif _aFStudent != "" and _aLStudent != "" and _aUStudent != "" and _rFStudent == "" and _rLStudent == "" and\
             _rUStudent == "":
+        print("over here")
         if _authF != "" and _authL != "" and _authU != "":
             if getStudentByUsernameOnly(var) == 0:
                 return render_template('approval_StudentDNE.html')
             else:
                 asID = getStudentID(var)
-                d = datetime.datetime.today().strftime('%m/%d/%Y')
-                s = Applicant(asID, "Accepted")
+                #d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(asID, "Accepted", _authF, _authL)
                 updateApplicant(s)
-                # NEEDS TO BE CHANGED
-                return render_template("afterApplying.html")
+                return redirect(url_for('showPersonnelApproval'))
         else:
             return render_template('approval_StudentDNE.html')
     elif _aFStudent == "" and _aLStudent == "" and _aUStudent == "" and _rFStudent != "" and _rLStudent != "" and\
             _rUStudent != "":
+        print("over over here")
         if _authF != "" and _authL != "" and _authU != "":
             if getStudentByUsernameOnly(var1) == 0:
                 return render_template('approval_StudentDNE.html')
             else:
                 rsID = getStudentID(var1)
-                d = datetime.datetime.today().strftime('%m/%d/%Y')
-                s = Applicant(rsID, "Denied")
+                # d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(rsID, "Denied", _authF, _authL)
                 updateApplicant(s)
-                # NEEDS TO BE CHANGED
-                return render_template("afterApplying.html")
+                return redirect(url_for('showPersonnelApproval'))
         else:
             return render_template('approval_StudentDNE.html')
     else:
-        return render_template('personnel_approval.html')
+        print("over over over here")
+        return redirect(url_for('showPersonnelApproval'))
 
 # ----- Student Search (Personnel) ------
 @app.route('/showStudentSearch', methods=['GET'])
@@ -612,6 +617,19 @@ def personnelEditCourse():
 
     return redirect(url_for('showPersonnelCourses'))
 
+# ---- Personnel Home Page (Edit their profile) ----
+@app.route('/personnelHome', methods=['POST', 'GET'])
+def personnelHome():
+    username = session['username']
+    return getPersonnelInfo('personnel_editProfile.html', username)
+
+@app.route('/personnelEditProfile', methods=['POST', 'GET'])
+def personnelEditProfile():
+    firstName = request.form['firstName']
+    lastName = request.form['lastName']
+    username = session['username']
+    updatePersonnelProfile(firstName, lastName, username)
+    return redirect(url_for('personnelHome'))
 
 # ---- Student MyCourses (AKA their home) ----
 @app.route('/studentHome', methods=['POST', 'GET'])
