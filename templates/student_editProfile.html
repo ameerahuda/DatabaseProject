@@ -287,7 +287,7 @@ function validate()
 
       <div class="jumbotron">
         <h1>Student Profile</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()"  method="post" class="form-signin">
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('editStudentProfile') }}" method="post" class="form-signin">
             {% for user in data %}
                 <h3>Students Information</h3>
                 <div class="form-row">
@@ -436,7 +436,7 @@ function validate()
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputSchoolType">School Type</label>
-                        <select id="inputGender" name="schoolType" class="form-control">
+                        <select id="inputSchoolType" name="schoolType" class="form-control">
                             <option value="{{ user[22] }}" selected>{{ user[22] }}</option>
                             <option value="PU">Public School</option>
                             <option value="PR">Private School</option>
@@ -485,7 +485,7 @@ function validate()
                     </div>
                     <div class="form-group col-md-12">
                         <label for="inputDateOfRegistration">Date of Registration</label>
-                        <input type="text" name="dateOfRegistration" id="inputDateOfRegistration" class="form-control" value="{{ user[1] }}" placeholder={{ user[1] }}>
+                        <input type="text" name="dateOfRegistration" id="inputDateOfRegistration" class="form-control" readonly value="{{ user[1] }}" placeholder={{ user[1] }}>
                     </div>
                 </div>
             {% endfor %}

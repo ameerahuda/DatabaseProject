@@ -141,6 +141,37 @@ class Student1:
     self.ELL = ELL
     self.UserName = UserName
 
+class Student2:
+  def __init__(self, FirstName, LastName, MiddleInitial, Suffix, PreferredName,
+               DateOfBirth, Gender, Race, Address, City, State, Zip, Email, PhoneNumber, DisabilityInfo,
+               HealthConditions, Siblings, SchoolName, SchoolDistrict, SchoolType, GradeInFall, ExpectedHighSchool,
+               ExpectedGradYear, GT, ELL):
+    self.FirstName = FirstName
+    self.LastName = LastName
+    self.MiddleInitial = MiddleInitial
+    self.Suffix = Suffix
+    self.PreferredName = PreferredName
+    self.DateOfBirth = DateOfBirth
+    self.Gender = Gender
+    self.Race = Race
+    self.Address = Address
+    self.City = City
+    self.State = State
+    self.Zip = Zip
+    self.Email = Email
+    self.PhoneNumber = PhoneNumber
+    self.DisabilityInfo = DisabilityInfo
+    self.HealthConditions = HealthConditions
+    self.Siblings = Siblings
+    self.SchoolName = SchoolName
+    self.SchoolDistrict = SchoolDistrict
+    self.SchoolType = SchoolType
+    self.GradeInFall = GradeInFall
+    self.ExpectedHighSchool = ExpectedHighSchool
+    self.ExpectedGradYear = ExpectedGradYear
+    self.GT = GT
+    self.ELL = ELL
+
 class EditCourse:
   def __init__(self, className, building, roomNumber, session, level, capacity, timeSlot):
     self.className = className
