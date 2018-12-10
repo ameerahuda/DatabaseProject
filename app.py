@@ -17,9 +17,10 @@ app.secret_key = 'secretkey'
 
 
 # landing page endpoint
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def main():
-    return render_template('index.html')
+    return getCoursesByGrade("student_addOrDropCourse.html", 'Jamie51788')
+    #return render_template('index.html')
 
 # added for staying logged in
 # @app.route('/')
