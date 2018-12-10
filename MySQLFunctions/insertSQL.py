@@ -108,7 +108,10 @@ def insertTake(Take):
     try:
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
-
+        print Take.StudentID
+        print Take.ClassID
+        val = "'" + Take.StudentID[0][0] + "'"
+        print val
         statement = "INSERT INTO Takes (StudentID, ClassID, IsDeleted) VALUES (%s,%s,%s)"
         mycursor.execute(statement, (Take.StudentID, Take.ClassID, Take.IsDeleted))
         mydb.commit()

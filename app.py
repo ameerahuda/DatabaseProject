@@ -755,6 +755,14 @@ def editStudentProfile():
 
     return redirect(url_for('showStudentProfile'))
 
+# ---- Student MyCourses ----
+@app.route('/studentMyCourses', methods=['POST', 'GET'])
+def studentMyCourses():
+    username = session['username']
+    print username
+    var = "'" + username + "'"
+    return getStudentCoursesByUsername("student_myCourses.html", var)
+
 # ---- Student SHOW Add/Drop Course ----
 @app.route('/studentAddDropCourse', methods=['POST', 'GET'])
 def addDropCourseStudent():
@@ -774,7 +782,11 @@ def studentAddCourse():
         username = session['username']
         var = "'" + username + "'"
         _sid = getStudentID(var)
-        t = Take(_sid, _courseid, "0")
+        print ("here")
+        print (_sid)
+        val = "'" + _sid[0] + "'"
+        print val
+        t = Take(_sid[0], _courseid, "0")
         insertTake(t)
         return redirect(url_for('showStudentHome'))
 

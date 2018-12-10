@@ -89,10 +89,11 @@ def getStudentCoursesByUsername(filename, username):
     try:
         result = getStudentID(username)
         studentID = result[0]
+        print studentID
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
         statement = "SELECT * FROM Takes, Classes WHERE Takes.ClassID = Classes.ClassID AND Takes.StudentID = '" + studentID + "'"
-        mycursor.execute(statement, studentID)
+        mycursor.execute(statement)
         data = mycursor.fetchall()
         print(data)
         return render_template(filename, data=data)
