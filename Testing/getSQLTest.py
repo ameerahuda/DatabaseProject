@@ -21,4 +21,6 @@ mycursor = mydb.cursor()
 
 # getCoursesByGrade('Jamie51788')
 
-incrementClassSize('08cc38')
+# incrementClassSize('08cc38')
+
+exportStudents()

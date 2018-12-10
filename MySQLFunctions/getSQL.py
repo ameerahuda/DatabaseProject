@@ -1,6 +1,7 @@
 import mysql.connector
 from DBandTables.ConnectionToDB import DatabaseConnection
 from flask import Flask, render_template
+import csv
 
 def getAllStudents(filename):
     try:
@@ -340,4 +341,8 @@ def decrementClassSize(courseid):
     statement = "UPDATE Classes SET NumberOfStudentsRegistered = " + str(num) + " WHERE ClassID = " + val
     mycursor.execute(statement)
     mydb.commit()
+
+
+
+
 
