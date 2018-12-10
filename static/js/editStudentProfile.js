@@ -6,7 +6,7 @@ $(function(){
 		// the url is the endpoint that is created in app.py
 		// type is whatever you want to do, can be POST or GET
 		$.ajax({
-			url: '/showSuccessfulEdit',
+			url: '/studentProfile',
 			data: $('form').serialize(),
 			type: 'POST',
 			success: function(response){

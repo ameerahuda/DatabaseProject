@@ -204,3 +204,31 @@ def updatePersonnelProfile(firstName, lastName, username):
 	except (sql.Error, sql.Warning) as e:
 		print(e)
 		exit(0)
+
+def studentUpdateProfile(Student2, username):
+	try:
+		db = DatabaseConnection()
+		c = db.cursor()
+
+		stmt = "UPDATE Students SET FirstName = %s, LastName = %s, " \
+			   "MiddleInitial = %s, Suffix = %s, PreferredName = %s, " \
+			   "DateOfBirth = %s, Gender = %s, Race = %s, Address = %s, " \
+			   "City = %s, State = %s, Zip = %s, Email = %s, " \
+			   "PhoneNumber = %s, DisabilityInfo = %s, HealthConditions = %s," \
+			   "Siblings = %s, SchoolName = %s, SchoolDistrict = %s, " \
+			   "SchoolType = %s, GradeInFall = %s, ExpectedHighSchool = %s, " \
+			   "ExpectedGradYear = %s, GT = %s, ELL = %s " \
+			   "WHERE UserName = %s"
+		vals = (Student2.FirstName, Student2.LastName, Student2.MiddleInitial,
+				Student2.Suffix, Student2.PreferredName, Student2.DateOfBirth, Student2.Gender, Student2.Race,
+				Student2.Address, Student2.City, Student2.State, Student2.Zip, Student2.Email, Student2.PhoneNumber,
+				Student2.DisabilityInfo, Student2.HealthConditions, Student2.Siblings, Student2.SchoolName,
+				Student2.SchoolDistrict, Student2.SchoolType, Student2.GradeInFall, Student2.ExpectedHighSchool,
+				Student2.ExpectedGradYear, Student2.GT, Student2.ELL, username)
+
+		c.execute(stmt, vals)
+
+		db.commit()
+	except (sql.Error, sql.Warning) as e:
+		print(e)
+		exit(0)

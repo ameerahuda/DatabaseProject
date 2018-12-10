@@ -19,8 +19,8 @@ app.secret_key = 'secretkey'
 # landing page endpoint
 @app.route('/', methods=['POST', 'GET'])
 def main():
-    return getCoursesByGrade("student_addOrDropCourse.html", 'Jamie51788')
-    #return render_template('index.html')
+    return render_template('index.html')
+    #return getCoursesByGrade("student_addOrDropCourse.html", 'Jamie51788')
 
 # added for staying logged in
 # @app.route('/')
@@ -640,7 +640,95 @@ def showStudentProfile():
     #return render_template("student_editProfile.html")
 
 # ---- Student Edit Profile ----
+@app.route('/studentProfile/edit', methods=['POST', 'GET'])
+def editStudentProfile():
+    username = session['username']
 
+    _fname = request.form['firstName']
+    _lname = request.form['lastName']
+    _initial = request.form['initial']
+    _preferredName = request.form['preferredName']
+    _suffix = request.form['suffix']
+    _address = request.form['address']
+    _city = request.form['city']
+    _zip = request.form['zip']
+    _state = request.form['state']
+    _dob = request.form['dob']
+    _gender = request.form['gender']
+    _race = request.form['race']
+    _email = request.form['email']
+    _phoneNumber = request.form['phoneNumber']
+    _siblings = request.form['siblings']
+    _healthConditions = request.form['healthConditions']
+    _disability = request.form['disability']
+    _schoolName = request.form['schoolName']
+    _schoolDistrict = request.form['schoolDistrict']
+    _schoolType = request.form['schoolType']
+    _gradeInFall = request.form['gradeInFall']
+    _gt = request.form['gt']
+    _ell = request.form['ell']
+    _gradDate = request.form['gradDate']
+    _expHighSchool = request.form['expHighSchool']
+
+    val = "'" + username + "'"
+    data = getStudentByUsernameOnly(val)
+    if len(data[0][3]) > 0 and len(_fname) == 0:
+        _fname = data[0][0]
+    if len(data[0][4]) > 0 and len(_lname) == 0:
+        _lname = data[0][4]
+    if len(data[0][5]) > 0 and len(_initial) == 0:
+        _initial = data[0][5]
+    if len(data[0][7]) > 0 and len(_preferredName) == 0:
+        _preferredName = data[0][7]
+    if len(data[0][6]) > 0 and len(_suffix) == 0:
+        _suffix = data[0][6]
+    if len(data[0][11]) > 0 and len(_address) == 0:
+        _address = data[0][11]
+    if len(data[0][12]) > 0 and len(_city) == 0:
+        _city = data[0][12]
+    if len(data[0][14]) > 0 and len(_zip) == 0:
+        _zip = data[0][14]
+    if len(data[0][13]) > 0 and len(_state) == 0:
+        _state = data[0][13]
+    if len(data[0][9]) > 0 and len(_gender) == 0:
+        _gender = data[0][9]
+    if len(data[0][10]) > 0 and len(_race) == 0:
+        _race = data[0][10]
+    if len(data[0][15]) > 0 and len(_email) == 0:
+        _email = data[0][15]
+    if len(data[0][16]) > 0 and len(_phoneNumber) == 0:
+        _phoneNumber = data[0][16]
+    if len(data[0][19]) > 0 and len(_siblings) == 0:
+        _siblings = data[0][19]
+    if len(data[0][18]) > 0 and len(_healthConditions) == 0:
+        _healthConditions = data[0][18]
+    if len(data[0][17]) > 0 and len(_disability) == 0:
+        _disability = data[0][17]
+    if len(data[0][20]) > 0 and len(_schoolName) == 0:
+        _schoolName = data[0][20]
+    if len(data[0][21]) > 0 and len(_schoolDistrict) == 0:
+        _schoolDistrict = data[0][21]
+    if len(data[0][22]) > 0 and len(_schoolType) == 0:
+        _schoolType = data[0][22]
+    if len(data[0][23]) > 0 and len(_gradeInFall) == 0:
+        _gradeInFall = data[0][23]
+    if len(data[0][26]) > 0 and len(_gt) == 0:
+        _gt = data[0][26]
+    if len(data[0][27]) > 0 and len(_ell) == 0:
+        _ell = data[0][27]
+    if len(data[0][25]) > 0 and len(_gradDate) == 0:
+        _gradDate = data[0][25]
+    if len(data[0][24]) > 0 and len(_expHighSchool) == 0:
+        _expHighSchool = data[0][24]
+
+    print("HERE!")
+    s = Student2(_fname, _lname, _initial, _suffix, _preferredName, _dob, _gender, _race,
+                 _address, _city, _state, _zip, _email, _phoneNumber, _disability, _healthConditions, _siblings,
+                 _schoolName, _schoolDistrict, _schoolType, _gradeInFall, _expHighSchool, _gradDate, _gt, _ell)
+
+    studentUpdateProfile(s, username)
+
+    return redirect(url_for('showStudentProfile'))
 
 if __name__ == "__main__":
     app.run()
