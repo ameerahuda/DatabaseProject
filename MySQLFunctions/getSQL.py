@@ -238,10 +238,64 @@ def getEditStudentFromPersonnel(filename, username):
         statement = "SELECT * FROM Students WHERE UserName = '" + username + "'"
         mycursor.execute(statement)
         data = mycursor.fetchall()
+        print data
+
         statement = "SELECT * FROM Instructors"
         mycursor.execute(statement)
         obj = mycursor.fetchall()
-        return render_template(filename, data=data, obj = obj)
+
+        val = "'" + username + "'"
+        sID = getStudentID(val)
+
+        statement = "SELECT * FROM Mentors WHERE StudentID = '" + sID[0] + "'"
+        mycursor.execute(statement)
+        preMentor = mycursor.fetchall()
+        print preMentor
+
+        mData = []
+        if (len(preMentor) != 0):
+            statement = "SELECT * FROM Instructors WHERE InstructorID = '" + preMentor[0][0] + "'"
+            mycursor.execute(statement)
+            mData = mycursor.fetchall()
+            print mData
+        else:
+            mData = [0]
+            print mData
+
+        return render_template(filename, data=data, obj = obj, mData = mData)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
+        exit(0)
+
+def getEditStudentFromPersonnel2(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Students WHERE UserName = '" + username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        print data
+
+        statement = "SELECT * FROM Instructors"
+        mycursor.execute(statement)
+        obj = mycursor.fetchall()
+
+        val = "'" + username + "'"
+        sID = getStudentID(val)
+
+        statement = "SELECT * FROM Mentors WHERE StudentID = '" + sID[0] + "'"
+        mycursor.execute(statement)
+        preMentor = mycursor.fetchall()
+        print preMentor
+
+        if( len(preMentor) != 0 ):
+            statement = "SELECT * FROM Instructors WHERE InstructorID = '" + preMentor[0][0] + "'"
+            mycursor.execute(statement)
+            mData = mycursor.fetchall()
+            print mData
+
+        # return render_template(filename, data=data, obj = obj)
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO RETURN STUDENTID')

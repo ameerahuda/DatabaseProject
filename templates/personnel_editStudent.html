@@ -486,9 +486,11 @@ function validate()
                     <div class="form-group col-md-12">
                         <label for="inputMentorID">Mentor</label>
                         <select id="inputMentorID" name="mentorID" required="required" class="form-control">
-                            <option selected>Choose...</option>
+                            {%  for item in mData %}
+                                <option selected>{{ item[1] }} {{ item[2] }} - {{ item[3] }}</option>
+                            {% endfor %}
                             {% for item in obj %}
-                                <option value={{ item[0] }}>{{ item[1] }} {{ item[2] }} {{ item[3] }}</option>
+                                <option value={{ item[0] }}>{{ item[1] }} {{ item[2] }} - {{ item[3] }}</option>
                             {% endfor %}
                         </select>
                     </div>
