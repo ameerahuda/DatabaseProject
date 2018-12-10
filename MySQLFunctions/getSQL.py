@@ -341,3 +341,16 @@ def decrementClassSize(courseid):
     mycursor.execute(statement)
     mydb.commit()
 
+def getAllCoursesNoFile():
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+
+        statement = "SELECT * FROM Classes"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)

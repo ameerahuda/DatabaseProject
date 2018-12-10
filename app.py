@@ -649,6 +649,18 @@ def showStudentProfile():
 
 # ---- Student Edit Profile ----
 
-
+# ---- Export Classes ----
+@app.route('/exportClasses', methods=['GET', 'POST'])
+def exportClasses():
+    file = ""
+    fileName = open("uypCourses.csv", "w")
+    file += "Course ID,Course Name,Instructor ID,Session,Level,Time Slot,Building,Room Number,Capacity,Course Size, Waitlist Size,Deleted?\n"
+    fileName.write("Course ID,Course Name,Instructor ID,Session,Level,Time Slot,Building,Room Number,Capacity,Course Size, Waitlist Size,Deleted?\n")
+    for course in getAllCoursesNoFile():
+        c = (str(course[0]), str(course[1]), str(course[2]), str(course[3]), str(course[4]), str(course[5]), str(course[6]), str(course[7]), str(course[8]), str(course[9]), str(course[10]), str(course[11]))
+        file += ",".join(c)
+        fileName.write(",".join(c))
+    fileName.close()
+    return file
 if __name__ == "__main__":
     app.run()

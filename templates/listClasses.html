@@ -33,8 +33,17 @@
       <script>
           function submitForm(action){
              console.log(action);
-            document.getElementById('listclassesform').action = action;
-            document.getElementById('listclassesform').submit();
+            if(action == 'exportClasses'){
+                var link = document.createElement("a");
+                link.download = "uypCourses.csv";
+                link.href = "/exportClasses";
+                link.click();
+                document.getElementById('listclassesform').action = 'showPersonnelCourses'
+            }
+            else{
+                document.getElementById('listclassesform').action = action;
+                document.getElementById('listclassesform').submit();
+            }
           }
       </script>
       <style>
@@ -128,6 +137,10 @@
                     </tr>
                 {% endfor %}
         </table>
+        <div class="form-group col-md-4">
+            <h4>Export Courses to a File</h4>
+            <input name="btnExport" type="submit" onclick="submitForm('exportClasses')" value="Export" class="btn btn-primary">
+        </div>
       </div>
 	</div>
   </body>
