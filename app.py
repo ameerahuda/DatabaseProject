@@ -637,7 +637,6 @@ def showStudentHome():
 def showStudentProfile():
     username = session['username']
     return getStudentByUsername("student_editProfile.html", username)
-    #return render_template("student_editProfile.html")
 
 # ---- Student Edit Profile ----
 @app.route('/studentProfile/edit', methods=['POST', 'GET'])
