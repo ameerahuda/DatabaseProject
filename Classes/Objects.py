@@ -103,9 +103,11 @@ class Take:
     self.IsDeleted = IsDeleted
 
 class Applicant:
-  def __init__(self, StudentID, AcceptedStatus):
+  def __init__(self, StudentID, AcceptedStatus, ApproversFirstName, ApproversLastName):
     self.StudentID = StudentID
     self.AcceptedStatus = AcceptedStatus
+    self.ApproversFirstName = ApproversFirstName
+    self.ApproversLastName = ApproversLastName
 
 class Student1:
   def __init__(self, FirstName, LastName, MiddleInitial, Suffix, PreferredName,
@@ -138,3 +140,13 @@ class Student1:
     self.GT = GT
     self.ELL = ELL
     self.UserName = UserName
+
+class EditCourse:
+  def __init__(self, className, building, roomNumber, session, level, capacity, timeSlot):
+    self.className = className
+    self.building = building
+    self.roomNumber = roomNumber
+    self.session = session
+    self.level = level
+    self.capacity = capacity
+    self.timeSlot = timeSlot

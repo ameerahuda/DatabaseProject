@@ -6,6 +6,7 @@
     <link href="../static/css/signup.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <div class="error-messages" style="display:none;"></div>
+      <script src="/static/js/personnel_editClass.js"></script>
       <script src="/static/js/addClass.js"></script>
       <script>
           function validate(){
@@ -31,6 +32,7 @@
       </script>
       <script>
           function submitForm(action){
+             console.log(action);
             document.getElementById('listclassesform').action = action;
             document.getElementById('listclassesform').submit();
           }
@@ -59,10 +61,10 @@
 	  <div class="header">
 	    <nav>
 		  <ul class="nav nav-pills pull-right">
-		    <li role="presentation" ><a href="showPersonnelCourses">Home</a></li>
-            <li role="presentation"><a href="showPersonnelApproval">Student Approval</a></li>
-            <li role="presentation"><a href="showStudentSearch">Student Search</a></li>
-            <li role="presentation" class="active"><a href="showPersonnelCourses">Courses</a></li>
+		    <li role="presentation" ><a href="/showPersonnelCourses">Home</a></li>
+            <li role="presentation"><a href="/showPersonnelApproval">Student Approval</a></li>
+            <li role="presentation"><a href="/showStudentSearch">Student Search</a></li>
+            <li role="presentation" class="active"><a href="/showPersonnelCourses">Courses</a></li>
             <li role="presentation"><a href="#">Export</a></li>
             <li role="presentation"><a href = '/logout'>Logout</a></li>
           </ul>
@@ -73,18 +75,27 @@
 	    <h1>Courses</h1>
         <form id="listclassesform" onsubmit="return validate()" method="post" name="EditClassInfo" class="form-signin">
             <div class="form-row">
-                <h4>Add a Course</h4>
-                <input name="btnAddClass" type="submit" onclick="submitForm('showAddClass')" value="Add" class="btn btn-primary">
-                <h4>Class you want to Edit</h4>
-                <label for="EditedCourseID">Couse ID</label>
-                <input type="text" name="EditedCourseID" class="form-control" placeholder="Course ID">
-                <select class="form-control" name="EditedCourseSession">
-                    <option value="Select" selected>Select Session...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <input name="btnEditClass" type="submit" value="Edit" class="btn btn-primary">
+                <div class="form-group col-md-4">
+                    <h4>Add a Course</h4>
+                    <input name="btnAddClass" type="submit" onclick="submitForm('showAddClass')" value="Add" class="btn btn-primary">
+                </div>
+                <div class="form-group col-md-4">
+                    <h4>Edit a Course</h4>
+                    <label for="EditedCourseID">Course ID</label>
+                    <input type="text" name="EditedCourseID" class="form-control" placeholder="Course ID">
+                    <br>
+                    <input name="btnEditClass1" type="submit" onclick="submitForm('showPersonnelEditCourse')" value="Edit" class="btn btn-primary">
+                </div>
+
+                <!-- FOR DROPPING A COURSE HAVE TO FIX BUTTON -->
+                <div class="form-group col-md-4">
+                    <h4>Drop a Course</h4>
+                    <label for="EditedCourseID">Course ID</label>
+                    <input type="text" name="EditedCourseID" class="form-control" placeholder="Course ID">
+                    <br>
+                    <input name="btnDrop" type="submit" value="Drop" class="btn btn-primary">
+                </div>
+
             </div>
         </form>
         <table id="classList">

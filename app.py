@@ -248,7 +248,7 @@ def showSignIn():
         if studentOrPersonnel(username) == "student entry":
             return redirect(url_for('showStudentProfile'))
         else:
-            return render_template('personnel_approval.html')
+            return redirect(url_for('personnelHome'))
     return render_template("signIn.html")
 
 @app.route('/signIn', methods=['GET', 'POST'])
@@ -292,7 +292,7 @@ def afteradminapplied():
     admin = Instructor(str(adminID), _adminFirstName, _adminLastName, _adminUserName, _adminPassword, "0")
     if getInstructorByUsernameOnly(admin.Username) == 0:
         insertInstructor(admin)
-        return render_template('afterApplying.html')
+        return redirect(url_for('showSignIn'))
     else:
         return render_template('personnelRegistration.html')
 
@@ -300,7 +300,7 @@ def afteradminapplied():
 # PERSONNEL APPROVAL
 @app.route('/showPersonnelApproval')
 def showPersonnelApproval():
-    return render_template("personnel_approval.html")
+    return getAllStudents('personnel_approval.html')
 
 @app.route('/personnelApproval', methods=['POST'])
 def personnelApproval():
@@ -314,9 +314,14 @@ def afterPersonnelApproval():
     _rFStudent = request.form['rStudentFirstName']
     _rLStudent = request.form['rStudentLastName']
     _rUStudent = request.form['rStudentUname']
-    _authF = request.form['authorizersFirstName']
-    _authL = request.form['authorizersLastName']
-    _authU = request.form['authorizersUname']
+
+    username = session['username']
+
+    varr = getPersonnelInfoOnly(username)
+
+    _authF = varr[0][0]
+    _authL = varr[0][1]
+    _authU = username
 
     var = "'"
     var += _aUStudent
@@ -333,53 +338,53 @@ def afterPersonnelApproval():
     # if there is a student in both approve and deny
     if _aFStudent != "" and _aLStudent != "" and _aUStudent != "" and _rFStudent != "" and _rLStudent != "" and\
             _rUStudent != "":
+        print("here")
         if _authF != "" and _authL != "" and _authU != "":
             if getStudentByUsernameOnly(var) == 0 or getStudentByUsernameOnly(var1) == 0:
                 return render_template('approval_StudentDNE.html')
             else:
-                asID = getStudentID(_aUStudent)
-                rsID = getStudentID(_rUStudent)
-                d = datetime.datetime.today().strftime('%m/%d/%Y')
-                s = Applicant(asID, "Accepted")
-                s1 = Applicant(rsID, "Denied")
+                asID = getStudentID(var)
+                rsID = getStudentID(var1)
+                # d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(asID, "Accepted", _authF, _authL)
+                s1 = Applicant(rsID, "Denied", _authF, _authL)
                 updateApplicant(s)
                 updateApplicant(s1)
-
-                # NEEDS TO BE CHANGED
-                return render_template("afterApplying.html")
+                return redirect(url_for('showPersonnelApproval'))
         else:
             return render_template('approval_StudentDNE.html')
             # only approved student
     elif _aFStudent != "" and _aLStudent != "" and _aUStudent != "" and _rFStudent == "" and _rLStudent == "" and\
             _rUStudent == "":
+        print("over here")
         if _authF != "" and _authL != "" and _authU != "":
             if getStudentByUsernameOnly(var) == 0:
                 return render_template('approval_StudentDNE.html')
             else:
                 asID = getStudentID(var)
-                d = datetime.datetime.today().strftime('%m/%d/%Y')
-                s = Applicant(asID, "Accepted")
+                #d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(asID, "Accepted", _authF, _authL)
                 updateApplicant(s)
-                # NEEDS TO BE CHANGED
-                return render_template("afterApplying.html")
+                return redirect(url_for('showPersonnelApproval'))
         else:
             return render_template('approval_StudentDNE.html')
     elif _aFStudent == "" and _aLStudent == "" and _aUStudent == "" and _rFStudent != "" and _rLStudent != "" and\
             _rUStudent != "":
+        print("over over here")
         if _authF != "" and _authL != "" and _authU != "":
             if getStudentByUsernameOnly(var1) == 0:
                 return render_template('approval_StudentDNE.html')
             else:
                 rsID = getStudentID(var1)
-                d = datetime.datetime.today().strftime('%m/%d/%Y')
-                s = Applicant(rsID, "Denied")
+                # d = datetime.datetime.today().strftime('%m/%d/%Y')
+                s = Applicant(rsID, "Denied", _authF, _authL)
                 updateApplicant(s)
-                # NEEDS TO BE CHANGED
-                return render_template("afterApplying.html")
+                return redirect(url_for('showPersonnelApproval'))
         else:
             return render_template('approval_StudentDNE.html')
     else:
-        return render_template('personnel_approval.html')
+        print("over over over here")
+        return redirect(url_for('showPersonnelApproval'))
 
 # ----- Student Search (Personnel) ------
 @app.route('/showStudentSearch', methods=['GET'])
@@ -403,10 +408,9 @@ def afterStudentSearch():
         if getStudentByUsernameOnly(var) == 0:
             return render_template('approval_StudentDNE.html')
         else:
-            sid = getStudentID(var)
-            return getStudentByUsername('personnel_editStudent.html', _studentUsername)
+            return getEditStudentFromPersonnel('personnel_editStudent.html', _studentUsername)
 
-@app.route('/showSuccessfulEdit', methods=['POST'])
+@app.route('/showSuccessfulEdit', methods=['POST', 'GET'])
 def showSuccessfulEdit():
     _fname = request.form['firstName']
     _lname = request.form['lastName']
@@ -500,12 +504,13 @@ def showSuccessfulEdit():
         m = Mentor(_mentorID,data[0][0],0)
         insertMentor(m)
 
-    return render_template("personnel_StudentEditGood.html")
+    return redirect(url_for('showStudentSearch'))
 
 # ADD CLASS
 @app.route('/showAddClass',methods=['POST'])
 def showAddClass():
     return getAllInstructors("addClass.html")
+    # return render_template("addClass.html")
 
 @app.route('/addClass', methods=['POST'])
 def addClass():
@@ -516,6 +521,8 @@ def afterAddedClass():
 
     # CHECK THAT CLASS BEING ADDED IS ONLY OFFERED ONCE IN THAT SESSION MAYBE
     #   MAYBE SHOULD DO THAT IN ENDPOINT: /addClass
+
+    # SHOULD CHECK IF INSTRUCTOR ID EXISTS OR ELSE FAILS OR COULD JUST USE LOGIN
 
     _className = request.form['className']
     _insID = request.form['instructorID']
@@ -529,18 +536,27 @@ def afterAddedClass():
 
     startTime_string = datetime.strptime(_startTime, '%H:%M')
     endTime_string = datetime.strptime(_endTime, '%H:%M')
+    if endTime_string < startTime_string:
+        return render_template('error_incorrectInput.html')
 
     timeslot = startTime_string.strftime('%I:%M %p') + "-" + endTime_string.strftime('%I:%M %p')
-    if getCourseByInstructorAndTime(_insID, timeslot, _session) == 0 and getCourseByRoomAndTime(_building, _roomno, timeslot, _session) == 0:
-        classid = str(uuid.uuid4())[:12]
+    # timeslot = _startTime + _endTime
+
+    if checkCourseInSession(_className, _session) > 0:
+        return render_template("personnel_ErrorCoursesExist.html")
+    elif getCourseByInstructorAndTime(_insID, timeslot, _session) == 0 \
+            and getCourseByRoomAndTime(_building, _roomno, timeslot, _session) == 0:
+        classid = str(uuid.uuid4())[:6]
         c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
         insertClass(c)
+
+        # CHANGE TO WHATEVEVER WE DECIDE
         return render_template('afterApplying.html')
     else:
-        return getAllInstructors("addClass.html")
+        return getAllInstructors("error_incorrectInput.html")
 
 # ---- List class (Personnel) ----
-@app.route('/showPersonnelCourses', methods=['GET'])
+@app.route('/showPersonnelCourses', methods=['GET', 'POST'])
 def showPersonnelCourses():
     return getAllCourses("listClasses.html")
 
@@ -562,12 +578,61 @@ def afterpersonnelCourses():
 
     timeslot = _startTime + _endTime
 
-    classid = str(uuid.uuid4())[:12]
+    classid = str(uuid.uuid4())[:6]
     c = Class(str(classid), _className, _insID, _session, _level, timeslot, _building, _roomno, _cap, "0", "0", "0")
     insertClass(c)
 
     # CHANGE TO WHATEVEVER WE DECIDE
     return render_template('afterApplying.html')
+
+# ---- Edit Class (Personnel) ----
+@app.route('/showPersonnelEditCourse', methods=['POST', 'GET'])
+def showPersonnelEditCourse():
+    _courseid = request.form['EditedCourseID']
+    print(_courseid)
+    val = "'" + _courseid + "'"
+    print(val)
+
+    if _courseid == "":
+        return redirect(url_for('/personnelEditCourse'))
+    else:
+        if checkIfCourseExists(_courseid) == 0:
+            return render_template("error_courseDNE_PERSONNEL.html") # check this
+        else:
+            return getEditCourseInfo('editClass.html', _courseid)
+
+@app.route('/personnelEditCourse', methods=['POST', 'GET'])
+def personnelEditCourse():
+
+    _className = request.form['className']
+    _building = request.form['building']
+    _roomno = request.form['roomNo']
+    _session = request.form['session']
+    _level = request.form['level']
+    _cap = request.form['capacity']
+    _startTime = request.form['timeSlot']
+
+    cid = getCourseID(_className, _session)
+
+    c = EditCourse(_className, _building, _roomno, _session, _level, _cap, _startTime)
+
+    updateEditClass(c, cid)
+
+    return redirect(url_for('showPersonnelCourses'))
+
+# ---- Personnel Home Page (Edit their profile) ----
+@app.route('/personnelHome', methods=['POST', 'GET'])
+def personnelHome():
+    username = session['username']
+    return getPersonnelInfo('personnel_editProfile.html', username)
+
+@app.route('/personnelEditProfile', methods=['POST', 'GET'])
+def personnelEditProfile():
+    firstName = request.form['firstName']
+    lastName = request.form['lastName']
+    username = session['username']
+    updatePersonnelProfile(firstName, lastName, username)
+    return redirect(url_for('personnelHome'))
 
 # ---- Student MyCourses (AKA their home) ----
 @app.route('/studentHome', methods=['POST', 'GET'])
@@ -581,6 +646,9 @@ def showStudentProfile():
     username = session['username']
     return getStudentByUsername("student_editProfile.html", username)
     #return render_template("student_editProfile.html")
+
+# ---- Student Edit Profile ----
+
 
 if __name__ == "__main__":
     app.run()

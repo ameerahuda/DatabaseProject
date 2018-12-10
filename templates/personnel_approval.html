@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>UYP - Student Approval</title>
+    <title>UYP Student Approval</title>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,9 +22,9 @@ function validate()
 	var rFname = document.forms["RegForm"]["rStudentFirstName"];
 	var rLname = document.forms["RegForm"]["rStudentLastName"];
 	var rUname = document.forms["RegForm"]["rStudentUname"];
-	var yFname = document.forms["RegForm"]["authorizersFirstName"];
-	var yLname = document.forms["RegForm"]["authorizersLastName"];
-	var yUname = document.forms["RegForm"]["authorizersUname"];
+	{#var yFname = document.forms["RegForm"]["authorizersFirstName"];#}
+	{#var yLname = document.forms["RegForm"]["authorizersLastName"];#}
+	{#var yUname = document.forms["RegForm"]["authorizersUname"];#}
 
 	var letters = /^[A-Za-z]+$/;
 	var numbers = /^[0-9]+$/;
@@ -33,7 +33,7 @@ function validate()
 	var letterNumber = /^[0-9a-zA-Z _]+$/;
 	var letterspace = /^[A-Za-z, _]+$/;
 
-	if (aFname.length > 1 && !aFname.value.match(letters))
+	if (aFname.value.length > 1 && !aFname.value.match(letters))
 	{
 	    aFname.style.backgroundColor = "pink";
 		return false;
@@ -81,29 +81,29 @@ function validate()
 	    rUname.style.backgroundColor = "white";
     }
 
-    if (yFname.length > 1 && !yFname.value.match(letters))
-	{
-	    yFname.style.backgroundColor = "pink";
-		return false;
-	}else{
-	    yFname.style.backgroundColor = "white";
-    }
-
-    if (yLname.length > 1 && !yLname.value.match(letters))
-	{
-	    yLname.style.backgroundColor = "pink";
-		return false;
-	}else{
-	    yLname.style.backgroundColor = "white";
-    }
-
-    if (yUname.length > 1 && !yUname.value.match(letterNumber))
-	{
-	    yUname.style.backgroundColor = "pink";
-		return false;
-	}else{
-	    yUname.style.backgroundColor = "white";
-    }
+    {#if (yFname.length > 1 && !yFname.value.match(letters))#}
+	{#{#}
+	{#    yFname.style.backgroundColor = "pink";#}
+	{#	return false;#}
+	//else
+	{#    yFname.style.backgroundColor = "white";#}
+    //{}}
+    {##}
+    {#if (yLname.length > 1 && !yLname.value.match(letters))#}
+	{#{#}
+	{#    yLname.style.backgroundColor = "pink";#}
+	{#	return false;#}
+	//{}else{
+	{#    yLname.style.backgroundColor = "white";#}
+    //{
+    {##}
+    {#if (yUname.length > 1 && !yUname.value.match(letterNumber))#}
+	{#{#}
+	{#    yUname.style.backgroundColor = "pink";#}
+	{#	return false;#}
+	//{else{
+	{#    yUname.style.backgroundColor = "white";#}
+    //{
 
 	return true;
 }</script>
@@ -114,10 +114,10 @@ function validate()
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" ><a href="showPersonnelCourses">Home</a></li>
-            <li role="presentation" class="active"><a href="showPersonnelApproval">Student Approval</a></li>
-            <li role="presentation"><a href="showStudentSearch">Student Search</a></li>
-            <li role="presentation"><a href="showPersonnelCourses">Courses</a></li>
+            <li role="presentation" ><a href="/showPersonnelCourses">Home</a></li>
+            <li role="presentation" class="active"><a href="/showPersonnelApproval">Student Approval</a></li>
+            <li role="presentation"><a href="/showStudentSearch">Student Search</a></li>
+            <li role="presentation"><a href="/showPersonnelCourses">Courses</a></li>
             <li role="presentation"><a href="#">Export</a></li>
             <li role="presentation"><a href = '/logout'>Logout</a></li>
           </ul>
@@ -163,19 +163,6 @@ function validate()
                 <br>
                 <br>
                 <br>
-                <h4>Enter Your Information</h4>
-                <div class="form-group col-md-3">
-                    <label for="AuthorizersFirstName">Your First Name</label>
-                    <input type="text" name="authorizersFirstName" id="insertAuthorizersFirstName" class="form-control" placeholder="Your First Name">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="AuthorizersLastName">Your Last Name</label>
-                    <input type="text" name="authorizersLastName" id="insertAuthorizersLastName" class="form-control" placeholder="Your Last Name">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="AuthorizersUname">Your Username</label>
-                    <input type="text" name="authorizersUname" id="insertAuthorizersUname" class="form-control" placeholder="Your Username">
-                </div>
             </div>
             <br>
             <input id="btnPersonnelApproval" type="submit" class="btn btn-primary">
@@ -184,7 +171,7 @@ function validate()
             <br>
             <h3>All Students</h3>
             {% for user in data %}
-                <li>{{user[3]}} {{user[4]}} - Username: {{user[29]}}</li>
+                <li>{{user[3]}} {{user[4]}} - Username: {{user[29]}} - Status: {{user[2]}} - Approved By: {{user[28]}}</li>
             {% endfor %}
         </form>
       </div>

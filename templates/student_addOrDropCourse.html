@@ -2,17 +2,40 @@
 <html lang="en">
 
 <head>
-    <title>UYP Student Courses</title>
+    <title>UYP Student Search</title>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/static/js/signUp.js"></script>
+    <script src="/static/js/personnel_StudentSearch.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script>
+function validate()
+{
+    var cID = document.forms["RegForm"]["classID"];
+
+	var letters = /^[A-Za-z]+$/;
+	var numbers = /^[0-9]+$/;
+	var phoneno = /^\d{10}$/;
+	var date =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+	var letterNumber = /^[0-9a-zA-Z _]+$/;
+	var letterspace = /^[A-Za-z, _]+$/;
+
+    if (uName.length > 1 && !uName.value.match(letterNumber))
+	{
+	    uName.style.backgroundColor = "pink";
+		return false;
+	}else{
+	    uName.style.backgroundColor = "white";
+    }
+
+	return true;
+}</script>
+    
     <style>
         table {
             font-family: arial, sans-serif;
@@ -30,15 +53,16 @@
             background-color: #dddddd;
         }
     </style>
+
 </head>
 <body>
     <div class="container">
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-              <li role="presentation" class="active"><a href="/studentHome">Home</a></li>
+            <li role="presentation" ><a href="/studentHome">Home</a></li>
             <li role="presentation" ><a href="/studentProfile">My Courses</a></li>
-            <li role="presentation"><a href="#">Add or Drop Course</a></li>
+            <li role="presentation" class="active"><a href="#">Add or Drop Course</a></li>
             <li role="presentation"><a href = '/logout'>Logout</a></li>
           </ul>
         </nav>
@@ -46,11 +70,25 @@
       </div>
 
       <div class="jumbotron">
-        <h1>Student Courses</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()"  method="post" class="form-signin">
+        <h1>Add or Drop Course</h1>
+        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterPersonnelApproval') }}" method="post" class="form-signin">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="ClassId">Class ID</label>
+                    <input type="text" name="classID" id="insertClassID" class="form-control" placeholder="Class ID">
+                </div>
+            </div>
+            <br>
+            <input id="btnStudentSearch" type="submit" value="Add" class="btn btn-primary">
+            <input id="btnStudentSearch" type="submit" value="Drop" class="btn btn-primary">
+            <br>
+            <br>
+            <br>
+            <h3>Students</h3>
             <table>
                 <tr>
                     <th>Course Name</th>
+                    <th>Course ID</th>
                     <th>Session</th>
                     <th>Level</th>
                     <th>Time Slot</th>
@@ -59,23 +97,16 @@
                 </tr>
                 {% for user in data %}
                     <tr>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[3] }}</td>
                         <td>{{ user[4] }}</td>
+                        <td>{{ user[5] }}</td>
                         <td>{{ user[6] }}</td>
                         <td>{{ user[7] }}</td>
-                        <td>{{ user[8] }}</td>
-                        <td>{{ user[9] }}</td>
-                        <td>{{ user[10] }}</td>
                     </tr>
                 {% endfor %}
             </table>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         </form>
       </div>
     </div>

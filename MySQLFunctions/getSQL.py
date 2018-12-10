@@ -2,7 +2,6 @@ import mysql.connector
 from DBandTables.ConnectionToDB import DatabaseConnection
 from flask import Flask, render_template
 
-
 def getAllStudents(filename):
     try:
         mydb = DatabaseConnection()
@@ -101,6 +100,23 @@ def getStudentCoursesByUsername(filename, username):
         print('FAILED TO RETURN STUDENTID')
         exit(0)
 
+
+def checkCourseInSession(className, sess):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT * FROM Classes WHERE Classes.ClassName = %s AND Classes.Session = %s"
+        vals = (className, sess)
+        mycursor.execute(statement, vals)
+        data = mycursor.fetchall()
+        if mycursor.rowcount == 0:
+            data = 0
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN STUDENTID')
+        exit(0)
+
 def studentOrPersonnel(username):
     try:
         mydb = DatabaseConnection()
@@ -113,6 +129,18 @@ def studentOrPersonnel(username):
             return "admin entry"
         else:
             return "student entry"
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO SELECT: TRY AGAIN')
+        exit(0)
+
+def checkIfCourseExists(courseid):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        val = "'" + courseid + "'"
+        print(courseid)
+        statement = "SELECT * FROM Classes WHERE ClassID = " + val
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO SELECT: TRY AGAIN')
@@ -149,18 +177,48 @@ def getAllInstructors(filename):
 
 def getEditCourseInfo(filename, courseId):
     try:
+        val = "'" + courseId + "'"
         mydb = DatabaseConnection()
         mycursor = mydb.cursor()
-        statement = "SELECT * FROM Classes WHERE ClassID = '" + courseId + "'"
+        statement = "SELECT * FROM Classes WHERE ClassID = " + val
         mycursor.execute(statement)
         data = mycursor.fetchall()
+
         statement = "SELECT * FROM Instructors"
         mycursor.execute(statement)
         obj = mycursor.fetchall()
-        return render_template(filename, data=data, obj = obj)
+
+        statement = "SELECT Takes.StudentID, Takes.ClassID, Students.FirstName, Students.LastName, Students.UserName " \
+                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val
+        mycursor.execute(statement)
+        currStudents = mycursor.fetchall()
+        print(currStudents)
+
+        statement = "SELECT Students.StudentID, Students.FirstName, Students.LastName, Students.UserName " \
+                    "FROM Students WHERE Students.StudentID NOT IN (SELECT Students.StudentID " \
+                    "FROM Students, Takes WHERE Takes.StudentID = Students.StudentID AND Takes.ClassID = " + val + ")"
+        mycursor.execute(statement)
+        otherStudents = mycursor.fetchall()
+        print(otherStudents)
+
+        return render_template(filename, data=data, obj=obj, cStu=currStudents, oStu=otherStudents)
     except (mysql.connector.Error, mysql.connector.Warning) as e:
         print(e)
         print('FAILED TO RETURN STUDENTID')
+        exit(0)
+
+def getCourseID(className, sess):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT ClassID FROM Classes WHERE Classes.ClassName = %s AND Classes.Session = %s"
+        vals = (className, sess)
+        mycursor.execute(statement, vals)
+        data = mycursor.fetchone()
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN COURSEID')
         exit(0)
 
 def getEditStudentFromPersonnel(filename, username):
@@ -208,3 +266,50 @@ def getCourseByRoomAndTime(building, room, time, session):
         print(e)
         print('FAILED TO SELECT: TRY AGAIN')
         exit(0)
+
+def getPersonnelInfo(filename, username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT FirstName, LastName FROM Instructors WHERE UserName = '" + username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        print(data)
+        return render_template(filename, data=data)
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN USERNAME')
+        exit(0)
+
+def getPersonnelInfoOnly(username):
+    try:
+        mydb = DatabaseConnection()
+        mycursor = mydb.cursor()
+        statement = "SELECT FirstName, LastName FROM Instructors WHERE UserName = '" + username + "'"
+        mycursor.execute(statement)
+        data = mycursor.fetchall()
+        print(data)
+        return data
+    except (mysql.connector.Error, mysql.connector.Warning) as e:
+        print(e)
+        print('FAILED TO RETURN USERNAME')
+        exit(0)
+
+def getCoursesByGrade(filename, username):
+    mydb = DatabaseConnection()
+    mycursor = mydb.cursor()
+    val = "'" + username + "'"
+    student = getStudentByUsernameOnly(val)
+    grade = student[0][23]
+    if grade in ["4th", "5th"]:
+        level = "4th-5th"
+    if grade in ["6th", "7th" "8th"]:
+        level = "6th-8th"
+    if grade in ["9th", "10th", "11th", "12th"]:
+        level = "9th-12th"
+
+    statement = "SELECT * FROM Classes WHERE Level = '" + level + "'"
+    mycursor.execute(statement)
+    data = mycursor.fetchall()
+    return render_template(filename, data=data)
+

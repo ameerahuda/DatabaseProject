@@ -9,7 +9,7 @@
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/static/js/signUp.js"></script>
+    <script src="/static/js/editStudentProfile.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -57,7 +57,7 @@ function validate()
 	    fname.style.backgroundColor = "white";
     }
 
-	if (initial.value.length > 1 || initial.required)
+	if (initial.value.match(numbers))
 	{
 		initial.style.backgroundColor = "pink";
 		return false;
@@ -73,7 +73,7 @@ function validate()
 	    lname.style.backgroundColor = "white";
     }
 
-	if (suffix.value.length > 1 && !suffix.value.match(letters))
+	if (suffix.value.match(numbers))
 	{
 		suffix.style.backgroundColor = "pink";
 		return false;
@@ -81,7 +81,10 @@ function validate()
 	    suffix.style.backgroundColor = "white";
     }
 
-    if (preName.value.length > 1 && !preName.value.match(letters))
+    if (preName.localeCompare("N/A") === 0){
+        preName.style.backgroundColor = "white";
+    }
+    else if (preName.value.match(numbers))
 	{
 		preName.style.backgroundColor = "pink";
 		return false;
@@ -89,15 +92,22 @@ function validate()
 	    preName.style.backgroundColor = "white";
     }
 
-	if (email.value.length > 1 && email.value.indexOf(".", 0) < 0)
+    if (graddate.value < 2018 || graddate.value > 2035) {
+        graddate.style.backgroundColor = "pink";
+		return false;
+    }else{
+	    graddate.style.backgroundColor = "white";
+    }
+
+	/*if (email.value.length > 1 && email.value.indexOf(".", 0) < 0)
 	{
 		email.style.backgroundColor = "pink";
 		return false;
 	}else{
 	    email.style.backgroundColor = "white";
-    }
+    }*/
 
-	if (phone.value.length > 1 && !phone.value.match(phoneno))
+	/*if (phone.value.length > 1 && !phone.value.match(phoneno))
 	{
 		phone.style.backgroundColor = "pink";
 		return false;
@@ -111,9 +121,9 @@ function validate()
 		return false;
 	}else{
 	    dob.style.backgroundColor = "white";
-    }
+    }*/
 
-    if (gender.value.length > 1 && !gender.value.match(letters))
+    /*if (gender.value.length > 1 && !gender.value.match(letters))
 	{
 		gender.style.backgroundColor = "pink";
 		return false;
@@ -127,9 +137,9 @@ function validate()
 		return false;
 	}else{
 	    race.style.backgroundColor = "white";
-    }
+    }*/
 
-	if (address.value.length > 1 && !address.value.match(letterNumber))
+	/*if (address.value.length > 1 && !address.value.match(letterNumber))
 	{
 		address.style.backgroundColor = "pink";
 		return false;
@@ -197,9 +207,9 @@ function validate()
 		return false;
 	}else{
 	    sd.style.backgroundColor = "white";
-    }
+    }*/
 
-    if (st.value.length > 1 && !st.value.match(letterspace))
+   /* if (st.value.length > 1 && !st.value.match(letterspace))
 	{
 		st.style.backgroundColor = "pink";
 		return false;
@@ -229,8 +239,8 @@ function validate()
 		return false;
 	}else{
 	    ell.style.backgroundColor = "white";
-    }
-
+    }*/
+/*
     if (graddate.value.length > 1 && !graddate.value.match(numbers))
 	{
 		graddate.style.backgroundColor = "pink";
@@ -247,15 +257,15 @@ function validate()
 		return false;
 	}else{
 	    exphs.style.backgroundColor = "white";
-    }
+    }*/
 
-    if (!dateofReg.value.match(date))
+    /*if (!dateofReg.value.match(date))
 	{
 		dateofReg.style.backgroundColor = "pink";
 		return false;
 	}else{
 	    dateofReg.style.backgroundColor = "white";
-    }
+    }*/
 
 	return true;
 }</script>
@@ -277,44 +287,44 @@ function validate()
 
       <div class="jumbotron">
         <h1>Student Profile</h1>
-        <form id="regist" name="RegForm" onsubmit="return validate()" action="{{ url_for('afterapplied') }}" method="post" class="form-signin">
+        <form id="regist" name="RegForm" onsubmit="return validate()"  method="post" class="form-signin">
             {% for user in data %}
                 <h3>Students Information</h3>
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="inputFirstName">FirstName</label>
-                        <input type="text" name="firstName" id="inputFirstName" required="required" class="form-control" placeholder={{ user[3] }}>
+                        <input type="text" name="firstName" id="inputFirstName" required="required" class="form-control" value="{{ user[3] }}" placeholder={{ user[3] }}>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputMiddleInitial">Middle Initial</label>
-                        <input type="text" name="initial" class="form-control" id="inputMiddleInitial" placeholder={{ user[5] }}>
+                        <input type="text" name="initial" class="form-control" id="inputMiddleInitial" value="{{ user[5] }}" placeholder={{ user[5] }}>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputLastName">Last Name</label>
-                        <input type="text" name="lastName" class="form-control" id="inputLastName" required="required" placeholder={{ user[4] }}>
+                        <input type="text" name="lastName" class="form-control" id="inputLastName" required="required"  value="{{ user[4] }}" placeholder={{ user[4] }}>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputSuffix">Suffix</label>
-                        <input type="text" name="suffix" id="inputSuffix" class="form-control" placeholder={{ user[6] }}>
+                        <input type="text" name="suffix" id="inputSuffix" class="form-control" value="{{ user[6] }}" placeholder={{ user[6] }}>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputPreferredName">Preferred Name</label>
-                        <input type="text" name="preferredName" class="form-control" id="inputPreferredName" placeholder={{ user[7] }}>
+                        <input type="text" name="preferredName" class="form-control" id="inputPreferredName" value="{{ user[7] }}" placeholder={{ user[7] }}>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="inputAddress">Address</label>
-                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="{{ user[11] }}">
+                        <input type="text" name="address" class="form-control" id="inputAddress" value="{{ user[11] }}" placeholder="{{ user[11] }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                                 <label for="inputCity">City</label>
-                                <input type="text" name="city" class="form-control" id="inputCity" placeholder={{ user[12] }}>
+                                <input type="text" name="city" class="form-control" id="inputCity" value="{{ user[12] }}" placeholder={{ user[12] }}>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputState">State</label>
                         <select id="inputState" name="state" class="form-control">
-                            <option selected>{{ user[13] }}</option>
+                            <option value="{{ user[13] }}" selected>{{ user[13] }}</option>
                             <option value="AK">Alaska</option>
                             <option value="AL">Alabama</option>
                             <option value="AR">Arkansas</option>
@@ -371,16 +381,16 @@ function validate()
                     </div>
                     <div class="form-group col-md-2">
                       <label for="inputZip">Zip</label>
-                      <input type="text" name="zip" class="form-control" id="inputZip" placeholder={{ user[14] }}>
+                      <input type="text" name="zip" class="form-control" id="inputZip" value="{{ user[14] }}" placeholder={{ user[14] }}>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputDOB">Date of Birth</label>
-                      <input type="text" name="dob" id="inputDOB" class="form-control" placeholder={{ user[8] }}>
+                      <input type="text" name="dob" id="inputDOB" class="form-control" value="{{ user[8] }}" placeholder={{ user[8] }}>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputGender">Select Gender</label>
                       <select id="inputGender" name="gender" class="form-control">
-                        <option selected>{{ user[9] }}</option>
+                        <option value="{{ user[9] }}" selected>{{ user[9] }}</option>
                         <option value="F">Female</option>
                         <option value="M">Male</option>
                       </select>
@@ -388,7 +398,7 @@ function validate()
                     <div class="form-group col-md-4">
                         <label for="inputRace">Select Race</label>
                             <select id="inputRace" name="race" class="form-control">
-                                <option selected>{{ user[10] }}</option>
+                                <option value="{{ user[10] }}" selected>{{ user[10] }}</option>
                                 <option value="AI">American Indian or Alaska Native</option>
                                 <option value="A">Asian</option>
                                 <option value="BAA">Black or African American</option>
@@ -398,36 +408,36 @@ function validate()
                     </div>
                     <div class="form-group col-md-6">
                       <label for="inputEmail">Email</label>
-                      <input type="text" name="email" id="inputEmail" class="form-control" placeholder={{ user[15] }}>
+                      <input type="text" name="email" id="inputEmail" class="form-control" value="{{ user[15] }}" placeholder={{ user[15] }}>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="inputPhoneNumber">PhoneNumber </label>
-                      <input type="text" name="phoneNumber" id="inputPhoneNumber" class="form-control" placeholder={{ user[16] }}>
+                      <input type="text" name="phoneNumber" id="inputPhoneNumber" class="form-control" value="{{ user[16] }}" placeholder={{ user[16] }}>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputSiblings">Siblings in Program</label>
-                      <input type="text" name="siblings" id="inputSiblings" class="form-control" placeholder={{ user[19] }}>
+                      <input type="text" name="siblings" id="inputSiblings" class="form-control" value="{{ user[19] }}" placeholder={{ user[19] }}>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputHealthConditions">Health Conditions</label>
-                      <input type="text" name="healthConditions" id="inputHealthConditions" class="form-control" placeholder={{ user[18] }}>
+                      <input type="text" name="healthConditions" id="inputHealthConditions" class="form-control" value="{{ user[18] }}" placeholder={{ user[18] }}>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputDisabilityInfo">Disability Info</label>
-                      <input type="text" name="disability" id="inputDisabilityInfo" class="form-control" placeholder={{ user[17] }}>
+                      <input type="text" name="disability" id="inputDisabilityInfo" class="form-control" value="{{ user[17] }}" placeholder={{ user[17] }}>
                     </div>
                     <div class="form-group col-md-3">
                       <label for="inputSchoolName">School Name</label>
-                      <input type="text" name="schoolName" id="inputSchoolName" class="form-control" placeholder="{{ user[20] }}">
+                      <input type="text" name="schoolName" id="inputSchoolName" class="form-control" value="{{ user[20] }}" placeholder="{{ user[20] }}">
                     </div>
                     <div class="form-group col-md-3">
                       <label for="inputSchoolDistrict">School Dristrict </label>
-                      <input type="text" name="schoolDistrict" id="inputSchoolDistrict" class="form-control" placeholder={{ user[21] }}>
+                      <input type="text" name="schoolDistrict" id="inputSchoolDistrict" class="form-control" value="{{ user[21] }}" placeholder={{ user[21] }}>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputSchoolType">School Type</label>
                         <select id="inputGender" name="schoolType" class="form-control">
-                            <option selected>{{ user[22] }}</option>
+                            <option value="{{ user[22] }}" selected>{{ user[22] }}</option>
                             <option value="PU">Public School</option>
                             <option value="PR">Private School</option>
                             <option value="UN">Unsure</option>
@@ -436,7 +446,7 @@ function validate()
                     <div class="form-group col-md-3">
                         <label for="inputGradeInFall">Grade in Fall</label>
                         <select id="inputGradeInFall" name="gradeInFall" class="form-control">
-                            <option selected>{{ user[23] }}</option>
+                            <option value="{{ user[23] }}" selected>{{ user[23] }}</option>
                             <option value="FIF">5th</option>
                             <option value="SIX">6th</option>
                             <option value="SEV">7th</option>
@@ -450,7 +460,7 @@ function validate()
                     <div class="form-group col-md-3">
                         <label for="inputGT">GT</label>
                         <select id="inputGT" name="gt" class="form-control">
-                            <option selected>{{ user[26] }}</option>
+                            <option value="{{ user[26] }}" selected>{{ user[26] }}</option>
                             <option value="Y">Yes</option>
                             <option value="N">No</option>
                             <option value="U">Unsure</option>
@@ -459,7 +469,7 @@ function validate()
                     <div class="form-group col-md-3">
                         <label for="inputELL">English Language Learner</label>
                         <select id="inputELL" name="ell" class="form-control">
-                            <option selected>{{ user[27] }}</option>
+                            <option value="{{ user[27] }}" selected>{{ user[27] }}</option>
                             <option value="Y">Yes</option>
                             <option value="N">No</option>
                             <option value="U">Unsure</option>
@@ -467,20 +477,20 @@ function validate()
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputExpGradDate">Graduation Date</label>
-                        <input type="text" name="gradDate" id="inputExpGradDate" class="form-control" placeholder={{ user[25] }}>
+                        <input type="text" name="gradDate" id="inputExpGradDate" class="form-control" value="{{ user[25] }}" placeholder={{ user[25] }}>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputExpHighSchool">Expected High School</label>
-                        <input type="text" name="expHighSchool" id="inputExpHighSchool" class="form-control" placeholder={{ user[24] }}>
+                        <input type="text" name="expHighSchool" id="inputExpHighSchool" class="form-control" value="{{ user[24] }}" placeholder={{ user[24] }}>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="inputDateOfRegistration">Date of Registration</label>
-                        <input type="text" name="dateOfRegistration" id="inputDateOfRegistration" class="form-control" placeholder={{ user[1] }}>
+                        <input type="text" name="dateOfRegistration" id="inputDateOfRegistration" class="form-control" value="{{ user[1] }}" placeholder={{ user[1] }}>
                     </div>
                 </div>
             {% endfor %}
             <br>
-            <input id="btnSignUp" type="submit" class="btn btn-primary">
+            <input id="btnEditStudentProfile" type="submit" class="btn btn-primary">
             <br>
             <br>
             <br>
