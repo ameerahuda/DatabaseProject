@@ -42,6 +42,7 @@ def main():
 def logout():
    # remove the username from the session if it is there
    session.pop('username', None)
+   session.pop('password', None)
    return redirect(url_for('main'))
 
 # 1st: show registration page
@@ -246,6 +247,7 @@ def afterapplied():
 def showSignIn():
     if 'username' in session:
         username = session['username']
+        print username
         ## check if student or personnel
         if studentOrPersonnel(username) == "student entry":
             password = session['password']
@@ -254,16 +256,20 @@ def showSignIn():
                 return redirect(url_for('showStudentProfile'))
             else:
                 session.pop('username', None)
+                session.pop('password', None)
                 return render_template('error_invalidUser.html')
         elif studentOrPersonnel(username) == "admin entry":
             password = session['password']
             result = checkIfCorrectInstructorPassword(username, password)
+            print result
             if result == "Correct Password":
                 return redirect(url_for('personnelHome'))
             else:
                 session.pop('username', None)
+                session.pop('password', None)
                 return render_template('error_invalidUser.html')
         else:
+            session.pop('username', None)
             return render_template('error_invalidUser.html')
     return render_template("signIn.html")
 
